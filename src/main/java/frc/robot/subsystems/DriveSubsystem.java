@@ -16,11 +16,11 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem() {
     
     swerveMods = new SwerveModule[] {
-      new SwerveModule<Constants.Swerve.Mod0>(0, new Constants.Swerve.Mod0()),
-      new SwerveModule<Constants.Swerve.Mod1>(1, new Constants.Swerve.Mod1()),
-      new SwerveModule<Constants.Swerve.Mod2>(2, new Constants.Swerve.Mod2()),
-      new SwerveModule<Constants.Swerve.Mod3>(3, new Constants.Swerve.Mod3())
-};
+      new SwerveModule(0, SwerveModuleConstants.MOD0),
+      new SwerveModule(1, SwerveModuleConstants.MOD1),
+      new SwerveModule(2, SwerveModuleConstants.MOD2),
+      new SwerveModule(3, SwerveModuleConstants.MOD3)
+    };
   }
 
   @Override

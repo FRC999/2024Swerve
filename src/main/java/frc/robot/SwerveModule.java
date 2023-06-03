@@ -1,19 +1,23 @@
 package frc.robot;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class SwerveModule<T extends Object> {
-    
+public class SwerveModule {
+
     private int moduleNumber;
     private double angleOffset;
-    private T wmConstants;
 
-    public SwerveModule(int moduleNumber, T wheelModule) {
+    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.DRIVE_KS,
+            Constants.Swerve.DRIVE_KV, Constants.Swerve.DRIVE_KA);
+
+    public SwerveModule(int moduleNumber, Constants.Swerve.SwerveModuleConstants moduleConstants) {
         this.moduleNumber = moduleNumber;
-        this.wmConstants = wheelModule;
-        //this.angleOffset = wmConstants.angleOffset;
-        double a = wmConstants.getAngleMotorID;
+        angleOffset = moduleConstants.getAngleOffset();
+
+   
+    
 
 
     }

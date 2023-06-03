@@ -23,6 +23,12 @@ public final class Constants {
 
   public static final class Swerve {
     
+	// TRAJECTORY PARAMETERS 3039
+	/* Drive Feedforward */
+	public static final double DRIVE_KS = 0.11937 / 12;
+	public static final double DRIVE_KV = 2.6335 / 12;
+	public static final double DRIVE_KA = 0.46034 / 12;
+
     //drive train properties
     //in meters
     public static final double TRACK_WIDTH = 0.390; //left to right
@@ -60,6 +66,82 @@ public final class Constants {
     public static final double MAX_ANGULAR_VELOCITY = 11.5;
 		public static final double MAX_SPEED = 3.0;
 
+	public static enum BaseMotorControllerTypes{
+		TALON_SRX,
+		SPARKMAX;
+	}
+
+	/**
+	 * Swerve Module Constants including
+	 * driveMotorID - CAN ID of the drive motors
+	 * angleMotorID - CAN ID of the rotation motors
+	 * angleOffset - Angle deviation of the absolute encoder when the 
+	 * respective wheel is pointing forward based on the absolute encoder value
+	 */
+	public static enum SwerveModuleConstants{
+		MOD0(
+			BaseMotorControllerTypes.TALON_SRX,
+			BaseMotorControllerTypes.TALON_SRX,
+			7, // driveMotorID
+			8, // angleMotorID
+			(3268.0 * 360.0) / 4096.0 // angleOffset
+		),
+		MOD1(
+			BaseMotorControllerTypes.TALON_SRX,
+			BaseMotorControllerTypes.TALON_SRX,
+			5, // driveMotorID
+			6, // angleMotorID
+			(433.0 * 360.0) / 4096.0 // angleOffset
+		),
+		MOD2(
+			BaseMotorControllerTypes.TALON_SRX,
+			BaseMotorControllerTypes.TALON_SRX,
+			1, // driveMotorID
+			2, // angleMotorID
+			(3489.0 * 360.0) / 4096.0 // angleOffset
+		),
+		MOD3(
+			BaseMotorControllerTypes.TALON_SRX,
+			BaseMotorControllerTypes.TALON_SRX,
+			3, // driveMotorID
+			4, // angleMotorID
+			(3307.0 * 360.0) / 4096.0 // angleOffset
+		);
+
+		private BaseMotorControllerTypes driveBaseMotorControllerType;
+		private BaseMotorControllerTypes angleBaseMotorControllerType;
+		private double driveMotorID;
+		private double angleMotorID;
+		private double angleOffset;
+
+		SwerveModuleConstants(BaseMotorControllerTypes dm, BaseMotorControllerTypes am, double d, double a, double o){
+			this.driveBaseMotorControllerType = dm;
+			this.angleBaseMotorControllerType = am;
+			this.driveMotorID = d;
+			this.angleMotorID = a;
+			this.angleOffset = o;
+		}
+
+		public BaseMotorControllerTypes getDriveMotorControllerType() {
+			return driveBaseMotorControllerType;
+		}
+
+		public BaseMotorControllerTypes getAngleMotorControllerType() {
+			return angleBaseMotorControllerType;
+		}
+
+		public double getDriveMotorID() {
+			return driveMotorID;
+		}
+
+		public double getAngleMotorID() {
+			return angleMotorID;
+		}
+
+		public double getAngleOffset() {
+			return angleOffset;
+		}
+	}
     /* Module Constants */
 		// BEVEL GEARS FACE RADIO FOR OFFSETS
 		/* Front Left Module - Module 0 */
