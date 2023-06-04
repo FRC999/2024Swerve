@@ -4,10 +4,16 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.Constants;
 
+/*
+ * This is a specific base motor implementation for the motors connected to TalonSRX
+ */
 public class BaseMotorTalonSRX implements BaseMotorInterface {
     private WPI_TalonSRX motorTalonSRX;
 
     public BaseMotorTalonSRX(int CANID) {
+
+        System.out.println("**** Activating TalonSRX CANID:"+CANID);
+
         motorTalonSRX = new WPI_TalonSRX(CANID);
     }
 

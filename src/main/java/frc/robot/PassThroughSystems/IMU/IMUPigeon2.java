@@ -8,14 +8,18 @@ import frc.robot.Constants;
 
 public class IMUPigeon2 implements IMUInterface {
 
-    /** Creates a new PidgeonIMUSubsystem. */
+
     private static WPI_Pigeon2 pigeon2;
     private static Pigeon2_Faults pigeonFaults = new Pigeon2_Faults();
     private double[] xyz = new double[3]; // so not to allocate one every time
 
+    /** Creates a new PidgeonIMUSubsystem. 
+     * This is a Pigeon-2 - specific implementation of the IMUPassthroughSubsystem
+     * It must implement methods from the IMUInterface
+    */
     public IMUPigeon2() {
 
-        System.out.println("**** Activating IMU");
+        System.out.println("**** Activating Pidgeon2 IMU");
         pigeon2 = new WPI_Pigeon2(Constants.IMUConstants.Pigeon2Constants.pigeonIMUId);
     }
       

@@ -9,8 +9,14 @@ public class IMUNavX implements IMUInterface {
 
     private AHRS navX;
 
-    /** Creates a new NavXSubsystem. */
+    /** Creates a new NavXSubsystem. 
+     * This is a NavX-specific implementation of the IMUPassthroughSubsystem
+     * It must implement methods from the IMUInterface
+    */
     public IMUNavX() {
+
+        System.out.println("**** Activating NavX IMU");
+
         try {
             navX = new AHRS(SPI.Port.kMXP);
         } catch (RuntimeException ex) {
