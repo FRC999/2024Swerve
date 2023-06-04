@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.SwerveModule;
 import frc.robot.Constants.Swerve.*;
 
 public class DriveSubsystem extends SubsystemBase {

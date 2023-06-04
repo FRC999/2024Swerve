@@ -1,5 +1,7 @@
-package frc.robot;
+package frc.robot.PassThroughSystems.Motor;
 
+import frc.robot.Constants;
+import frc.robot.Constants.Swerve;
 import frc.robot.Constants.Swerve.BaseMotorControllerTypes;
 import frc.robot.Constants.Swerve.SwerveModuleConstants;
 

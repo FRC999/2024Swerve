@@ -1,10 +1,12 @@
-package frc.robot;
+package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import frc.robot.Constants;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.Constants.Swerve;
+import frc.robot.Constants.Swerve.SwerveModuleConstants;
 
-public class SwerveModule {
+public class SwerveModule extends SubsystemBase {
 
     private int moduleNumber;
     private double angleOffset;
