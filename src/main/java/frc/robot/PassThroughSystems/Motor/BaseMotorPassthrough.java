@@ -19,4 +19,13 @@ public class BaseMotorPassthrough implements BaseMotorInterface{
               
           }
     }
+
+    public void configureDriveMotor(Constants.Swerve.SwerveModuleConstants c){
+      baseMotorInterface.configureDriveMotor(c);
+    }
+
+    public void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c){
+      baseMotorInterface.configureAngleMotor(c);
+    }
+    
 }

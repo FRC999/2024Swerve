@@ -5,8 +5,13 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
 import frc.robot.Constants.Swerve.SwerveModuleConstants;
+import frc.robot.PassThroughSystems.Motor.BaseMotorPassthrough;
+
 
 public class SwerveModule extends SubsystemBase {
+
+    private BaseMotorPassthrough driveMotor;
+    private BaseMotorPassthrough angleMotor;
 
     private int moduleNumber;
     private double angleOffset;
@@ -18,9 +23,13 @@ public class SwerveModule extends SubsystemBase {
         this.moduleNumber = moduleNumber;
         angleOffset = moduleConstants.getAngleOffset();
 
+        driveMotor = new BaseMotorPassthrough(moduleConstants.getDriveMotorControllerType(), moduleConstants.getDriveMotorID());
+
+        angleMotor = new BaseMotorPassthrough(moduleConstants.getAngleMotorControllerType(), moduleConstants.getAngleMotorID());
+
+
    
     
-
 
     }
 }

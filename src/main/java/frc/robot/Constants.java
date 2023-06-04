@@ -80,46 +80,58 @@ public final class Constants {
 	 */
 	public static enum SwerveModuleConstants{
 		MOD0(
-			BaseMotorControllerTypes.TALON_SRX,
-			BaseMotorControllerTypes.TALON_SRX,
-			7, // driveMotorID
-			8, // angleMotorID
-			(3268.0 * 360.0) / 4096.0 // angleOffset
+			BaseMotorControllerTypes.TALON_SRX, // Drive motor type
+			BaseMotorControllerTypes.TALON_SRX, // Angle motor type
+			7, 									// driveMotorID
+			8, 									// angleMotorID
+			(3268.0 * 360.0) / 4096.0,  		// angleOffset
+			false,								// Inversion for drive motor
+			false								// Inversion for angle motor
 		),
 		MOD1(
-			BaseMotorControllerTypes.TALON_SRX,
-			BaseMotorControllerTypes.TALON_SRX,
-			5, // driveMotorID
-			6, // angleMotorID
-			(433.0 * 360.0) / 4096.0 // angleOffset
+			BaseMotorControllerTypes.TALON_SRX, // Drive motor type
+			BaseMotorControllerTypes.TALON_SRX, // Angle motor type
+			5, 									// driveMotorID
+			6, 									// angleMotorID
+			(433.0 * 360.0) / 4096.0,   		// angleOffset
+			false,								// Inversion for drive motor
+			false								// Inversion for angle motor
 		),
 		MOD2(
-			BaseMotorControllerTypes.TALON_SRX,
-			BaseMotorControllerTypes.TALON_SRX,
-			1, // driveMotorID
-			2, // angleMotorID
-			(3489.0 * 360.0) / 4096.0 // angleOffset
+			BaseMotorControllerTypes.TALON_SRX, // Drive motor type
+			BaseMotorControllerTypes.TALON_SRX, // Angle motor type
+			1, 									// driveMotorID
+			2, 									// angleMotorID
+			(3489.0 * 360.0) / 4096.0, 			// angleOffset
+			false,								// Inversion for drive motor
+			false 								// Inversion for angle motor
 		),
 		MOD3(
-			BaseMotorControllerTypes.TALON_SRX,
-			BaseMotorControllerTypes.TALON_SRX,
-			3, // driveMotorID
-			4, // angleMotorID
-			(3307.0 * 360.0) / 4096.0 // angleOffset
+			BaseMotorControllerTypes.TALON_SRX, // Drive motor type
+			BaseMotorControllerTypes.TALON_SRX, // Angle motor type
+			3, 									// driveMotorID
+			4, 									// angleMotorID
+			(3307.0 * 360.0) / 4096.0, 			// angleOffset
+			false,								// Inversion for drive motor
+			false 								// Inversion for angle motor
 		);
 
 		private BaseMotorControllerTypes driveBaseMotorControllerType;
 		private BaseMotorControllerTypes angleBaseMotorControllerType;
-		private double driveMotorID;
-		private double angleMotorID;
+		private int driveMotorID;
+		private int angleMotorID;
 		private double angleOffset;
+		private boolean driveMotorInverted;
+		private boolean angleMotorInverted;
 
-		SwerveModuleConstants(BaseMotorControllerTypes dm, BaseMotorControllerTypes am, double d, double a, double o){
+		SwerveModuleConstants(BaseMotorControllerTypes dm, BaseMotorControllerTypes am, int d, int a, double o, boolean di, boolean ai){
 			this.driveBaseMotorControllerType = dm;
 			this.angleBaseMotorControllerType = am;
 			this.driveMotorID = d;
 			this.angleMotorID = a;
 			this.angleOffset = o;
+			this.driveMotorInverted = di;
+			this.angleMotorInverted = ai;
 		}
 
 		public BaseMotorControllerTypes getDriveMotorControllerType() {
@@ -130,16 +142,24 @@ public final class Constants {
 			return angleBaseMotorControllerType;
 		}
 
-		public double getDriveMotorID() {
+		public int getDriveMotorID() {
 			return driveMotorID;
 		}
 
-		public double getAngleMotorID() {
+		public int getAngleMotorID() {
 			return angleMotorID;
 		}
 
 		public double getAngleOffset() {
 			return angleOffset;
+		}
+
+		public boolean isDriveMotorInverted() {
+			return driveMotorInverted;
+		}
+
+		public boolean isAngleMotorInverted() {
+			return angleMotorInverted;
 		}
 	}
     /* Module Constants */
@@ -204,4 +224,18 @@ public final class Constants {
 		}
 
   }
+
+  public static final class IMUConstants {
+	
+	public static enum IMUTypes{
+		Pigeon2,
+		NavX;
+	}
+
+	public static final IMUTypes imuType = IMUTypes.Pigeon2;
+	public static final class Pigeon2Constants{
+		public static final int pigeonIMUId = 15; //TODO: Make sure Pigeon ID is correct, this value is a placeholder
+	}
+  }
+
 }
