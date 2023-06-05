@@ -14,7 +14,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
  * classes, as well as a Passthrough class, which should simply call an underlying implementation method.
  */
 public interface IMUInterface {
-    
+
     double getPitch();
 
     double getRoll();
@@ -26,6 +26,6 @@ public interface IMUInterface {
     double setYaw(double y);
 
     double getTurnRate();
-    
+
     Rotation2d getHeading();
 }

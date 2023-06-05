@@ -16,7 +16,7 @@ import frc.robot.Constants;
  * classes, as well as a Passthrough class, which should simply call an underlying implementation method.
  */
 public interface BaseMotorInterface {
-    
+
     void configureDriveMotor(Constants.Swerve.SwerveModuleConstants c);
 
     void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c);

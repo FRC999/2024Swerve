@@ -24,20 +24,27 @@ public class IMUPassthroughSubsystem extends SubsystemBase implements IMUInterfa
   private IMUInterface imu; // We will use downcasting to set this - it will point to methods either in NavX
   // or Pigeon subsystems
 
-  /** Creates a new IMUSubsystem. 
-   * This is an IMU Passthrough class, meaning, it provides a class for the generic IMU instantiation.
-   * The "switch" implementation chooser below will instantiate hardware-specific implementation, and will
-   * map "imu" variable to that object.
-   * That means all hardware-specific implementations must implement the same methods, which is enforced
-   * via interface IMUInterface. That interface contains all methods that must be declared as "public"
-   * both in this class and in the hardware-specific classes. All other methods (if they're needed) should be private.
-  */
+  /**
+   * Creates a new IMUSubsystem.
+   * This is an IMU Passthrough class, meaning, it provides a class for the
+   * generic IMU instantiation.The "switch" implementation chooser below will
+   * instantiate hardware-specific
+   * implementation, and will map "imu" variable to that object.
+   * That means all hardware-specific implementations must implement the same
+   * methods, which is enforced via interface IMUInterface. That interface
+   * contains all methods that must be
+   * declared as "public" both in this class and in the hardware-specific classes.
+   * All other methods
+   * (if they're needed) should be private.
+   */
   public IMUPassthroughSubsystem() {
 
     /*
-     * Depending on the IMU type specified in Constants, the variable "imu" will point to the instance
+     * Depending on the IMU type specified in Constants, the variable "imu" will
+     * point to the instance
      * of the class specific to the hardware you have, e.g. Pigeon2 or NavX
-     * All such implementation classes must have public methods specified by the IMUInterface
+     * All such implementation classes must have public methods specified by the
+     * IMUInterface
      */
     switch (Constants.IMUConstants.imuType) {
       case Pigeon2:
@@ -49,10 +56,8 @@ public class IMUPassthroughSubsystem extends SubsystemBase implements IMUInterfa
       default:
     }
 
-    imu.zeroYaw(); // TODO: At start of game, robot must be pointed towards opposite team's side
+    imu.zeroYaw(); // TODO: At the start of game, robot must be pointed towards opposite team's side
                    // (This is our zero value). We do not know which side red/blue is on
-
-
 
   }
 

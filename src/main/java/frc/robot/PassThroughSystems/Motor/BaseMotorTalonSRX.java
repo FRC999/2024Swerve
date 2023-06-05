@@ -12,7 +12,7 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
     public BaseMotorTalonSRX(int CANID) {
 
-        System.out.println("**** Activating TalonSRX CANID:"+CANID);
+        System.out.println("**** Activating TalonSRX CANID:" + CANID);
 
         motorTalonSRX = new WPI_TalonSRX(CANID);
     }
@@ -24,7 +24,7 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
     }
 
     public void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c) {
-        
+
         motorTalonSRX.configFactoryDefault();
         motorTalonSRX.setInverted(c.isDriveMotorInverted());
     }

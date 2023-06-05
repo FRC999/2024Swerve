@@ -26,27 +26,27 @@ import frc.robot.Constants.Swerve.SwerveModuleConstants;
  * E.g. a call to the "configureDriveMotor" of this class will simply result in calling "configureDriveMotor"
  * of specific implementation, such as the same method in BaseMotorTalonSRX.
  */
-public class BaseMotorPassthrough implements BaseMotorInterface{
-    private BaseMotorInterface baseMotorInterface; //downcasting to the individual motor types
-  
-    /** Creates a new IMUSubsystem. */
-    public BaseMotorPassthrough(BaseMotorControllerTypes motorType, int CANID) {
+public class BaseMotorPassthrough implements BaseMotorInterface {
+  private BaseMotorInterface baseMotorInterface; // downcasting to the individual motor types
 
-        switch(motorType) {
-            case TALON_SRX:
-              baseMotorInterface = new BaseMotorTalonSRX(CANID);
-              break;
-            default:
-              
-          }
-    }
+  /** Creates a new IMUSubsystem. */
+  public BaseMotorPassthrough(BaseMotorControllerTypes motorType, int CANID) {
 
-    public void configureDriveMotor(Constants.Swerve.SwerveModuleConstants c){
-      baseMotorInterface.configureDriveMotor(c);
-    }
+    switch (motorType) {
+      case TALON_SRX:
+        baseMotorInterface = new BaseMotorTalonSRX(CANID);
+        break;
+      default:
 
-    public void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c){
-      baseMotorInterface.configureAngleMotor(c);
     }
-    
+  }
+
+  public void configureDriveMotor(Constants.Swerve.SwerveModuleConstants c) {
+    baseMotorInterface.configureDriveMotor(c);
+  }
+
+  public void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c) {
+    baseMotorInterface.configureAngleMotor(c);
+  }
+
 }
