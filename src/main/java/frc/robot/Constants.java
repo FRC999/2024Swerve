@@ -86,6 +86,17 @@ public final class Constants {
 		public static final double MAX_ANGULAR_VELOCITY = 11.5;
 		public static final double MAX_SPEED = 3.0;
 
+		//Parameters for BaseMotorTalonSRX class
+		public static final class TalonSRXConfiguration {
+
+			public static final int kPIDLoopIdx = 0;  // Talon Loop ID
+			public static final int configureTimeoutMs = 30; // Hardware Talon TimeoutMs
+
+			public static final double metersPerTick = 1.0/30000.0;
+			public static final double degreePerTick = 360.0/4096.0 ;
+		}
+		
+
 		/*
 		 * Add controller types for each supported motor controller including simulated
 		 * ones

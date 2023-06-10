@@ -20,4 +20,20 @@ public interface BaseMotorInterface {
     void configureDriveMotor(Constants.Swerve.SwerveModuleConstants c);
 
     void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c);
+
+    double getDriveEncoderPosition();
+
+    double getAngleEncoderPosition();
+
+    double getDriveEncoderVelocity();
+
+    double getAngleEncoderVelocity();
+
+    double getDriveEncoderPositionSI();
+
+    double getAngleEncoderPositionSI();
+
+    double getDriveEncoderVelocitySI();
+
+    double getAngleEncoderVelocitySI();
 }

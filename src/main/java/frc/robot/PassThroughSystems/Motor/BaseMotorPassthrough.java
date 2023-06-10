@@ -49,4 +49,36 @@ public class BaseMotorPassthrough implements BaseMotorInterface {
     baseMotorInterface.configureAngleMotor(c);
   }
 
+  public double getDriveEncoderPosition() {
+    return baseMotorInterface.getDriveEncoderPosition();
+  }
+
+  public double getAngleEncoderPosition() {
+    return baseMotorInterface.getAngleEncoderPosition();
+  }
+
+  public double getDriveEncoderVelocity() {
+    return baseMotorInterface.getAngleEncoderVelocity();
+  }
+
+  public double getAngleEncoderVelocity() {
+    return baseMotorInterface.getAngleEncoderVelocity();
+  }
+
+  public double getDriveEncoderPositionSI() {
+    return baseMotorInterface.getDriveEncoderPositionSI();
+  }
+
+  public double getAngleEncoderPositionSI() {
+    return baseMotorInterface.getAngleEncoderPositionSI();
+  }
+
+  public double getDriveEncoderVelocitySI() {
+    return baseMotorInterface.getAngleEncoderVelocitySI();
+  }
+
+  public double getAngleEncoderVelocitySI() {
+    return baseMotorInterface.getAngleEncoderVelocitySI();
+  }
+
 }
