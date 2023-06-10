@@ -89,11 +89,13 @@ public final class Constants {
 		//Parameters for BaseMotorTalonSRX class
 		public static final class TalonSRXConfiguration {
 
+			// We assume that all TalonSRX controlers need the same PID and some other hardware configuration parameters
 			public static final int kPIDLoopIdx = 0;  // Talon Loop ID
 			public static final int configureTimeoutMs = 30; // Hardware Talon TimeoutMs
 
-			public static final double metersPerTick = 1.0/30000.0;
-			public static final double degreePerTick = 360.0/4096.0 ;
+			// Customize the following values to your prototype
+			public static final double metersPerTick = 1.0/30000.0;	//TODO: measure this number on the robot
+			public static final double degreePerTick = 360.0/4096.0 ; // On our prototype 1 angular rotation of the wheel = 1 rotation of the encoder
 		}
 		
 

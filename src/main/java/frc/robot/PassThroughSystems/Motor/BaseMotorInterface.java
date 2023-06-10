@@ -21,6 +21,13 @@ public interface BaseMotorInterface {
 
     void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c);
 
+    /*
+     * The methods below expose encoder values for position and speed.
+     * The non-SI methods provide values in raw encoder units 
+     * (e.g. in CTR Mag Encoder velocity is measured in ticks per 100ms)
+     * The SI methods provide value sin SI units - m/s and degree/s (we may consider modifying the latter to radians/s)
+     */
+    
     double getDriveEncoderPosition();
 
     double getAngleEncoderPosition();
