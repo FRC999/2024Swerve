@@ -1,10 +1,12 @@
 package frc.robot.PassThroughSystems.Motor;
 
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.Constants;
+import frc.robot.Constants.PIDConstants.SRXAngle;
 
 /*
  * This is a specific base motor implementation for the motors connected to TalonSRX
@@ -29,6 +31,8 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
                 Constants.Swerve.TalonSRXConfiguration.kPIDLoopIdx,
                 Constants.Swerve.TalonSRXConfiguration.configureTimeoutMs);
 
+        motorTalonSRX.setSensorPhase(c.getDriveMotorSensorPhase());
+
     }
 
     public void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c) {
@@ -40,6 +44,10 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         motorTalonSRX.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Absolute,
                 Constants.Swerve.TalonSRXConfiguration.kPIDLoopIdx,
                 Constants.Swerve.TalonSRXConfiguration.configureTimeoutMs);
+
+        motorTalonSRX.setSensorPhase(c.getAngleMotorSensorPhase());
+
+        configureMotionMagicAngle(c);
     }
 
     public double getDriveEncoderPosition() {
@@ -51,11 +59,11 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
     }
 
     public double getDriveEncoderVelocity() {
-        return motorTalonSRX.getSelectedSensorPosition();
+        return motorTalonSRX.getSelectedSensorVelocity();
     }
 
     public double getAngleEncoderVelocity() {
-        return motorTalonSRX.getSelectedSensorPosition();
+        return motorTalonSRX.getSelectedSensorVelocity();
     }
 
     public double getDriveEncoderPositionSI() {
@@ -67,10 +75,43 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
     }
 
     public double getDriveEncoderVelocitySI() {
-        return motorTalonSRX.getSelectedSensorPosition()*10.0*Constants.Swerve.TalonSRXConfiguration.metersPerTick;
+        return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.Swerve.TalonSRXConfiguration.metersPerTick;
     }
 
     public double getAngleEncoderVelocitySI() {
-        return motorTalonSRX.getSelectedSensorPosition()*10.0*Constants.Swerve.TalonSRXConfiguration.degreePerTick;
+        return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.Swerve.TalonSRXConfiguration.degreePerTick;
+    }
+
+    private void configureMotionMagicAngle(Constants.Swerve.SwerveModuleConstants c) {
+
+        // Disable motor safety so we can use hardware PID
+        motorTalonSRX.setSafetyEnabled(false);
+
+        motorTalonSRX.configNeutralDeadband(SRXAngle.NeutralDeadband, 30);
+
+        motorTalonSRX.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, SRXAngle.periodMs,  SRXAngle.timeoutMs);
+        motorTalonSRX. setStatusFramePeriod(StatusFrame.Status_10_Targets, SRXAngle.periodMs,  SRXAngle.timeoutMs);
+
+        motorTalonSRX.configPeakOutputForward(+1.0, SRXAngle.timeoutMs);
+        motorTalonSRX.configPeakOutputReverse(-1.0, SRXAngle.timeoutMs);
+        motorTalonSRX.configNominalOutputForward(0, SRXAngle.timeoutMs);
+        motorTalonSRX.configNominalOutputReverse(0, SRXAngle.timeoutMs);
+
+        /* FPID Gains */
+        motorTalonSRX.selectProfileSlot(SRXAngle.SLOT_0, 0);
+        motorTalonSRX.config_kP(SRXAngle.SLOT_0, SRXAngle.kP, SRXAngle.timeoutMs);
+        motorTalonSRX.config_kI(SRXAngle.SLOT_0, SRXAngle.kI, SRXAngle.timeoutMs);
+        motorTalonSRX.config_kD(SRXAngle.SLOT_0, SRXAngle.kD, SRXAngle.timeoutMs);
+        motorTalonSRX.config_kF(SRXAngle.SLOT_0, SRXAngle.kF, SRXAngle.timeoutMs);
+
+        motorTalonSRX.config_IntegralZone(SRXAngle.SLOT_0, SRXAngle.Izone,  SRXAngle.timeoutMs);
+        motorTalonSRX.configClosedLoopPeakOutput(SRXAngle.SLOT_0, SRXAngle.PeakOutput, SRXAngle.timeoutMs);
+        motorTalonSRX.configAllowableClosedloopError(SRXAngle.SLOT_0, SRXAngle.DefaultAcceptableError, SRXAngle.timeoutMs);
+      
+        motorTalonSRX.configClosedLoopPeriod(SRXAngle.SLOT_0, SRXAngle.closedLoopPeriod, SRXAngle.timeoutMs);
+
+        motorTalonSRX.configMotionAcceleration(SRXAngle.Acceleration,SRXAngle.timeoutMs);
+        motorTalonSRX.configMotionCruiseVelocity(SRXAngle.CruiseVelocity,SRXAngle.timeoutMs);
+        motorTalonSRX.configMotionSCurveStrength(SRXAngle.Smoothing);
     }
 }

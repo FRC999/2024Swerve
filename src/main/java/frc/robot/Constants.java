@@ -134,7 +134,9 @@ public final class Constants {
 					8, // angleMotorID
 					(3268.0 * 360.0) / 4096.0, // angleOffset
 					false, // Inversion for drive motor
-					false // Inversion for angle motor
+					false, // Inversion for angle motor
+					false, // Sensor phase for drive motor
+					false  // Sensor phase for drive motor
 			),
 			MOD1(
 					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
@@ -143,7 +145,10 @@ public final class Constants {
 					6, // angleMotorID
 					(433.0 * 360.0) / 4096.0, // angleOffset
 					false, // Inversion for drive motor
-					false // Inversion for angle motor
+					false, // Inversion for angle motor
+					false, // Sensor phase for drive motor
+					false  // Sensor phase for drive motor
+
 			),
 			MOD2(
 					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
@@ -152,7 +157,10 @@ public final class Constants {
 					2, // angleMotorID
 					(3489.0 * 360.0) / 4096.0, // angleOffset
 					false, // Inversion for drive motor
-					false // Inversion for angle motor
+					false, // Inversion for angle motor
+					false, // Sensor phase for drive motor
+					false  // Sensor phase for drive motor
+
 			),
 			MOD3(
 					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
@@ -161,7 +169,10 @@ public final class Constants {
 					4, // angleMotorID
 					(3307.0 * 360.0) / 4096.0, // angleOffset
 					false, // Inversion for drive motor
-					false // Inversion for angle motor
+					false, // Inversion for angle motor
+					false, // Sensor phase for drive motor
+					false  // Sensor phase for drive motor
+
 			);
 
 			private BaseMotorControllerTypes driveBaseMotorControllerType;
@@ -171,9 +182,11 @@ public final class Constants {
 			private double angleOffset;
 			private boolean driveMotorInverted;
 			private boolean angleMotorInverted;
+			private boolean driveMotorSensorPhase;
+			private boolean angleMotorSensorPhase;
 
 			SwerveModuleConstants(BaseMotorControllerTypes dm, BaseMotorControllerTypes am, int d, int a, double o,
-					boolean di, boolean ai) {
+					boolean di, boolean ai, boolean ds, boolean as) {
 				this.driveBaseMotorControllerType = dm;
 				this.angleBaseMotorControllerType = am;
 				this.driveMotorID = d;
@@ -181,6 +194,8 @@ public final class Constants {
 				this.angleOffset = o;
 				this.driveMotorInverted = di;
 				this.angleMotorInverted = ai;
+				this.driveMotorSensorPhase = ds;
+				this.angleMotorSensorPhase = as;
 			}
 
 			public BaseMotorControllerTypes getDriveMotorControllerType() {
@@ -210,6 +225,15 @@ public final class Constants {
 			public boolean isAngleMotorInverted() {
 				return angleMotorInverted;
 			}
+
+			public boolean getDriveMotorSensorPhase() {
+				return driveMotorSensorPhase;
+			}
+
+			public boolean getAngleMotorSensorPhase() {
+				return angleMotorSensorPhase;
+			}
+
 		} // End ENUM SwerveModuleConstants
 
 	} // End Swerve
@@ -228,5 +252,30 @@ public final class Constants {
 														// placeholder
 		}
 	} // End IMUConstants
+
+	public static final class PIDConstants {
+
+		// PID constants for motors controlled by TalonSRX
+		public static final class SRXAngle {
+
+			public static final int SLOT_0 = 0;
+			public static final double kP = 0.75;
+			public static final double kI = 0.005;
+			public static final double kD = 0.01;
+			public static final double kF = 0;
+			public static final double Acceleration = 6750; // raw sensor units per 100 ms per second
+			public static final double CruiseVelocity = 6750; // raw sensor units per 100 ms
+			public static final int Smoothing = 3; // CurveStrength. 0 to use Trapezoidal Motion Profile. [1,8] for S-Curve (greater value yields greater smoothing).
+			public static final double DefaultAcceptableError = 5; // Sensor units
+			public static final double Izone = 500;
+			public static final double PeakOutput = 0.5; // Closed Loop peak output
+			public static final double NeutralDeadband = 0.001;
+			public static final int periodMs = 10; // status frame period
+			public static final int timeoutMs = 30; // status frame timeout
+			public static final int closedLoopPeriod = 1; // 1ms for TalonSRX and locally connected encoder
+
+		}
+
+	}
 
 }

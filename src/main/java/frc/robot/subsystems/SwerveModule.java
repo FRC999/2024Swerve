@@ -41,9 +41,11 @@ public class SwerveModule extends SubsystemBase {
 
         angleMotor = new BaseMotorPassthrough(moduleConstants.getAngleMotorControllerType(), moduleConstants.getAngleMotorID());
 
+        driveMotor.configureDriveMotor(moduleConstants);
 
-   
-    
+        angleMotor.configureAngleMotor(moduleConstants);
+
+
 
     }
 }

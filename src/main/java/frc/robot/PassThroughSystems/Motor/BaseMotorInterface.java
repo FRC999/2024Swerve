@@ -43,4 +43,5 @@ public interface BaseMotorInterface {
     double getDriveEncoderVelocitySI();
 
     double getAngleEncoderVelocitySI();
+
 }
