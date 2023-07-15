@@ -10,7 +10,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.IMUPassthroughSubsystem;
+import frc.robot.subsystems.IMUSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
 
-  public static final IMUPassthroughSubsystem imuPassthroughSubsystem = new IMUPassthroughSubsystem();
+  public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 

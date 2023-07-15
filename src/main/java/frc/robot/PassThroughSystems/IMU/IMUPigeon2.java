@@ -54,9 +54,11 @@ public class IMUPigeon2 implements IMUInterface {
      * @return
      */
     public double getYaw() {
-        // double[] ypr = new double[3];
-        // pigeon2.getYawPitchRoll(ypr);
-        // return ypr[0];
+        //double[] ypr = new double[3];
+        //pigeon2.getYawPitchRoll(ypr);
+        //System.out.println(ypr[0]);
+        //return ypr[0];
+
         return pigeon2.getYaw(); //TODO: Check this method returns values in degrees
     }
 

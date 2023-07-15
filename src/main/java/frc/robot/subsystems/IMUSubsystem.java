@@ -19,7 +19,7 @@ import frc.robot.PassThroughSystems.IMU.IMUPigeon2;
  * We do not currently need that. However, when used in a competition, you might find it necessary to do so.
  */
 
-public class IMUPassthroughSubsystem extends SubsystemBase implements IMUInterface {
+public class IMUSubsystem extends SubsystemBase implements IMUInterface {
 
   private IMUInterface imu; // We will use downcasting to set this - it will point to methods either in NavX
   // or Pigeon subsystems
@@ -37,7 +37,7 @@ public class IMUPassthroughSubsystem extends SubsystemBase implements IMUInterfa
    * All other methods
    * (if they're needed) should be private.
    */
-  public IMUPassthroughSubsystem() {
+  public IMUSubsystem() {
 
     /*
      * Depending on the IMU type specified in Constants, the variable "imu" will
