@@ -61,6 +61,26 @@ public class SwerveModule extends SubsystemBase {
         return new SwerveModuleState(velocity, angle);
     }
 
+    public double telemetryAngleEncoder(){
+        return angleMotor.getAngleEncoderPosition();
+    }
+
+    public double telemetryAngleEncoderSI(){
+        return angleMotor.getAngleEncoderPositionSI();
+    }
+
+    public double telemetryDriveEncoder(){
+        return driveMotor.getDriveEncoderPosition();
+    }
+
+    public void testDriveMotorApplyPower(double power) {
+        driveMotor.testMotorApplyPower(power);
+    }
+
+    public void testAngleMotorApplyPower(double power) {
+        angleMotor.testMotorApplyPower(power);
+    }
+
     @Override
     public void periodic() {
         currentAngle = Rotation2d.fromDegrees(angleMotor.getAngleEncoderPositionSI());

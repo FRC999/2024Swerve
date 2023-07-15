@@ -22,7 +22,35 @@ public class DriveSubsystem extends SubsystemBase {
     };
   }
 
-  
+  public double telemetryAngleEncoder(int modnumber) {
+    return swerveMods[modnumber].telemetryAngleEncoder();
+  }
+
+  public double telemetryAngleEncoderSI(int modnumber) {
+    return swerveMods[modnumber].telemetryAngleEncoderSI();
+  }
+
+  public double telemetryDriveEncoder(int modnumber) {
+    return swerveMods[modnumber].telemetryDriveEncoder();
+  }
+
+  public void testDriveMotorEncoderPhase(int modnumber){
+    swerveMods[modnumber].testDriveMotorApplyPower(0.3);
+  }
+
+  public void stopDriveMotor(int modnumber){
+    swerveMods[modnumber].testDriveMotorApplyPower(0);
+  }
+
+  public void testAngleMotorEncoderPhase(int modnumber){
+    swerveMods[modnumber].testAngleMotorApplyPower(0.3);
+  }
+
+  public void stopAngleMotor(int modnumber){
+    swerveMods[modnumber].testAngleMotorApplyPower(0);
+  }
+
+
 
   @Override
   public void periodic() {

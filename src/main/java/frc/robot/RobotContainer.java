@@ -4,13 +4,20 @@
 
 package frc.robot;
 
+import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IMUPassthroughSubsystem;
+import frc.robot.subsystems.SmartDashboardSubsystem;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -23,17 +30,38 @@ public class RobotContainer {
 
   public static final IMUPassthroughSubsystem imuPassthroughSubsystem = new IMUPassthroughSubsystem();
 
+  public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+
+  public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
+
+  public static Joystick driveStick;
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
+
+  
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
+    // Configure driver interface - binding joystick objects to port numbers
+    configureDriverInterface();
+
     // Configure the trigger bindings
     configureBindings();
+  }
+
+   /**
+   * Use this method to define your controllers depending on the
+   * {@link DriveInterface}
+   */
+  private void configureDriverInterface() {
+    driveStick = new Joystick(OIConstants.driverControllerPort);
+    System.out.println("Driver interface configured");
   }
 
   /**
@@ -50,9 +78,42 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+    // pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+    new JoystickButton(driveStick, 5)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testDriveMotorEncoderPhase(0)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)));
+
+    new JoystickButton(driveStick, 6)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testDriveMotorEncoderPhase(1)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)));
+
+    new JoystickButton(driveStick, 3)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testDriveMotorEncoderPhase(2)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)));
+
+    new JoystickButton(driveStick, 4)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testDriveMotorEncoderPhase(3)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)));
+
+    new JoystickButton(driveStick, 11)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testAngleMotorEncoderPhase(2)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)));
+
+    new JoystickButton(driveStick, 12)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testAngleMotorEncoderPhase(3)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)));
+
+    new JoystickButton(driveStick, 10)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testAngleMotorEncoderPhase(1)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)));
+
+    new JoystickButton(driveStick, 9)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testAngleMotorEncoderPhase(0)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0)));
   }
 
   /**

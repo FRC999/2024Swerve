@@ -46,4 +46,6 @@ public interface BaseMotorInterface {
 
     void setAngleMotorChassisAngle(double angle);
 
+    void testMotorApplyPower(double power); // Test method to check inversion and encoders
+
 }

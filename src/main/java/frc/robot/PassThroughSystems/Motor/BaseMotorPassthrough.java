@@ -85,5 +85,8 @@ public class BaseMotorPassthrough implements BaseMotorInterface {
     baseMotorInterface.setAngleMotorChassisAngle(angle);
   }
 
+  public void testMotorApplyPower(double power) {
+    baseMotorInterface.testMotorApplyPower(power);
+  }
 
 }

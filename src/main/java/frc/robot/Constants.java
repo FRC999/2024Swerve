@@ -139,10 +139,10 @@ public final class Constants {
 					7, // driveMotorID
 					8, // angleMotorID
 					(3268.0 * 360.0) / 4096.0, // angleOffset
-					false, // Inversion for drive motor
+					true, // Inversion for drive motor
 					false, // Inversion for angle motor
 					false, // Sensor phase for drive motor
-					false  // Sensor phase for drive motor
+					false  // Sensor phase for angle motor
 			),
 			MOD1(
 					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
@@ -150,10 +150,10 @@ public final class Constants {
 					5, // driveMotorID
 					6, // angleMotorID
 					(433.0 * 360.0) / 4096.0, // angleOffset
-					false, // Inversion for drive motor
+					true, // Inversion for drive motor
 					false, // Inversion for angle motor
 					false, // Sensor phase for drive motor
-					false  // Sensor phase for drive motor
+					false  // Sensor phase for angle motor
 
 			),
 			MOD2(
@@ -162,10 +162,10 @@ public final class Constants {
 					1, // driveMotorID
 					2, // angleMotorID
 					(3489.0 * 360.0) / 4096.0, // angleOffset
-					false, // Inversion for drive motor
+					true, // Inversion for drive motor
 					false, // Inversion for angle motor
-					false, // Sensor phase for drive motor
-					false  // Sensor phase for drive motor
+					true, // Sensor phase for drive motor
+					false  // Sensor phase for angle motor
 
 			),
 			MOD3(
@@ -174,10 +174,10 @@ public final class Constants {
 					3, // driveMotorID
 					4, // angleMotorID
 					(3307.0 * 360.0) / 4096.0, // angleOffset
-					false, // Inversion for drive motor
+					true, // Inversion for drive motor
 					false, // Inversion for angle motor
-					false, // Sensor phase for drive motor
-					false  // Sensor phase for drive motor
+					true, // Sensor phase for drive motor
+					false  // Sensor phase for angle motor
 
 			);
 
@@ -283,5 +283,7 @@ public final class Constants {
 		}
 
 	}
-
+	public static final class OIConstants {
+		public static final int driverControllerPort = 0;
+	}
 }

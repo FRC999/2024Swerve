@@ -1,5 +1,6 @@
 package frc.robot.PassThroughSystems.Motor;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
@@ -38,12 +39,14 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
         motorTalonSRX.setSensorPhase(c.getDriveMotorSensorPhase());
 
+        motorBrakeMode();
+
     }
 
     public void configureAngleMotor(SwerveModuleConstants c) {
 
         motorTalonSRX.configFactoryDefault();
-        motorTalonSRX.setInverted(c.isDriveMotorInverted());
+        motorTalonSRX.setInverted(c.isAngleMotorInverted());
 
         // Encoder configuration
         motorTalonSRX.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Absolute,
@@ -58,7 +61,9 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
         setEncoderforWheelCalibration(c);
 
-        setAngleMotorChassisAngle(0); //Initialization turn wheels to 0 degrees
+        motorBrakeMode();
+
+        //setAngleMotorChassisAngle(0); //Initialization turn wheels to 0 degrees
         
     }
 
@@ -100,6 +105,10 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
     public void setAngleMotorChassisAngle(double angle){
         motorTalonSRX.set(TalonSRXControlMode.MotionMagic, angle / TalonSRXConfiguration.degreePerTick);
+    }
+
+    public void testMotorApplyPower(double power) {
+        motorTalonSRX.set(TalonSRXControlMode.PercentOutput, power);
     }
 
     
@@ -178,6 +187,10 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
         System.out.println("Set encoder for motor " + c.getAngleMotorID() + " to " + encoderSetting);
 
+    }
+
+    private void motorBrakeMode() {
+        motorTalonSRX.setNeutralMode(NeutralMode.Brake);
     }
 
 }
