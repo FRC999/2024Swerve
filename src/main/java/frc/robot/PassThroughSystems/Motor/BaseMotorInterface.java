@@ -44,4 +44,6 @@ public interface BaseMotorInterface {
 
     double getAngleEncoderVelocitySI();
 
+    void setAngleMotorChassisAngle(double angle);
+
 }

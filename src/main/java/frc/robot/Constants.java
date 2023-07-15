@@ -96,6 +96,12 @@ public final class Constants {
 			// Customize the following values to your prototype
 			public static final double metersPerTick = 1.0/30000.0;	//TODO: measure this number on the robot
 			public static final double degreePerTick = 360.0/4096.0 ; // On our prototype 1 angular rotation of the wheel = 1 rotation of the encoder
+
+			// Absolute encoder setup
+          	public static final boolean kDiscontinuityPresent = true;
+			public static final int kBookEnd_0 = 910;	/* 80 deg */
+			public static final int kBookEnd_1 = 1137;	/* 100 deg */
+			public static final int clicksSRXPerFullRotation = 4096; //rollover on 999 swerve
 		}
 		
 

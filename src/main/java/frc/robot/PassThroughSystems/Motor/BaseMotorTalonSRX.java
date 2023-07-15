@@ -2,11 +2,16 @@ package frc.robot.PassThroughSystems.Motor;
 
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
 import frc.robot.Constants.PIDConstants.SRXAngle;
+import frc.robot.Constants.Swerve.SwerveModuleConstants;
+import frc.robot.Constants.Swerve.TalonSRXConfiguration;
 
 /*
  * This is a specific base motor implementation for the motors connected to TalonSRX
@@ -35,7 +40,7 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
     }
 
-    public void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c) {
+    public void configureAngleMotor(SwerveModuleConstants c) {
 
         motorTalonSRX.configFactoryDefault();
         motorTalonSRX.setInverted(c.isDriveMotorInverted());
@@ -47,7 +52,14 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
         motorTalonSRX.setSensorPhase(c.getAngleMotorSensorPhase());
 
+        initQuadrature();
+
         configureMotionMagicAngle(c);
+
+        setEncoderforWheelCalibration(c);
+
+        setAngleMotorChassisAngle(0); //Initialization turn wheels to 0 degrees
+        
     }
 
     public double getDriveEncoderPosition() {
@@ -82,6 +94,16 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.Swerve.TalonSRXConfiguration.degreePerTick;
     }
 
+    private int getDriveAbsEncoder() {
+        return (int) motorTalonSRX.getSensorCollection().getPulseWidthPosition() & 0xFFF;
+    }
+
+    public void setAngleMotorChassisAngle(double angle){
+        motorTalonSRX.set(TalonSRXControlMode.MotionMagic, angle / TalonSRXConfiguration.degreePerTick);
+    }
+
+    
+
     private void configureMotionMagicAngle(Constants.Swerve.SwerveModuleConstants c) {
 
         // Disable motor safety so we can use hardware PID
@@ -114,4 +136,48 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         motorTalonSRX.configMotionCruiseVelocity(SRXAngle.CruiseVelocity,SRXAngle.timeoutMs);
         motorTalonSRX.configMotionSCurveStrength(SRXAngle.Smoothing);
     }
+
+    public void initQuadrature() { // Set absolute encoders
+        int pulseWidth = motorTalonSRX.getSensorCollection().getPulseWidthPosition();
+
+        if (TalonSRXConfiguration.kDiscontinuityPresent) {
+
+            /* Calculate the center */
+            int newCenter;
+            newCenter = (TalonSRXConfiguration.kBookEnd_0 + TalonSRXConfiguration.kBookEnd_1) / 2;
+            newCenter &= 0xFFF;
+
+            /**
+             * Apply the offset so the discontinuity is in the unused portion of
+             * the sensor
+             */
+            pulseWidth -= newCenter;
+        }
+    }
+
+    public void setEncoderforWheelCalibration(SwerveModuleConstants c) {
+        double difference = getDriveAbsEncoder() - c.getAngleOffset()*4096.0/360.0;
+        double encoderSetting = 0.0;
+
+        // System.out.println("I0 d " + difference);
+
+        if (difference < 0) {
+            difference += TalonSRXConfiguration.clicksSRXPerFullRotation;
+        }
+
+        // System.out.println("I1 d " + difference);
+
+        if (difference <= TalonSRXConfiguration.clicksSRXPerFullRotation / 2) {
+            encoderSetting = difference;
+
+        } else {
+            encoderSetting = difference - TalonSRXConfiguration.clicksSRXPerFullRotation;
+        }
+
+        motorTalonSRX.setSelectedSensorPosition(encoderSetting);
+
+        System.out.println("Set encoder for motor " + c.getAngleMotorID() + " to " + encoderSetting);
+
+    }
+
 }
