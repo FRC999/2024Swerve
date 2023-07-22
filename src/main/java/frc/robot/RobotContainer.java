@@ -6,6 +6,8 @@ package frc.robot;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.OIConstants.ControllerDevice;
+import frc.robot.Devices.Controller;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -34,7 +36,7 @@ public class RobotContainer {
 
   public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
 
-  public static Joystick driveStick;
+  public static Controller driveStick;
 
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -60,7 +62,7 @@ public class RobotContainer {
    * {@link DriveInterface}
    */
   private void configureDriverInterface() {
-    driveStick = new Joystick(OIConstants.driverControllerPort);
+    driveStick = new Controller(ControllerDevice.DRIVESTICK);
     System.out.println("Driver interface configured");
   }
 
@@ -83,14 +85,38 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-    
-  }
- 
+}
+
+/**
+ * Swerve control inputs will be supplied as lambdas to the manual drive command.
+ * This way it would be easy to be switch between different input devices such as joystick or Xbox controller.
+ * In order to do a switch appropriate analog axis of the device would need to be specificed in one of the three
+ * methods below.
+ */
+
+ /**
+  * Logitech joystick returns -1 of Y axis when pushed all the way forward and +1 when pushed all the way backwards.
+  * Since the robot is oriented on the X axis of the field, pushing joystick forward means robot to go forward
+  * along the X axis.
+  * @return
+  */
+private double getDriverXAxis() {
+    return -driveStick.getLeftStickY();
+}
+
+private double getDriverYAxis() {
+    return -driveStick.getLeftStickX();
+}
+
+private double getDriverOmegaAxis() {
+    return -driveStick.getLeftStickOmega();
+}
+
   /**
   * Make sure motors move robot forward with positive power and encoders increase with positive power
   * To enable put call to this method in configureBindings method
   */
-  public void testCalibrateMotorsAndEncodersButtonBindings() {
+  private void testCalibrateMotorsAndEncodersButtonBindings() {
 
     new JoystickButton(driveStick, 5)
         .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testDriveMotorEncoderPhase(0)))

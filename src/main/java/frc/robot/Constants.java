@@ -85,7 +85,13 @@ public final class Constants {
 																								// tick/100ms to
 																								// degree/s
 
-		public static final double MAX_ANGULAR_VELOCITY = 11.5;
+		// Radians per second
+		//TODO: Determine how fast robot can turn in place and put that number in here
+		public static final double MAX_ANGULAR_VELOCITY = Units.degreesToRadians(275.0);
+
+		/**
+		 * Maximum linear speed of chassis in meters per second
+		 */
 		public static final double MAX_SPEED = 3.0;
 
 		//Parameters for BaseMotorTalonSRX class
@@ -287,5 +293,57 @@ public final class Constants {
 	}
 	public static final class OIConstants {
 		public static final int driverControllerPort = 0;
+
+		public static enum ControllerDeviceType {
+			LOGITECH,
+			PS5,
+			XBOX
+		} 
+
+		public static enum ControllerDevice {
+			DRIVESTICK(
+				0, // Port Number
+				ControllerDeviceType.LOGITECH,
+				0.1, // deadband X
+				0.25, // deadband Y
+				0.1  // deadband Omega
+			);
+
+			private ControllerDeviceType controllerDeviceType;
+			private int portNumber;
+			private double deadbandX;
+			private double deadbandY;
+			private double deadbandOmega;
+
+			ControllerDevice(int pn, ControllerDeviceType cdt, double dx, double dy, double dm) {
+				this.portNumber = pn;
+				this.controllerDeviceType = cdt;
+				this.deadbandX = dx;
+				this.deadbandY = dy;
+				this.deadbandOmega = dm;
+			}
+
+			public ControllerDeviceType getControllerDeviceType() {
+				return controllerDeviceType;
+			}
+
+			public int getPortNumber() {
+				return portNumber;
+			}
+
+			public double getDeadbandX() {
+				return deadbandX;
+			}
+
+			public double getDeadbandY() {
+				return deadbandY;
+			}
+
+			public double getDeadbandOmega() {
+				return deadbandOmega;
+			}
+
+		}
+				
 	}
 }

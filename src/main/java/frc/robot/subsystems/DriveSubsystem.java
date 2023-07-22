@@ -16,9 +16,23 @@ import frc.robot.Constants.Swerve;
 import frc.robot.Constants.Swerve.*;
 
 public class DriveSubsystem extends SubsystemBase {
-  /** Creates a new DriveSubsystem. */
+
   public SwerveModule[] swerveMods;
   
+  /**
+   * Creates a new DriveSubsystem.
+   * In a Swerve this subsystem represents chassis of the Swerve drive.
+   * Here we organize the Swerve modules in a proper array object, and define methods that can command
+   * individual swerve modules.
+   * If a different subsystem needs to operate with the individual swerve module, it needs to go through
+   * this subsystem, as it knows which module is responsible for which wheel.
+   * If one wants to apply changes to the calculated power and angle for the individual swerve modules,
+   * such as implementing a joystick deadzone in order to reduce excessive wheel movements, this
+   * should be done here as well. Such decisions should be done by the chassis, not by the individual
+   * swerve modules. The swerve modules essentially should simply do what they're told. The only optimization
+   * that may be implemented on the swerve module level is angle rotaiton minimization, because it does not
+   * change the result of the state change.
+   */
   public DriveSubsystem() {
     
     swerveMods = new SwerveModule[] {
@@ -57,12 +71,12 @@ public class DriveSubsystem extends SubsystemBase {
     swerveMods[modnumber].testAngleMotorApplyPower(0);
   }
 
-  public void drive(Translation2d translation, double rotation) {
+  public void drive(double xVelocity_m_per_s, double yVelocity_m_per_s, double omega_rad_per_s) {
     SwerveModuleState[] swerveModuleStates = Swerve.SWERVE_KINEMATICS.toSwerveModuleStates(
         ChassisSpeeds.fromFieldRelativeSpeeds(
-            translation.getX(),
-            translation.getY(),
-            rotation,
+            xVelocity_m_per_s,
+            yVelocity_m_per_s,
+            omega_rad_per_s,
             Rotation2d.fromDegrees(RobotContainer.imuSubsystem.getYaw())
             )
     );
@@ -72,7 +86,7 @@ public class DriveSubsystem extends SubsystemBase {
     for (SwerveModule mod : swerveMods) {
       mod.setDesiredState(swerveModuleStates[mod.getModuleNumber()]); 
     }
-    
+
   }
 
   @Override
