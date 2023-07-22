@@ -51,6 +51,8 @@ public final class Constants {
 		 * due to the very scewed CG or uneven traction, you may want to adjust the
 		 * numbers below
 		 * based on the center of rotation.
+		 * The order of the wheels location definition must match the order of the swerve modules
+		 * defined in the DriveSubsystem for the SwerveModule array.
 		 */
 		public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
 				new Translation2d(WHEEL_BASE / 2.0, TRACK_WIDTH / 2.0),

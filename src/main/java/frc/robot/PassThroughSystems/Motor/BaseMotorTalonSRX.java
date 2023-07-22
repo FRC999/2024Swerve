@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
+import frc.robot.Constants.Swerve;
 import frc.robot.Constants.PIDConstants.SRXAngle;
 import frc.robot.Constants.Swerve.SwerveModuleConstants;
 import frc.robot.Constants.Swerve.TalonSRXConfiguration;
@@ -109,6 +110,18 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
     public void testMotorApplyPower(double power) {
         motorTalonSRX.set(TalonSRXControlMode.PercentOutput, power);
+    }
+
+    public void applyPower(double power) {
+        motorTalonSRX.set(TalonSRXControlMode.PercentOutput, power);
+    }
+
+    public void moveToAngle(double angle) {
+        motorTalonSRX.set(TalonSRXControlMode.MotionMagic, ticksToDegrees(angle));
+    }
+
+    private double ticksToDegrees(double degrees) {
+        return degrees / Swerve.TalonSRXConfiguration.degreePerTick;
     }
 
     

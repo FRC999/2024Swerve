@@ -4,8 +4,15 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.Swerve;
 import frc.robot.Constants.Swerve.*;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -15,10 +22,10 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem() {
     
     swerveMods = new SwerveModule[] {
-      new SwerveModule(0, SwerveModuleConstants.MOD0),
-      new SwerveModule(1, SwerveModuleConstants.MOD1),
-      new SwerveModule(2, SwerveModuleConstants.MOD2),
-      new SwerveModule(3, SwerveModuleConstants.MOD3)
+      new SwerveModule(0, SwerveModuleConstants.MOD0),  // front left
+      new SwerveModule(1, SwerveModuleConstants.MOD1),  // front right
+      new SwerveModule(2, SwerveModuleConstants.MOD2),  // rear left
+      new SwerveModule(3, SwerveModuleConstants.MOD3)   // rear right
     };
   }
 
@@ -42,15 +49,31 @@ public class DriveSubsystem extends SubsystemBase {
     swerveMods[modnumber].testDriveMotorApplyPower(0);
   }
 
-  public void testAngleMotorEncoderPhase(int modnumber){
+  public void testAngleMotorEncoderPhase(int modnumber) {
     swerveMods[modnumber].testAngleMotorApplyPower(0.3);
   }
 
-  public void stopAngleMotor(int modnumber){
+  public void stopAngleMotor(int modnumber) {
     swerveMods[modnumber].testAngleMotorApplyPower(0);
   }
 
+  public void drive(Translation2d translation, double rotation) {
+    SwerveModuleState[] swerveModuleStates = Swerve.SWERVE_KINEMATICS.toSwerveModuleStates(
+        ChassisSpeeds.fromFieldRelativeSpeeds(
+            translation.getX(),
+            translation.getY(),
+            rotation,
+            Rotation2d.fromDegrees(RobotContainer.imuSubsystem.getYaw())
+            )
+    );
+  
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Swerve.MAX_SPEED);
 
+    for (SwerveModule mod : swerveMods) {
+      mod.setDesiredState(swerveModuleStates[mod.getModuleNumber()]); 
+    }
+    
+  }
 
   @Override
   public void periodic() {

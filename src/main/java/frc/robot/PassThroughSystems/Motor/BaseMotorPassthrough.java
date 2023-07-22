@@ -89,4 +89,12 @@ public class BaseMotorPassthrough implements BaseMotorInterface {
     baseMotorInterface.testMotorApplyPower(power);
   }
 
+  public void applyPower(double power) {
+    baseMotorInterface.applyPower(power);
+  }
+
+  public void moveToAngle(double angle) {
+    baseMotorInterface.moveToAngle(angle);
+  }
+
 }

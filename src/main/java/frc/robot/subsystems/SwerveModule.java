@@ -81,8 +81,36 @@ public class SwerveModule extends SubsystemBase {
         angleMotor.testMotorApplyPower(power);
     }
 
+    public int getModuleNumber(){
+        return moduleNumber;
+    }
+
+    /**
+     * Set angle motor in swerve module to a specific angle and set drive motor to a specific power.
+     * These settings are robot centric and need to be converted from the field centric values by the chassis
+     * code located in DriveSubsystem.
+     * This method will apply power to the motors by calling appropriate methods in both the drive and angle motor objects.
+     * SwerveModule should not be making decisions to change the drive speed or direction besides optimization based on
+     * other factors such as joystick deadzones because it cannot inform other instances of SwerveModule of the change.
+     * Such decisions should be done on the level of the drive chassis (DriveSubsystem).
+     * 
+     * @param desiredState - The wheel angle and the speed we want the swerve module to go to.
+     */
+    public void setDesiredState(SwerveModuleState desiredState) {
+
+        // Minimizes angle movement of angle motor by limiting movement to 90 degrees and 
+        // reversing power to negative value if necessary
+        desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
+
+        driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
+
+        angleMotor.moveToAngle(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
+
+    }
+
     @Override
     public void periodic() {
+
         currentAngle = Rotation2d.fromDegrees(angleMotor.getAngleEncoderPositionSI());
         //integratedAngleEncoder.setPosition(cancoder.getAbsolutePosition() - angleOffset);
     }

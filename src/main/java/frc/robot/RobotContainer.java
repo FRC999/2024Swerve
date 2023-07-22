@@ -83,6 +83,15 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
+    
+  }
+ 
+  /**
+  * Make sure motors move robot forward with positive power and encoders increase with positive power
+  * To enable put call to this method in configureBindings method
+  */
+  public void testCalibrateMotorsAndEncodersButtonBindings() {
+
     new JoystickButton(driveStick, 5)
         .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testDriveMotorEncoderPhase(0)))
         .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)));
