@@ -44,12 +44,10 @@ public interface BaseMotorInterface {
 
     double getAngleEncoderVelocitySI();
 
-    void setAngleMotorChassisAngle(double angle);
+    void setAngleMotorChassisAngleSI(double angle); // Moves angle motor to desired angle using PID
 
     void testMotorApplyPower(double power); // Test method to check inversion and encoders
 
     void applyPower(double power); // Apply power to the motor. Should be between -1 and 1
-
-    void moveToAngle(double angle); // Moves angle motor to desired angle using PID
 
 }

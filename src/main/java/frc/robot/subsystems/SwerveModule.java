@@ -102,9 +102,15 @@ public class SwerveModule extends SubsystemBase {
         // reversing power to negative value if necessary
         desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
 
-        driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
+        if (Constants.Swerve.TalonSRXConfiguration.testSwervePrintOnly) {
+            System.out.print(" SM: "+moduleNumber);
+            System.out.print(" P: "+desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
+            System.out.println(" A: "+desiredState.angle.getDegrees());
+        } else {
+            driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
 
-        angleMotor.moveToAngle(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
+            angleMotor.setAngleMotorChassisAngleSI(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
+        }
 
     }
 

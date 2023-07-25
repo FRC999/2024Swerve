@@ -104,8 +104,8 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         return (int) motorTalonSRX.getSensorCollection().getPulseWidthPosition() & 0xFFF;
     }
 
-    public void setAngleMotorChassisAngle(double angle){
-        motorTalonSRX.set(TalonSRXControlMode.MotionMagic, angle / TalonSRXConfiguration.degreePerTick);
+    public void setAngleMotorChassisAngleSI(double angle){
+        motorTalonSRX.set(TalonSRXControlMode.MotionMagic, degreesToTicks(angle));
     }
 
     public void testMotorApplyPower(double power) {
@@ -116,12 +116,8 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         motorTalonSRX.set(TalonSRXControlMode.PercentOutput, power);
     }
 
-    public void moveToAngle(double angle) {
-        motorTalonSRX.set(TalonSRXControlMode.MotionMagic, ticksToDegrees(angle));
-    }
-
-    private double ticksToDegrees(double degrees) {
-        return degrees / Swerve.TalonSRXConfiguration.degreePerTick;
+     private double degreesToTicks(double degrees) {
+        return degrees / TalonSRXConfiguration.degreePerTick;
     }
 
     

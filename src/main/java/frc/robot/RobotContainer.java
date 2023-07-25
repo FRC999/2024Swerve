@@ -9,11 +9,13 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.OIConstants.ControllerDevice;
 import frc.robot.Devices.Controller;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -55,7 +57,17 @@ public class RobotContainer {
 
     // Configure the trigger bindings
     configureBindings();
-  }
+
+    // Teleop manual drive swerve
+    driveSubsystem.setDefaultCommand(
+            new DriveManuallyCommand(
+                () -> getDriverXAxis(),
+                () -> getDriverYAxis(),
+                () -> getDriverOmegaAxis()
+            )
+    );
+                    
+}
 
    /**
    * Use this method to define your controllers depending on the
@@ -85,6 +97,8 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
+    //swerveValuesTesting();
+
 }
 
 /**
@@ -98,6 +112,11 @@ public class RobotContainer {
   * Logitech joystick returns -1 of Y axis when pushed all the way forward and +1 when pushed all the way backwards.
   * Since the robot is oriented on the X axis of the field, pushing joystick forward means robot to go forward
   * along the X axis.
+  * The next three commands are used for teleop driving, and they should represent the controller inputs from the field point of view
+  * meaning getDriverXAxis() should provide positive value for robot moving towards the opposite side of the field where the other team is
+  * located if your team's location is on the left side of the field.
+  * getDriverYAxis() positive value will cause the robot move to the left of your team's location on the field.
+  * getDriverOmegaAxis() positive value causes the robot to rotate counterclockwise.
   * @return
   */
 private double getDriverXAxis() {
@@ -150,6 +169,78 @@ private double getDriverOmegaAxis() {
         .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testAngleMotorEncoderPhase(0)))
         .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0)));
   }
+
+  
+  private void swerveValuesTesting() { // Field centric numbers applied
+    new JoystickButton(driveStick, 3)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,3,0)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
+        );
+    new JoystickButton(driveStick, 4)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(3,0,0)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
+        );
+    new JoystickButton(driveStick, 5)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,-3,0)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
+        );
+    new JoystickButton(driveStick, 6)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(-3,0,0)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
+        );
+    new JoystickButton(driveStick, 7)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,0, 10)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
+        );
+    new JoystickButton(driveStick, 8)
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,0, 10)))
+        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
+           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
+        );
+  }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

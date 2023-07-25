@@ -81,8 +81,8 @@ public class BaseMotorPassthrough implements BaseMotorInterface {
     return baseMotorInterface.getAngleEncoderVelocitySI();
   }
 
-  public void setAngleMotorChassisAngle(double angle){
-    baseMotorInterface.setAngleMotorChassisAngle(angle);
+  public void setAngleMotorChassisAngleSI(double angle){
+    baseMotorInterface.setAngleMotorChassisAngleSI(angle);
   }
 
   public void testMotorApplyPower(double power) {
@@ -93,8 +93,5 @@ public class BaseMotorPassthrough implements BaseMotorInterface {
     baseMotorInterface.applyPower(power);
   }
 
-  public void moveToAngle(double angle) {
-    baseMotorInterface.moveToAngle(angle);
-  }
 
 }

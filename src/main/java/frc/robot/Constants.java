@@ -33,8 +33,8 @@ public final class Constants {
 		 * Drive train properties
 		 * All measurements are in meters
 		 */
-		public static final double TRACK_WIDTH = 0.390; // left to right
-		public static final double WHEEL_BASE = 0.537; // front to back
+		public static final double TRACK_WIDTH = 0.385; // left to right
+		public static final double WHEEL_BASE = 0.44; // front to back
 		public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
 		public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
@@ -85,14 +85,23 @@ public final class Constants {
 																								// tick/100ms to
 																								// degree/s
 
-		// Radians per second
-		//TODO: Determine how fast robot can turn in place and put that number in here
-		public static final double MAX_ANGULAR_VELOCITY = Units.degreesToRadians(275.0);
-
+																								
 		/**
 		 * Maximum linear speed of chassis in meters per second
 		 */
 		public static final double MAX_SPEED = 3.0;
+		
+		/**
+		 * Radians per second.
+		 * Swerve chassis assumes that the maximum linear speed during rotation is the same as the 
+		 * maxiumum linear speed during forward drive.
+		 * That means the maximum angular speed can be calculated by dividing the maximum linear speed by 
+		 * the radius of rotation, which can be calculated by halving the distance between the opposing swerve 
+		 * modules such as the front left and rear right.
+		 */
+		public static final double MAX_ANGULAR_VELOCITY = MAX_SPEED/(Math.sqrt(TRACK_WIDTH*TRACK_WIDTH+WHEEL_BASE*WHEEL_BASE)/2);
+
+		
 
 		//Parameters for BaseMotorTalonSRX class
 		public static final class TalonSRXConfiguration {
@@ -110,6 +119,9 @@ public final class Constants {
 			public static final int kBookEnd_0 = 910;	/* 80 deg */
 			public static final int kBookEnd_1 = 1137;	/* 100 deg */
 			public static final int clicksSRXPerFullRotation = 4096; //rollover on 999 swerve
+
+			public static final boolean testSwervePrintOnly = false; // if set to true will not actually apply power
+																	// but rather just print out the value
 		}
 		
 

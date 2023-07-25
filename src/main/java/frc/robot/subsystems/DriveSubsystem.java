@@ -71,6 +71,13 @@ public class DriveSubsystem extends SubsystemBase {
     swerveMods[modnumber].testAngleMotorApplyPower(0);
   }
 
+  /**
+   * X and Y velocity values need to be submitted from a field point of view, where the 0,0 coordinates are in the 
+   * left lower corner of the field.
+   * @param xVelocity_m_per_s
+   * @param yVelocity_m_per_s
+   * @param omega_rad_per_s
+   */
   public void drive(double xVelocity_m_per_s, double yVelocity_m_per_s, double omega_rad_per_s) {
     SwerveModuleState[] swerveModuleStates = Swerve.SWERVE_KINEMATICS.toSwerveModuleStates(
         ChassisSpeeds.fromFieldRelativeSpeeds(
