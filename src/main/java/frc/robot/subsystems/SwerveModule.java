@@ -22,6 +22,7 @@ public class SwerveModule extends SubsystemBase {
 
     private Rotation2d currentAngle = new Rotation2d();
 
+    // This is not used for the manual teleop driving
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.DRIVE_KS,
             Constants.Swerve.DRIVE_KV, Constants.Swerve.DRIVE_KA);
 
@@ -90,8 +91,8 @@ public class SwerveModule extends SubsystemBase {
      * These settings are robot centric and need to be converted from the field centric values by the chassis
      * code located in DriveSubsystem.
      * This method will apply power to the motors by calling appropriate methods in both the drive and angle motor objects.
-     * SwerveModule should not be making decisions to change the drive speed or direction besides optimization based on
-     * other factors such as joystick deadzones because it cannot inform other instances of SwerveModule of the change.
+     * SwerveModule should not be making decisions to change the drive speed or direction (besides optimization), based on
+     * other factors such as joystick deadzones, because it cannot inform other instances of SwerveModule of the change.
      * Such decisions should be done on the level of the drive chassis (DriveSubsystem).
      * 
      * @param desiredState - The wheel angle and the speed we want the swerve module to go to.
@@ -102,13 +103,16 @@ public class SwerveModule extends SubsystemBase {
         // reversing power to negative value if necessary
         desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
 
+        // Use this flag for chassis testing, if you want to see the angle and power numbers provided by the Swerve calculations
+        // instead of actually moving the robot
         if (Constants.Swerve.TalonSRXConfiguration.testSwervePrintOnly) {
             System.out.print(" SM: "+moduleNumber);
             System.out.print(" P: "+desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
             System.out.println(" A: "+desiredState.angle.getDegrees());
         } else {
-            driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
 
+            // This is the code that makes the robot move by applying the power to the motors
+            driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
             angleMotor.setAngleMotorChassisAngleSI(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
         }
 
@@ -117,7 +121,10 @@ public class SwerveModule extends SubsystemBase {
     @Override
     public void periodic() {
 
+        // While we update the current angle of the angle motor for telemetry,
+        // It's not used in the teleop driving, as we use real-time update via getState call.
         currentAngle = Rotation2d.fromDegrees(angleMotor.getAngleEncoderPositionSI());
+
         //integratedAngleEncoder.setPosition(cancoder.getAbsolutePosition() - angleOffset);
     }
 }

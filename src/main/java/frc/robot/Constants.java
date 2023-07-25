@@ -39,17 +39,12 @@ public final class Constants {
 		public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
 		/**
-		 * This class lists locating of each of the swerve modules from the center of
-		 * the robot.
-		 * It is assumed that there are four swerve modules located at the edges of a
-		 * rectangle.
-		 * It is also assumed that the center of rotation is at the center of that
-		 * rectangle.
+		 * This class lists locating of each of the swerve modules from the center of the robot.
+		 * It is assumed that there are four swerve modules located at the edges of a rectangle.
+		 * It is also assumed that the center of rotation is at the center of that rectangle.
 		 * 
-		 * If your center of rotation is far off the centerof that rectangle, which may
-		 * happen
-		 * due to the very scewed CG or uneven traction, you may want to adjust the
-		 * numbers below
+		 * If your center of rotation is far off the center of that rectangle, which may happen
+		 * due to the very scewed CG or uneven traction, you may want to adjust the numbers below
 		 * based on the center of rotation.
 		 * The order of the wheels location definition must match the order of the swerve modules
 		 * defined in the DriveSubsystem for the SwerveModule array.
@@ -88,6 +83,9 @@ public final class Constants {
 																								
 		/**
 		 * Maximum linear speed of chassis in meters per second
+		 * Note that not determining this number precisely up front will not affect your teleop driving
+		 * as the teleop logic will simply use it as a point of reference.
+		 * Changing this number will not require any other changes in the teleop code.
 		 */
 		public static final double MAX_SPEED = 3.0;
 		
@@ -112,7 +110,7 @@ public final class Constants {
 
 			// Customize the following values to your prototype
 			public static final double metersPerTick = 1.0/30000.0;	//TODO: measure this number on the robot
-			public static final double degreePerTick = 360.0/4096.0 ; // On our prototype 1 angular rotation of the wheel = 1 rotation of the encoder
+			public static final double degreePerTick = 360.0/4096.0 ; // On our swerve prototype 1 angular rotation of the wheel = 1 full rotation of the encoder
 
 			// Absolute encoder setup
           	public static final boolean kDiscontinuityPresent = true;
@@ -126,10 +124,8 @@ public final class Constants {
 		
 
 		/*
-		 * Add controller types for each supported motor controller including simulated
-		 * ones
-		 * Make sure to modify BaseMotorPassthrough.java and add specific implementation
-		 * class
+		 * Add controller types for each supported motor controller including simulated ones
+		 * Make sure to modify BaseMotorPassthrough.java and add specific implementation class
 		 * under the "Motor" folder
 		 */
 		public static enum BaseMotorControllerTypes {
@@ -138,13 +134,22 @@ public final class Constants {
 		}
 
 		/**
-		 * Swerve Module Constants including
+		 * Swerve Module Constants for each module including
+		 * driveMotorType - type of the motor controller (e.g. TalonSRX vs NEO vs simulations)
+		 * angleMotorType - type of the motor controller (e.g. TalonSRX vs NEO vs simulations)
 		 * driveMotorID - CAN ID of the drive motors
 		 * angleMotorID - CAN ID of the rotation motors
 		 * angleOffset - Angle deviation of the absolute encoder when the
 		 * respective wheel is pointing forward based on the absolute encoder value
 		 * driveMotorInverted - is the drive motor inverted
 		 * angleMotorInverted - is the angle motor inverted
+		 * driveMotorSensorPhaseInverted - is the drive motor sensor phase inverted
+		 * angleMotorSensorPhaseInverted - is the angle motor sensor phase inverted
+		 * 
+		 * For sensor phase we should use PID rule - when the positive power is applied,
+		 * the motor should propell the robot "forward" and the corresponding encoder
+		 * value should increase. Also for the angle motors the "positive"  direction
+		 * is counterclockwise.
 		 * 
 		 * Only include constants that may differ for each motor.
 		 * Items that are the same for each motoro or motor type (e.g. PID constants)
@@ -153,7 +158,7 @@ public final class Constants {
 		 * Since this is an ENUM, need to have getter method for each value.
 		 */
 		public static enum SwerveModuleConstants {
-			MOD0(
+			MOD0( // Front Left
 					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
 					BaseMotorControllerTypes.TALON_SRX, // Angle motor type
 					7, // driveMotorID
@@ -164,7 +169,7 @@ public final class Constants {
 					false, // Sensor phase for drive motor
 					false  // Sensor phase for angle motor
 			),
-			MOD1(
+			MOD1( // Front Right
 					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
 					BaseMotorControllerTypes.TALON_SRX, // Angle motor type
 					5, // driveMotorID
@@ -176,7 +181,7 @@ public final class Constants {
 					false  // Sensor phase for angle motor
 
 			),
-			MOD2(
+			MOD2( // Back Left
 					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
 					BaseMotorControllerTypes.TALON_SRX, // Angle motor type
 					1, // driveMotorID
@@ -188,7 +193,7 @@ public final class Constants {
 					false  // Sensor phase for angle motor
 
 			),
-			MOD3(
+			MOD3( // Back Right
 					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
 					BaseMotorControllerTypes.TALON_SRX, // Angle motor type
 					3, // driveMotorID
