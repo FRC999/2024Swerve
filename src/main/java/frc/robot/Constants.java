@@ -323,7 +323,9 @@ public final class Constants {
 				ControllerDeviceType.LOGITECH,
 				0.1, // deadband X
 				0.25, // deadband Y
-				0.1  // deadband Omega
+				0.1,  // deadband Omega
+				true, // cubeControllerLeft
+				false // cubeControllerRight
 			);
 
 			private ControllerDeviceType controllerDeviceType;
@@ -331,13 +333,17 @@ public final class Constants {
 			private double deadbandX;
 			private double deadbandY;
 			private double deadbandOmega;
+			private boolean cubeControllerLeftStick;
+			private boolean cubeControllerRightStick;
 
-			ControllerDevice(int pn, ControllerDeviceType cdt, double dx, double dy, double dm) {
+			ControllerDevice(int pn, ControllerDeviceType cdt, double dx, double dy, double dm, boolean ccL, boolean ccR) {
 				this.portNumber = pn;
 				this.controllerDeviceType = cdt;
 				this.deadbandX = dx;
 				this.deadbandY = dy;
 				this.deadbandOmega = dm;
+				this.cubeControllerLeftStick = ccL;
+				this.cubeControllerRightStick = ccR;
 			}
 
 			public ControllerDeviceType getControllerDeviceType() {
@@ -359,6 +365,16 @@ public final class Constants {
 			public double getDeadbandOmega() {
 				return deadbandOmega;
 			}
+
+			public boolean isCubeControllerLeftStick() {
+				return cubeControllerLeftStick;
+			}
+
+			public boolean isCubeControllerRightStick() {
+				return cubeControllerRightStick;
+			}
+
+			
 
 		}
 				
