@@ -40,6 +40,8 @@ public class RobotContainer {
 
   public static Controller driveStick;
 
+  public static Controller turnStick;
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -75,6 +77,7 @@ public class RobotContainer {
    */
   private void configureDriverInterface() {
     driveStick = new Controller(ControllerDevice.DRIVESTICK);
+    turnStick = new Controller(ControllerDevice.TURNSTICK);
     System.out.println("Driver interface configured");
   }
 
@@ -128,10 +131,11 @@ private double getDriverYAxis() {
 }
 
 private double getDriverOmegaAxis() {
-    return -driveStick.getLeftStickOmega();
+    return -turnStick.getLeftStickOmega();
 }
 
   /**
+   * 
   * Make sure motors move robot forward with positive power and encoders increase with positive power
   * To enable put a call to this method in configureBindings method
   */
