@@ -73,6 +73,10 @@ public class IMUSubsystem extends SubsystemBase implements IMUInterface {
     return imu.getYaw();
   }
 
+  public Rotation2d getYawRotation2d() {
+    return imu.getYawRotation2d();
+  }
+
   public double zeroYaw() {
     return imu.zeroYaw();
   }
