@@ -62,6 +62,10 @@ public class IMUPigeon2 implements IMUInterface {
         return pigeon2.getYaw(); //TODO: Check this method returns values in degrees
     }
 
+    public Rotation2d getYawRotation2d() {
+        return Rotation2d.fromDegrees(getYaw());
+    }
+
     /**
      * Zeroes the yaw of the robot
      * 

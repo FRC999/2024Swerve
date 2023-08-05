@@ -58,6 +58,10 @@ public class IMUNavX implements IMUInterface {
         return navX.getYaw();
     }
 
+    public Rotation2d getYawRotation2d() {
+        return Rotation2d.fromDegrees(getYaw());
+    }
+
     /**
      * Zeroes the yaw of the robot
      * 

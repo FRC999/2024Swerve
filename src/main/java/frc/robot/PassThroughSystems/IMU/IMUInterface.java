@@ -21,6 +21,8 @@ public interface IMUInterface {
 
     double getYaw();
 
+    Rotation2d getYawRotation2d();
+
     double zeroYaw();
 
     double setYaw(double y);

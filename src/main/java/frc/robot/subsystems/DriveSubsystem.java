@@ -4,10 +4,16 @@
 
 package frc.robot.subsystems;
 
+import java.util.Optional;
+
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,6 +24,9 @@ import frc.robot.Constants.Swerve.*;
 public class DriveSubsystem extends SubsystemBase {
 
   public SwerveModule[] swerveMods;
+
+  public SwerveDriveOdometry swerveOdometry;
+  public SwerveDrivePoseEstimator swervePoseEstimator;
   
   /**
    * Creates a new DriveSubsystem.
@@ -41,6 +50,11 @@ public class DriveSubsystem extends SubsystemBase {
       new SwerveModule(2, SwerveModuleConstants.MOD2),  // rear left
       new SwerveModule(3, SwerveModuleConstants.MOD3)   // rear right
     };
+
+    swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.SWERVE_KINEMATICS, RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
+
+    swervePoseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.SWERVE_KINEMATICS, RobotContainer.imuSubsystem.getYawRotation2d(), getPositions(), new Pose2d());
+  
   }
 
   public double telemetryAngleEncoder(int modnumber) {
@@ -96,8 +110,37 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
+  public SwerveModulePosition[] getPositions() {
+    SwerveModulePosition[] positions = new SwerveModulePosition[4];
+    for (int i = 0; i < positions.length; i++) {
+        positions[i] = swerveMods[i].getPosition();
+    }
+    return positions;
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    swerveOdometry.resetPosition(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions(), pose);
+  }
+
+  // Field Centric
+  public Pose2d getPose() {
+    return swerveOdometry.getPoseMeters();
+  }
+
+  public void resetPoseEstimator(Pose2d pose) {
+    swervePoseEstimator.resetPosition(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions(), pose);
+  }
+
+  public Pose2d getPoseEstimate() {
+    return swervePoseEstimator.getEstimatedPosition();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    swerveOdometry.update(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
+    //TODO: We may want to update the robot odometry based the cameras and AprilTags
+
   }
 }

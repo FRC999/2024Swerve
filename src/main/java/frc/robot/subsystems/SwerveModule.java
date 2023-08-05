@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
@@ -115,7 +116,12 @@ public class SwerveModule extends SubsystemBase {
             driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
             angleMotor.setAngleMotorChassisAngleSI(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
         }
+    }
 
+    public SwerveModulePosition getPosition() {
+        double position = driveMotor.getDriveEncoderPosition(); 
+        Rotation2d angle = currentAngle;
+        return new SwerveModulePosition(position, angle);
     }
 
     @Override
