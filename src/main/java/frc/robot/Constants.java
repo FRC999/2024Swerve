@@ -120,6 +120,19 @@ public final class Constants {
 
 			public static final boolean testSwervePrintOnly = false; // if set to true will not actually apply power
 																	// but rather just print out the value
+			// Current limiters
+
+			public static final int angleContinuousCurrentLimit = 25; // amperes
+        	public static final int anglePeakCurrentLimit = 40; // amperes
+			public static final int anglePeakCurrentDuration = 1000; // Milliseconds
+			public static final boolean angleEnableCurrentLimit = true;
+
+			public static final int driveContinuousCurrentLimit = 35; // amperes
+			public static final int drivePeakCurrentLimit = 60; // amperes
+			public static final int drivePeakCurrentDuration = 500; // Milliseconds
+			public static final boolean driveEnableCurrentLimit = true;
+
+			public static final int talonSRXConfigurationTimeout = 30; // Milliseconds
 		}
 		
 

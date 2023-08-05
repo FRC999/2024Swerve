@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -40,6 +41,8 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
         motorTalonSRX.setSensorPhase(c.getDriveMotorSensorPhase());
 
+        configureCurrentLimiterDrive();
+
         motorBrakeMode();
 
     }
@@ -61,6 +64,8 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         configureMotionMagicAngle(c);
 
         setEncoderforWheelCalibration(c);
+
+        configureCurrentLimiterAngle();
 
         motorBrakeMode();
 
@@ -153,6 +158,22 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         motorTalonSRX.configMotionAcceleration(SRXAngle.Acceleration,SRXAngle.timeoutMs);
         motorTalonSRX.configMotionCruiseVelocity(SRXAngle.CruiseVelocity,SRXAngle.timeoutMs);
         motorTalonSRX.configMotionSCurveStrength(SRXAngle.Smoothing);
+    }
+
+    private void configureCurrentLimiterAngle() {
+        motorTalonSRX.configPeakCurrentLimit(TalonSRXConfiguration.anglePeakCurrentLimit, TalonSRXConfiguration.talonSRXConfigurationTimeout);
+		motorTalonSRX.configPeakCurrentDuration(TalonSRXConfiguration.anglePeakCurrentDuration, TalonSRXConfiguration.talonSRXConfigurationTimeout);
+		motorTalonSRX.configContinuousCurrentLimit(TalonSRXConfiguration.angleContinuousCurrentLimit, TalonSRXConfiguration.talonSRXConfigurationTimeout);
+		motorTalonSRX.enableCurrentLimit(TalonSRXConfiguration.angleEnableCurrentLimit); // Honor initial setting
+
+    }
+
+    private void configureCurrentLimiterDrive() {
+        motorTalonSRX.configPeakCurrentLimit(TalonSRXConfiguration.drivePeakCurrentLimit, TalonSRXConfiguration.talonSRXConfigurationTimeout);
+		motorTalonSRX.configPeakCurrentDuration(TalonSRXConfiguration.drivePeakCurrentDuration, TalonSRXConfiguration.talonSRXConfigurationTimeout);
+		motorTalonSRX.configContinuousCurrentLimit(TalonSRXConfiguration.driveContinuousCurrentLimit, TalonSRXConfiguration.talonSRXConfigurationTimeout);
+		motorTalonSRX.enableCurrentLimit(TalonSRXConfiguration.driveEnableCurrentLimit); // Honor initial setting
+
     }
 
     public void initQuadrature() { // Set absolute encoders
