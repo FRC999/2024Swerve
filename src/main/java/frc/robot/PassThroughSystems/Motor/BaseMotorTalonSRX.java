@@ -52,7 +52,10 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         motorTalonSRX.configFactoryDefault();
         motorTalonSRX.setInverted(c.isAngleMotorInverted());
 
-        // Encoder configuration
+        /** Configure encoder
+         * We use CTR Mag encoders directly connected to the TalonSRX.
+         * These encoders can be used as both absolute and relative encoders at the same time.
+         */
         motorTalonSRX.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Absolute,
                 Constants.Swerve.TalonSRXConfiguration.kPIDLoopIdx,
                 Constants.Swerve.TalonSRXConfiguration.configureTimeoutMs);
@@ -160,18 +163,20 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         motorTalonSRX.configMotionSCurveStrength(SRXAngle.Smoothing);
     }
 
+    // Current limiter configuration for the angle motor
     private void configureCurrentLimiterAngle() {
-        motorTalonSRX.configPeakCurrentLimit(TalonSRXConfiguration.anglePeakCurrentLimit, TalonSRXConfiguration.talonSRXConfigurationTimeout);
-		motorTalonSRX.configPeakCurrentDuration(TalonSRXConfiguration.anglePeakCurrentDuration, TalonSRXConfiguration.talonSRXConfigurationTimeout);
-		motorTalonSRX.configContinuousCurrentLimit(TalonSRXConfiguration.angleContinuousCurrentLimit, TalonSRXConfiguration.talonSRXConfigurationTimeout);
+        motorTalonSRX.configPeakCurrentLimit(TalonSRXConfiguration.anglePeakCurrentLimit, TalonSRXConfiguration.configureTimeoutMs);
+		motorTalonSRX.configPeakCurrentDuration(TalonSRXConfiguration.anglePeakCurrentDuration, TalonSRXConfiguration.configureTimeoutMs);
+		motorTalonSRX.configContinuousCurrentLimit(TalonSRXConfiguration.angleContinuousCurrentLimit, TalonSRXConfiguration.configureTimeoutMs);
 		motorTalonSRX.enableCurrentLimit(TalonSRXConfiguration.angleEnableCurrentLimit); // Honor initial setting
 
     }
 
+    // Current limiter configuration for the drive motor
     private void configureCurrentLimiterDrive() {
-        motorTalonSRX.configPeakCurrentLimit(TalonSRXConfiguration.drivePeakCurrentLimit, TalonSRXConfiguration.talonSRXConfigurationTimeout);
-		motorTalonSRX.configPeakCurrentDuration(TalonSRXConfiguration.drivePeakCurrentDuration, TalonSRXConfiguration.talonSRXConfigurationTimeout);
-		motorTalonSRX.configContinuousCurrentLimit(TalonSRXConfiguration.driveContinuousCurrentLimit, TalonSRXConfiguration.talonSRXConfigurationTimeout);
+        motorTalonSRX.configPeakCurrentLimit(TalonSRXConfiguration.drivePeakCurrentLimit, TalonSRXConfiguration.configureTimeoutMs);
+		motorTalonSRX.configPeakCurrentDuration(TalonSRXConfiguration.drivePeakCurrentDuration, TalonSRXConfiguration.configureTimeoutMs);
+		motorTalonSRX.configContinuousCurrentLimit(TalonSRXConfiguration.driveContinuousCurrentLimit, TalonSRXConfiguration.configureTimeoutMs);
 		motorTalonSRX.enableCurrentLimit(TalonSRXConfiguration.driveEnableCurrentLimit); // Honor initial setting
 
     }
@@ -194,6 +199,17 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         }
     }
 
+    /**
+     * The CTR Mag encoders we use to track wheel angle can be used in both absolute and relative modes
+     * at the same time. The Hardware PID on the TalonSRX, however, is easier to use with relative encoders.
+     * So, we read absolute encoders at the start, and set relative encoders so their 0 corresponds to the
+     * wheels being lined up and facing forward (0 degree from the forward robot direction).
+     * We have not found significant drift/discrepancy between absolute and relative encoder increments, so
+     * we do not currently recalibrate relative encoders again during the game.
+     * Note that the wheels do not need to be set "forward" at the beginning of the game. The absolute encoder
+     * will set the right angle-related value to the relative encoder, since absolute encoders are not set to 0 after
+     * power cycle. The drive routines will then change the wheel positions as needed.
+    */
     public void setEncoderforWheelCalibration(SwerveModuleConstants c) {
         double difference = getDriveAbsEncoder() - c.getAngleOffset()*4096.0/360.0;
         double encoderSetting = 0.0;

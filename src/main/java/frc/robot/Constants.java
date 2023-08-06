@@ -106,7 +106,9 @@ public final class Constants {
 
 			// We assume that all TalonSRX controlers need the same PID and some other hardware configuration parameters
 			public static final int kPIDLoopIdx = 0;  // Talon Loop ID
-			public static final int configureTimeoutMs = 30; // Hardware Talon TimeoutMs
+			public static final int configureTimeoutMs = 30; // Hardware Talon Configuration TimeoutMs (probably need to be larger than CAN cycle of 20ms)
+															 // For Talon configuration command it means - you expect a reply from the controller
+															 // in that time; otherwise assume the error
 
 			// Customize the following values to your prototype
 			public static final double metersPerTick = 1.0/30000.0;	//TODO: measure this number on the robot
@@ -116,11 +118,29 @@ public final class Constants {
           	public static final boolean kDiscontinuityPresent = true;
 			public static final int kBookEnd_0 = 910;	/* 80 deg */
 			public static final int kBookEnd_1 = 1137;	/* 100 deg */
-			public static final int clicksSRXPerFullRotation = 4096; //rollover on 999 swerve
+			public static final int clicksSRXPerFullRotation = 4096; //rollover on 999 swerve encoder - we use CTR Mag encoders for angle with 1:1 ratio
 
 			public static final boolean testSwervePrintOnly = false; // if set to true will not actually apply power
 																	// but rather just print out the value
-			// Current limiters
+			/**
+			 * Current limiters
+			 * 
+			 * In TalonSRX the limiters limit the input current (not the stator current)
+			 * and work in the following way:
+			 * If the current demand exceeds peak current for more than a specified duration,
+			 * the current will be limited to the continuous limit until the power demand drops
+			 * below the continuous limit. After that the limiter "resets" and will watch for peak current again.
+			 * For instance in this case if the peak demand on the angle motor exceeds 40amp for more than 1 second,
+			 * the max draw on it will be limited to 25amp until the demand falls below 25amp.
+			 * 
+			 * The reason for the limits - you want to make sure you do not trip the breakers, and Rio will not
+			 * go into brownout protection mode. Note that PDP breakers do not immediately trip when you exceed the
+			 * power limit written on them.
+			 * Good discussions about brownouts as well as breakers are here:
+			 * https://docs.wpilib.org/en/latest/docs/software/roborio-info/roborio-brownouts.html
+			 * https://www.chiefdelphi.com/t/power-draw-from-motors/368244/7
+			 * https://v5.docs.ctr-electronics.com/en/latest/ch13_MC.html#new-api-in-2020
+			 */
 
 			public static final int angleContinuousCurrentLimit = 25; // amperes
         	public static final int anglePeakCurrentLimit = 40; // amperes
@@ -132,7 +152,6 @@ public final class Constants {
 			public static final int drivePeakCurrentDuration = 500; // Milliseconds
 			public static final boolean driveEnableCurrentLimit = true;
 
-			public static final int talonSRXConfigurationTimeout = 30; // Milliseconds
 		}
 		
 

@@ -83,6 +83,14 @@ public class SwerveModule extends SubsystemBase {
         angleMotor.testMotorApplyPower(power);
     }
 
+    public void DriveMotorApplyPower(double power) {
+        driveMotor.applyPower(power);
+    }
+
+    public void AngleMotorApplyPower(double power) {
+        angleMotor.applyPower(power);
+    }
+
     public int getModuleNumber(){
         return moduleNumber;
     }
@@ -118,6 +126,13 @@ public class SwerveModule extends SubsystemBase {
         }
     }
 
+    //TODO: This position is currently set in the encoder units. This may need to change to the SI units. Investigate.
+    /**
+     * Returns a robot-centric position of the swerve module
+     * It is only used in odometry calculations, meaning, is only used for automated/trajectory driving
+     * and not for teleop/manual driving.
+     * @return SwerveModulePosition - WPILIB kinematics object 
+     */
     public SwerveModulePosition getPosition() {
         double position = driveMotor.getDriveEncoderPosition(); 
         Rotation2d angle = currentAngle;

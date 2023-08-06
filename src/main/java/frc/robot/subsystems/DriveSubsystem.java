@@ -51,8 +51,13 @@ public class DriveSubsystem extends SubsystemBase {
       new SwerveModule(3, SwerveModuleConstants.MOD3)   // rear right
     };
 
+    // When the robot is turned on, both the IMU and drive encoders will be set to 0.
+    // So, the initial odometry X,Y,Angle will be set to 0,0,0
+    // This may need to be updated later either by th auto-driviing routines, or by camera inputs based on the AprilTags
     swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.SWERVE_KINEMATICS, RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
 
+    // This object will help tracking Swerve pose changes based on the odometry
+    // So it will likely be used only for telemetry
     swervePoseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.SWERVE_KINEMATICS, RobotContainer.imuSubsystem.getYawRotation2d(), getPositions(), new Pose2d());
   
   }
@@ -69,20 +74,22 @@ public class DriveSubsystem extends SubsystemBase {
     return swerveMods[modnumber].telemetryDriveEncoder();
   }
 
+  // Used only for motor testing; run motor forward, 0.3 power
   public void testDriveMotorEncoderPhase(int modnumber){
     swerveMods[modnumber].testDriveMotorApplyPower(0.3);
   }
 
-  public void stopDriveMotor(int modnumber){
-    swerveMods[modnumber].testDriveMotorApplyPower(0);
-  }
-
+  // Used only for motor testing; run motor forward, 0.3 power
   public void testAngleMotorEncoderPhase(int modnumber) {
     swerveMods[modnumber].testAngleMotorApplyPower(0.3);
   }
 
+  public void stopDriveMotor(int modnumber){
+    swerveMods[modnumber].DriveMotorApplyPower(0);
+  }
+
   public void stopAngleMotor(int modnumber) {
-    swerveMods[modnumber].testAngleMotorApplyPower(0);
+    swerveMods[modnumber].AngleMotorApplyPower(0);
   }
 
   /**
@@ -110,6 +117,13 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
+  /**
+   * Creates an array of the swerve module positions (one array element per swerve module)
+   * It is only used in odometry calculations, meaning, is only used for automated/trajectory driving
+   * and not for teleop/manual driving
+   * 
+   * @return SwerveModulePosition[] - array of the SwerveModulePosition objects (WPILIB)
+   */
   public SwerveModulePosition[] getPositions() {
     SwerveModulePosition[] positions = new SwerveModulePosition[4];
     for (int i = 0; i < positions.length; i++) {
@@ -118,11 +132,12 @@ public class DriveSubsystem extends SubsystemBase {
     return positions;
   }
 
+  // Set odometry to a specified field-centric Pose2d
   public void resetOdometry(Pose2d pose) {
     swerveOdometry.resetPosition(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions(), pose);
   }
 
-  // Field Centric
+  // Field Centric Pose
   public Pose2d getPose() {
     return swerveOdometry.getPoseMeters();
   }
