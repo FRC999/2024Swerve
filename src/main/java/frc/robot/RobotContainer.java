@@ -76,6 +76,13 @@ public class RobotContainer {
    * {@link DriveInterface}
    */
   private void configureDriverInterface() {
+
+    /**
+     * We tried driving with a single Logitech joystick that has X,Y and turn axis.
+     * However, the team decided to move the turn to the second joystick for now.
+     * Note that Controller objects are only used to provide DoubleSupplier methods to the
+     * commands that need manual control input (e.g. DriveManuallyCommand)
+     */
     driveStick = new Controller(ControllerDevice.DRIVESTICK);
     turnStick = new Controller(ControllerDevice.TURNSTICK);
     System.out.println("Driver interface configured");
@@ -120,6 +127,9 @@ public class RobotContainer {
   * located if your team's location is on the left side of the field.
   * getDriverYAxis() positive value will cause the robot move to the left of your team's location on the field.
   * getDriverOmegaAxis() positive value causes the robot to rotate counterclockwise.
+  *
+  * If you use just one joystick or other controllers, modify the methods below to return the value from the appropriate controler axis.
+  *
   * @return
   */
 private double getDriverXAxis() {
