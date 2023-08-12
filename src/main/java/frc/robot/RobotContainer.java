@@ -285,10 +285,10 @@ private double getDriverOmegaAxis() {
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
       new JoystickButton(driveStick, 10)
               .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag2"))
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));\
+              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
       new JoystickButton(driveStick, 7)
               .whileTrue(new ZeroHeadingCommand())
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));\
+              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
         
 
   }
