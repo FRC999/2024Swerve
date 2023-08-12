@@ -109,7 +109,7 @@ public final class Constants {
 		public static final double MAX_ACCELERATION = 2.0;
 
 		//Parameters for BaseMotorTalonSRX class
-		public static final class TalonSRXConfiguration {
+		public static final class TalonSRXSwerveConfiguration {
 
 			// We assume that all TalonSRX controlers need the same PID and some other hardware configuration parameters
 			public static final int kPIDLoopIdx = 0;  // Talon Loop ID
@@ -127,8 +127,7 @@ public final class Constants {
 			public static final int kBookEnd_1 = 1137;	/* 100 deg */
 			public static final int clicksSRXPerFullRotation = 4096; //rollover on 999 swerve encoder - we use CTR Mag encoders for angle with 1:1 ratio
 
-			public static final boolean testSwervePrintOnly = false; // if set to true will not actually apply power
-																	// but rather just print out the value
+			
 			/**
 			 * Current limiters
 			 * 
@@ -159,6 +158,22 @@ public final class Constants {
 			public static final int drivePeakCurrentDuration = 500; // Milliseconds
 			public static final boolean driveEnableCurrentLimit = true;
 
+		}
+
+		public static final class SwerveTelemetry {
+			public static enum SwerveDriveOrTelemetry {
+				DRIVE_ONLY,
+				TELEMETRY_ONLY,
+				DRIVE_AND_TELEMETRY;
+			}
+
+			/**
+			 *  Specify whether telemetry will be printed and/or the robot will apply power to the motors
+			 */
+			public static final SwerveDriveOrTelemetry swerveDriveOrTelemetry = SwerveDriveOrTelemetry.DRIVE_AND_TELEMETRY;
+			
+			public static final boolean odometryTelemetryPrint = true;
+			
 		}
 		
 

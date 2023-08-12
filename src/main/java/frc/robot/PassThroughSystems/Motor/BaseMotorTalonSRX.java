@@ -14,7 +14,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
 import frc.robot.Constants.PIDConstants.SRXAngle;
 import frc.robot.Constants.Swerve.SwerveModuleConstants;
-import frc.robot.Constants.Swerve.TalonSRXConfiguration;
+import frc.robot.Constants.Swerve.TalonSRXSwerveConfiguration;
 
 /*
  * This is a specific base motor implementation for the motors connected to TalonSRX
@@ -36,8 +36,8 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
         // Encoder configuration
         motorTalonSRX.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative,
-                Constants.Swerve.TalonSRXConfiguration.kPIDLoopIdx,
-                Constants.Swerve.TalonSRXConfiguration.configureTimeoutMs);
+                Constants.Swerve.TalonSRXSwerveConfiguration.kPIDLoopIdx,
+                Constants.Swerve.TalonSRXSwerveConfiguration.configureTimeoutMs);
 
         motorTalonSRX.setSensorPhase(c.getDriveMotorSensorPhase());
 
@@ -57,8 +57,8 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
          * These encoders can be used as both absolute and relative encoders at the same time.
          */
         motorTalonSRX.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Absolute,
-                Constants.Swerve.TalonSRXConfiguration.kPIDLoopIdx,
-                Constants.Swerve.TalonSRXConfiguration.configureTimeoutMs);
+                Constants.Swerve.TalonSRXSwerveConfiguration.kPIDLoopIdx,
+                Constants.Swerve.TalonSRXSwerveConfiguration.configureTimeoutMs);
 
         motorTalonSRX.setSensorPhase(c.getAngleMotorSensorPhase());
 
@@ -93,19 +93,19 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
     }
 
     public double getDriveEncoderPositionSI() {
-        return motorTalonSRX.getSelectedSensorPosition()*Constants.Swerve.TalonSRXConfiguration.metersPerTick;
+        return motorTalonSRX.getSelectedSensorPosition()*Constants.Swerve.TalonSRXSwerveConfiguration.metersPerTick;
     }
 
     public double getAngleEncoderPositionSI() {
-        return motorTalonSRX.getSelectedSensorPosition()*Constants.Swerve.TalonSRXConfiguration.degreePerTick;
+        return motorTalonSRX.getSelectedSensorPosition()*Constants.Swerve.TalonSRXSwerveConfiguration.degreePerTick;
     }
 
     public double getDriveEncoderVelocitySI() {
-        return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.Swerve.TalonSRXConfiguration.metersPerTick;
+        return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.Swerve.TalonSRXSwerveConfiguration.metersPerTick;
     }
 
     public double getAngleEncoderVelocitySI() {
-        return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.Swerve.TalonSRXConfiguration.degreePerTick;
+        return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.Swerve.TalonSRXSwerveConfiguration.degreePerTick;
     }
 
     private int getDriveAbsEncoder() {
@@ -125,7 +125,7 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
     }
 
      private double degreesToTicks(double degrees) {
-        return degrees / TalonSRXConfiguration.degreePerTick;
+        return degrees / TalonSRXSwerveConfiguration.degreePerTick;
     }
 
     
@@ -165,30 +165,30 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
     // Current limiter configuration for the angle motor
     private void configureCurrentLimiterAngle() {
-        motorTalonSRX.configPeakCurrentLimit(TalonSRXConfiguration.anglePeakCurrentLimit, TalonSRXConfiguration.configureTimeoutMs);
-		motorTalonSRX.configPeakCurrentDuration(TalonSRXConfiguration.anglePeakCurrentDuration, TalonSRXConfiguration.configureTimeoutMs);
-		motorTalonSRX.configContinuousCurrentLimit(TalonSRXConfiguration.angleContinuousCurrentLimit, TalonSRXConfiguration.configureTimeoutMs);
-		motorTalonSRX.enableCurrentLimit(TalonSRXConfiguration.angleEnableCurrentLimit); // Honor initial setting
+        motorTalonSRX.configPeakCurrentLimit(TalonSRXSwerveConfiguration.anglePeakCurrentLimit, TalonSRXSwerveConfiguration.configureTimeoutMs);
+		motorTalonSRX.configPeakCurrentDuration(TalonSRXSwerveConfiguration.anglePeakCurrentDuration, TalonSRXSwerveConfiguration.configureTimeoutMs);
+		motorTalonSRX.configContinuousCurrentLimit(TalonSRXSwerveConfiguration.angleContinuousCurrentLimit, TalonSRXSwerveConfiguration.configureTimeoutMs);
+		motorTalonSRX.enableCurrentLimit(TalonSRXSwerveConfiguration.angleEnableCurrentLimit); // Honor initial setting
 
     }
 
     // Current limiter configuration for the drive motor
     private void configureCurrentLimiterDrive() {
-        motorTalonSRX.configPeakCurrentLimit(TalonSRXConfiguration.drivePeakCurrentLimit, TalonSRXConfiguration.configureTimeoutMs);
-		motorTalonSRX.configPeakCurrentDuration(TalonSRXConfiguration.drivePeakCurrentDuration, TalonSRXConfiguration.configureTimeoutMs);
-		motorTalonSRX.configContinuousCurrentLimit(TalonSRXConfiguration.driveContinuousCurrentLimit, TalonSRXConfiguration.configureTimeoutMs);
-		motorTalonSRX.enableCurrentLimit(TalonSRXConfiguration.driveEnableCurrentLimit); // Honor initial setting
+        motorTalonSRX.configPeakCurrentLimit(TalonSRXSwerveConfiguration.drivePeakCurrentLimit, TalonSRXSwerveConfiguration.configureTimeoutMs);
+		motorTalonSRX.configPeakCurrentDuration(TalonSRXSwerveConfiguration.drivePeakCurrentDuration, TalonSRXSwerveConfiguration.configureTimeoutMs);
+		motorTalonSRX.configContinuousCurrentLimit(TalonSRXSwerveConfiguration.driveContinuousCurrentLimit, TalonSRXSwerveConfiguration.configureTimeoutMs);
+		motorTalonSRX.enableCurrentLimit(TalonSRXSwerveConfiguration.driveEnableCurrentLimit); // Honor initial setting
 
     }
 
     public void initQuadrature() { // Set absolute encoders
         int pulseWidth = motorTalonSRX.getSensorCollection().getPulseWidthPosition();
 
-        if (TalonSRXConfiguration.kDiscontinuityPresent) {
+        if (TalonSRXSwerveConfiguration.kDiscontinuityPresent) {
 
             /* Calculate the center */
             int newCenter;
-            newCenter = (TalonSRXConfiguration.kBookEnd_0 + TalonSRXConfiguration.kBookEnd_1) / 2;
+            newCenter = (TalonSRXSwerveConfiguration.kBookEnd_0 + TalonSRXSwerveConfiguration.kBookEnd_1) / 2;
             newCenter &= 0xFFF;
 
             /**
@@ -217,16 +217,16 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         // System.out.println("I0 d " + difference);
 
         if (difference < 0) {
-            difference += TalonSRXConfiguration.clicksSRXPerFullRotation;
+            difference += TalonSRXSwerveConfiguration.clicksSRXPerFullRotation;
         }
 
         // System.out.println("I1 d " + difference);
 
-        if (difference <= TalonSRXConfiguration.clicksSRXPerFullRotation / 2) {
+        if (difference <= TalonSRXSwerveConfiguration.clicksSRXPerFullRotation / 2) {
             encoderSetting = difference;
 
         } else {
-            encoderSetting = difference - TalonSRXConfiguration.clicksSRXPerFullRotation;
+            encoderSetting = difference - TalonSRXSwerveConfiguration.clicksSRXPerFullRotation;
         }
 
         motorTalonSRX.setSelectedSensorPosition(encoderSetting);

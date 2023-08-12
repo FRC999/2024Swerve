@@ -92,6 +92,10 @@ public class DriveSubsystem extends SubsystemBase {
     swerveMods[modnumber].AngleMotorApplyPower(0);
   }
 
+  public void stopRobot() {
+    drive(0,0,0);
+  }
+
   /**
    * X and Y velocity values need to be submitted from a field point of view, where the 0,0 coordinates are in the 
    * left lower corner of the field.
@@ -127,6 +131,16 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
+  public void setDesiredStates(SwerveModuleState[] swerveModuleStates) {
+  
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Swerve.MAX_SPEED);
+
+    for (SwerveModule mod : swerveMods) {
+      mod.setDesiredState(swerveModuleStates[mod.getModuleNumber()]); 
+    }
+
+  }
+
 
   /**
    * Creates an array of the swerve module positions (one array element per swerve module)
@@ -153,6 +167,13 @@ public class DriveSubsystem extends SubsystemBase {
     return swerveOdometry.getPoseMeters();
   }
 
+  /**
+   * print current odometry values
+   */
+  public void odometryTelemetry() {
+    System.out.println("Odometry: "+swerveOdometry.getPoseMeters());
+  }
+
   public void resetPoseEstimator(Pose2d pose) {
     swervePoseEstimator.resetPosition(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions(), pose);
   }
@@ -165,9 +186,13 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    
+
     swerveOdometry.update(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
     //TODO: We may want to update the robot odometry based the cameras and AprilTags
+
+    if (SwerveTelemetry.odometryTelemetryPrint) {
+      odometryTelemetry();
+    }
 
   }
 }

@@ -51,7 +51,7 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
       new PIDController(Constants.Swerve.ANGLE_MOTOR_KP,
                         Constants.Swerve.ANGLE_MOTOR_KI,
                         Constants.Swerve.ANGLE_MOTOR_KD),
-      RobotContainer.driveSubsystem::setDesiredStatesCalibration,
+      RobotContainer.driveSubsystem::setDesiredStates,
       false,
       RobotContainer.driveSubsystem
     );

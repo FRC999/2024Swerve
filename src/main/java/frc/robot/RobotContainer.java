@@ -11,6 +11,7 @@ import frc.robot.Devices.Controller;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
@@ -61,13 +62,13 @@ public class RobotContainer {
     configureBindings();
 
     // Teleop manual drive swerve
-    driveSubsystem.setDefaultCommand(
-            new DriveManuallyCommand(
-                () -> getDriverXAxis(),
-                () -> getDriverYAxis(),
-                () -> getDriverOmegaAxis()
-            )
-    );
+    // driveSubsystem.setDefaultCommand(
+    //         new DriveManuallyCommand(
+    //             () -> getDriverXAxis(),
+    //             () -> getDriverYAxis(),
+    //             () -> getDriverOmegaAxis()
+    //         )
+    // );
                     
 }
 
@@ -108,6 +109,8 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
     //swerveValuesTesting();
+
+    trajectoryCalibration();
 
 }
 
@@ -268,6 +271,24 @@ private double getDriverOmegaAxis() {
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
         );
   }
+
+  public void trajectoryCalibration() {
+      new JoystickButton(driveStick, 11)
+              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1MeterForward"))
+              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+      new JoystickButton(driveStick, 12)
+              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1MeterSideways"))
+              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+      new JoystickButton(driveStick, 9)
+              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag"))
+              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+
+  }
+
+  
+    
+
+  
 
 
 

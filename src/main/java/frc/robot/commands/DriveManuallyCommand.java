@@ -46,7 +46,7 @@ public class DriveManuallyCommand extends CommandBase {
 		double omegaInput = mOmegaSupplier.getAsDouble();
 
     
-    driveControlTelemetry(xInput, yInput, omegaInput);
+    //driveControlTelemetry(xInput, yInput, omegaInput);
     
     RobotContainer.driveSubsystem.drive(
       xInput * Swerve.MAX_SPEED,

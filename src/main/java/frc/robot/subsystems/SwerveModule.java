@@ -8,6 +8,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
 import frc.robot.Constants.Swerve.SwerveModuleConstants;
+import frc.robot.Constants.Swerve.SwerveTelemetry;
 import frc.robot.PassThroughSystems.Motor.BaseMotorPassthrough;
 
 
@@ -114,16 +115,23 @@ public class SwerveModule extends SubsystemBase {
 
         // Use this flag for chassis testing, if you want to see the angle and power numbers provided by the Swerve calculations
         // instead of actually moving the robot
-        if (Constants.Swerve.TalonSRXConfiguration.testSwervePrintOnly) {
-            System.out.print(" SM: "+moduleNumber);
-            System.out.print(" P: "+desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
-            System.out.println(" A: "+desiredState.angle.getDegrees());
-        } else {
 
-            // This is the code that makes the robot move by applying the power to the motors
-            driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
-            angleMotor.setAngleMotorChassisAngleSI(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
-        }
+        switch (SwerveTelemetry.swerveDriveOrTelemetry) {
+            case DRIVE_ONLY:
+                 // This is the code that makes the robot move by applying the power to the motors
+                driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
+                angleMotor.setAngleMotorChassisAngleSI(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
+                break;
+            case TELEMETRY_ONLY:
+                printSwerveModuleState(desiredState);
+                break;
+            case DRIVE_AND_TELEMETRY:
+                printSwerveModuleState(desiredState);
+                // This is the code that makes the robot move by applying the power to the motors
+                driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
+                angleMotor.setAngleMotorChassisAngleSI(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
+                break;
+        }            
     }
 
     public void setDesiredStateCalibration(SwerveModuleState desiredState) {
@@ -134,9 +142,13 @@ public class SwerveModule extends SubsystemBase {
 
         // Use this flag for chassis testing, if you want to see the angle and power numbers provided by the Swerve calculations
         // instead of actually moving the robot
-            System.out.print(" SM: "+moduleNumber);
-            System.out.print(" P: "+desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
-            System.out.println(" A: "+desiredState.angle.getDegrees());
+        printSwerveModuleState(desiredState);
+    }
+
+    public void printSwerveModuleState(SwerveModuleState moduleState) {
+        System.out.print(" SM: "+moduleNumber);
+        System.out.print(" P: "+moduleState.speedMetersPerSecond / Swerve.MAX_SPEED);
+        System.out.println(" A: "+moduleState.angle.getDegrees());
     }
 
     //TODO: This position is currently set in the encoder units. This may need to change to the SI units. Investigate.
