@@ -117,6 +117,17 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
+  public void setDesiredStatesCalibration(SwerveModuleState[] swerveModuleStates) {
+  
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Swerve.MAX_SPEED);
+
+    for (SwerveModule mod : swerveMods) {
+      mod.setDesiredStateCalibration(swerveModuleStates[mod.getModuleNumber()]); 
+    }
+
+  }
+
+
   /**
    * Creates an array of the swerve module positions (one array element per swerve module)
    * It is only used in odometry calculations, meaning, is only used for automated/trajectory driving
@@ -154,6 +165,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
+    
     swerveOdometry.update(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
     //TODO: We may want to update the robot odometry based the cameras and AprilTags
 

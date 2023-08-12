@@ -126,6 +126,19 @@ public class SwerveModule extends SubsystemBase {
         }
     }
 
+    public void setDesiredStateCalibration(SwerveModuleState desiredState) {
+
+        // Minimizes angle movement of angle motor by limiting movement to 90 degrees and 
+        // reversing power to negative value if necessary
+        desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
+
+        // Use this flag for chassis testing, if you want to see the angle and power numbers provided by the Swerve calculations
+        // instead of actually moving the robot
+            System.out.print(" SM: "+moduleNumber);
+            System.out.print(" P: "+desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
+            System.out.println(" A: "+desiredState.angle.getDegrees());
+    }
+
     //TODO: This position is currently set in the encoder units. This may need to change to the SI units. Investigate.
     /**
      * Returns a robot-centric position of the swerve module

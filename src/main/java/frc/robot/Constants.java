@@ -79,6 +79,12 @@ public final class Constants {
 		public static final double ANGLE_MOTOR_VELOCITY_CONVERSION = (360.0 * 10.0) / 4096.0; // conversion factor from
 																								// tick/100ms to
 																								// degree/s
+		
+		/* Drive Motor PID. Assumed to be the same for all drive motors */
+		public static final double DRIVE_MOTOR_KP = 0.75;
+		public static final double DRIVE_MOTOR_KI = 0.005;
+		public static final double DRIVE_MOTOR_KD = 0.01;
+
 
 																								
 		/**
@@ -99,7 +105,8 @@ public final class Constants {
 		 */
 		public static final double MAX_ANGULAR_VELOCITY = MAX_SPEED/(Math.sqrt(TRACK_WIDTH*TRACK_WIDTH+WHEEL_BASE*WHEEL_BASE)/2);
 
-		
+		// For trajectory driving.
+		public static final double MAX_ACCELERATION = 2.0;
 
 		//Parameters for BaseMotorTalonSRX class
 		public static final class TalonSRXConfiguration {
