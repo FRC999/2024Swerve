@@ -29,8 +29,8 @@ public class ZeroHeadingCommand extends SequentialCommandGroup {
           new PathConstraints(Constants.Swerve.MAX_SPEED,Constants.Swerve.MAX_ACCELERATION ), 
           new PathPoint(
             RobotContainer.driveSubsystem.getPose().getTranslation(), 
-            Rotation2d.fromDegrees(0), 
-            RobotContainer.driveSubsystem.getPose().getRotation()
+            RobotContainer.driveSubsystem.getPose().getRotation(),
+            Rotation2d.fromDegrees(0)
           ), // position, heading(direction of travel), holonomic rotation
           new PathPoint(
             RobotContainer.driveSubsystem.getPose().getTranslation(), 
