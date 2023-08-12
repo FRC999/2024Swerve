@@ -61,14 +61,14 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    // Teleop manual drive swerve
-    // driveSubsystem.setDefaultCommand(
-    //         new DriveManuallyCommand(
-    //             () -> getDriverXAxis(),
-    //             () -> getDriverYAxis(),
-    //             () -> getDriverOmegaAxis()
-    //         )
-    // );
+    
+    driveSubsystem.setDefaultCommand(
+            new DriveManuallyCommand(
+                () -> getDriverXAxis(),
+                () -> getDriverYAxis(),
+                () -> getDriverOmegaAxis()
+            )
+    );
                     
 }
 
@@ -281,6 +281,9 @@ private double getDriverOmegaAxis() {
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
       new JoystickButton(driveStick, 9)
               .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag"))
+              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+      new JoystickButton(driveStick, 10)
+              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag2"))
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
 
   }

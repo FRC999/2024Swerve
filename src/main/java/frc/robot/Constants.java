@@ -172,6 +172,9 @@ public final class Constants {
 			 */
 			public static final SwerveDriveOrTelemetry swerveDriveOrTelemetry = SwerveDriveOrTelemetry.DRIVE_AND_TELEMETRY;
 			
+			/**
+			 *  Print odometry telemetry every 20 milliseconds.
+			 */
 			public static final boolean odometryTelemetryPrint = true;
 			
 		}
