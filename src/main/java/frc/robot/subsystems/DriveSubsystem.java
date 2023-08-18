@@ -174,6 +174,15 @@ public class DriveSubsystem extends SubsystemBase {
     System.out.println("Odometry: "+swerveOdometry.getPoseMeters());
   }
 
+  public void odometryCommandTelemetry(Rotation2d r, SwerveModulePosition[] s) {
+    System.out.println("Odometry Command Rotation: "+r);
+    
+    for(int i = 0; i < 4; i++)  {
+      System.out.println("Odometry Command Module: "+ i + " " + s[i]);
+    }
+  
+  }
+
   public void resetPoseEstimator(Pose2d pose) {
     swervePoseEstimator.resetPosition(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions(), pose);
   }
@@ -187,12 +196,17 @@ public class DriveSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
 
 
-    swerveOdometry.update(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
+    //swerveOdometry.update(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
     //TODO: We may want to update the robot odometry based the cameras and AprilTags
 
     if (SwerveTelemetry.odometryTelemetryPrint) {
+      Rotation2d r = RobotContainer.imuSubsystem.getYawRotation2d();
+      SwerveModulePosition[] s = getPositions();
+      odometryCommandTelemetry(r, s);
+      swerveOdometry.update(r, s);
       odometryTelemetry();
+    } else {
+      swerveOdometry.update(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
     }
-
   }
 }

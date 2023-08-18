@@ -112,6 +112,8 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
 
     //RobotContainer.driveSubsystem.updateOdometry();
 
-    return super.isFinished();
+    boolean f = super.isFinished();
+    System.out.println("f: " + f);
+    return f;
   }
 }

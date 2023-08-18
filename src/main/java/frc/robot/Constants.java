@@ -378,9 +378,9 @@ public final class Constants {
 			DRIVESTICK(
 				0, // Port Number
 				ControllerDeviceType.LOGITECH,
-				0.1, // deadband X
-				0.25, // deadband Y
-				0.1,  // deadband Omega
+				0.02, // deadband X
+				0.02, // deadband Y
+				0.02,  // deadband Omega
 				true, // cubeControllerLeft
 				true // cubeControllerRight
 			),
@@ -388,9 +388,9 @@ public final class Constants {
 			TURNSTICK(	//Controls the rotation of the swervebot
 				1, // Port Number
 				ControllerDeviceType.LOGITECH,
-				0.1, // deadband X
-				0.25, // deadband Y
-				0.1,  // deadband Omega
+				0.02, // deadband X
+				0.02, // deadband Y
+				0.02,  // deadband Omega
 				true, // cubeControllerLeft
 				true // cubeControllerRight
 			);

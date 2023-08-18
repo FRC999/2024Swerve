@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.058985146411172,
-        "y": 2.0
+        "x": 2.015700468332016,
+        "y": 2.0014579430979396
       },
       "holonomicAngle": 0.0,
       "isReversal": false,
@@ -28,8 +28,8 @@
         "y": 3.0
       },
       "prevControl": {
-        "x": 0.7352405833937463,
-        "y": 3.0
+        "x": 2.015700468332016,
+        "y": 2.9917626545266094
       },
       "nextControl": null,
       "holonomicAngle": 0.0,

@@ -32,7 +32,7 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
 
     addCommands(
       //new InstantCommand(RobotContainer.driveSubsystem::zeroDriveEncoders),
-      //new PrintCommand("ZEncoder"),
+      new PrintCommand("****Starting trajectory****"),
       //new WaitCommand(0.4),
       new InstantCommand( () -> RobotContainer.driveSubsystem.resetOdometry(trajectoryPath.getInitialPose()) ),
       //new PrintCommand(
@@ -40,7 +40,8 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
       //  " IY:" + trajectoryPath.getInitialPose().getY()+
       //  " IA:" + trajectoryPath.getInitialPose().getRotation().getDegrees()
       //  ),  // Set the initial pose of the robot to the one in a trajectory
-      new AutonomousTrajectoryRioCommand(trajectoryPath) // Run a trajectory
+      new AutonomousTrajectoryRioCommand(trajectoryPath), // Run a trajectory
+      new PrintCommand("****End trajectory****")
     );
   }
 
