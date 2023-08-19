@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,15 +17,17 @@ public class DriveManuallyCommand extends CommandBase {
   private final DoubleSupplier mVxSupplier;
 	private final DoubleSupplier mVySupplier;
 	private final DoubleSupplier mOmegaSupplier;
+  private final BooleanSupplier mFieldCentrSupplier;
 
   /** Creates a new DriveManuallyCommand. */
-  public DriveManuallyCommand(DoubleSupplier vxSupplier, DoubleSupplier vySupplier, DoubleSupplier omegaSupplier) {
+  public DriveManuallyCommand(DoubleSupplier vxSupplier, DoubleSupplier vySupplier, DoubleSupplier omegaSupplier, BooleanSupplier fieldCentrSupplier) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.driveSubsystem);
 
     mVxSupplier = vxSupplier;
 		mVySupplier = vySupplier;
 		mOmegaSupplier = omegaSupplier;
+    mFieldCentrSupplier = fieldCentrSupplier;
 
   }
 
@@ -51,7 +54,8 @@ public class DriveManuallyCommand extends CommandBase {
     RobotContainer.driveSubsystem.drive(
       xInput * Swerve.MAX_SPEED,
       yInput * Swerve.MAX_SPEED,
-      omegaInput * Swerve.MAX_ANGULAR_VELOCITY
+      omegaInput * Swerve.MAX_ANGULAR_VELOCITY,
+      mFieldCentrSupplier.getAsBoolean()
     );
 
   }

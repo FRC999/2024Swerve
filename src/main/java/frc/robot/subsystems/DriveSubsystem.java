@@ -93,7 +93,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void stopRobot() {
-    drive(0,0,0);
+    drive(0,0,0, true);
   }
 
   /**
@@ -103,15 +103,23 @@ public class DriveSubsystem extends SubsystemBase {
    * @param yVelocity_m_per_s
    * @param omega_rad_per_s
    */
-  public void drive(double xVelocity_m_per_s, double yVelocity_m_per_s, double omega_rad_per_s) {
-    SwerveModuleState[] swerveModuleStates = Swerve.SWERVE_KINEMATICS.toSwerveModuleStates(
-        ChassisSpeeds.fromFieldRelativeSpeeds(
-            xVelocity_m_per_s,
-            yVelocity_m_per_s,
-            omega_rad_per_s,
-            Rotation2d.fromDegrees(RobotContainer.imuSubsystem.getYaw())
-            )
-    );
+  public void drive(double xVelocity_m_per_s, double yVelocity_m_per_s, double omega_rad_per_s, boolean fieldcentric) {
+    SwerveModuleState[] swerveModuleStates;
+
+    if (fieldcentric) {
+      swerveModuleStates = Swerve.SWERVE_KINEMATICS.toSwerveModuleStates(
+          ChassisSpeeds.fromFieldRelativeSpeeds(
+              xVelocity_m_per_s,
+              yVelocity_m_per_s,
+              omega_rad_per_s,
+              Rotation2d.fromDegrees(RobotContainer.imuSubsystem.getYaw())));
+    } else {
+      swerveModuleStates = Swerve.SWERVE_KINEMATICS.toSwerveModuleStates(
+          new ChassisSpeeds(
+              xVelocity_m_per_s,
+              yVelocity_m_per_s,
+              omega_rad_per_s));
+    }
   
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Swerve.MAX_SPEED);
 
