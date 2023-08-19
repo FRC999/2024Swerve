@@ -33,7 +33,8 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
       //new InstantCommand(RobotContainer.driveSubsystem::zeroDriveEncoders),
       new PrintCommand("****Starting trajectory****"),
       //new WaitCommand(0.4),
-      new InstantCommand( () -> RobotContainer.driveSubsystem.resetOdometry(trajectoryPath.getInitialPose()) ),
+      new InstantCommand( () -> RobotContainer.imuSubsystem.setYaw(trajectoryPath.getInitialHolonomicPose().getRotation().getDegrees()) ),
+      new InstantCommand( () -> RobotContainer.driveSubsystem.resetOdometry(trajectoryPath.getInitialHolonomicPose()  ) ),
       //new PrintCommand(
       //  "START IX:" + trajectoryPath.getInitialPose().getX()+
       //  " IY:" + trajectoryPath.getInitialPose().getY()+
@@ -52,7 +53,7 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
 
   public RunTrajectorySequenceRobotAtStartPoint(String trajectory, boolean reversed) {
 
-    this(trajectory, 2.0, 1.5, reversed);
+    this(trajectory, 0.5, 0.05, reversed);
     //this(trajectory, DriveConstants.maxVelocityDefault, DriveConstants.maxAccelerationDefault, reversed);
     System.out.println("*** Run trajectory "+ trajectory+" reversed:"+reversed);
   }

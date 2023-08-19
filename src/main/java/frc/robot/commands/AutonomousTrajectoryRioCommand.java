@@ -86,7 +86,7 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
     //System.out.println("O");
 
     //TODO: Currently update odometry in DriveSubsystem, but it is really used here.
-    //RobotContainer.driveSubsystem.updateTrajectoryOdometry();
+    RobotContainer.driveSubsystem.updateTrajectoryOdometry();
 
     super.execute();
   }
@@ -104,8 +104,10 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
 
     //RobotContainer.driveSubsystem.updateOdometry();
 
+    
     boolean f = super.isFinished();
     System.out.println("f: " + f);
-    return f;
+    //return f;
+    return false;
   }
 }

@@ -214,19 +214,16 @@ public class DriveSubsystem extends SubsystemBase {
     return swervePoseEstimator.getEstimatedPosition();
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-
-
-    
-    //TODO: We may want to update the robot odometry based the cameras and AprilTags
-
-    /**
-     * This will produce the IMU and swerve positions we send to odometry along with the same information obtained from telemetry after update.
-     * It may help troubleshooting potential odometry update issues (e.g. units of measure issues etc)
-     */
+  /**
+   * This will produce the IMU and swerve positions we send to odometry along with
+   * the same information obtained from telemetry after update.
+   * It may help troubleshooting potential odometry update issues (e.g. units of
+   * measure issues etc)
+   */
+  public void updateTrajectoryOdometry() {
     if (SwerveTelemetry.odometryTelemetryPrint) {
+
+      System.out.println("PoseSupplier: "+getPose());
       Rotation2d r = RobotContainer.imuSubsystem.getYawRotation2d();
       SwerveModulePosition[] s = getPositions();
       odometryCommandTelemetry(r, s);
@@ -235,5 +232,24 @@ public class DriveSubsystem extends SubsystemBase {
     } else {
       swerveOdometry.update(RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
     }
+  }
+
+  public void testOdometryUpdates() {
+    swerveOdometry.update(
+      Rotation2d.fromDegrees(10),
+      getPositions());
+    odometryTelemetry();
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+
+
+    
+    //TODO: We may want to update the robot odometry based the cameras and AprilTags
+
+    
+    
   }
 }

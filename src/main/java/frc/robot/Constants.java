@@ -81,7 +81,7 @@ public final class Constants {
 																								// degree/s
 		
 		/* Drive Motor PID. Assumed to be the same for all drive motors */
-		public static final double DRIVE_MOTOR_KP = 0.75;
+		public static final double DRIVE_MOTOR_KP = 3.0;
 		public static final double DRIVE_MOTOR_KI = 0.005;
 		public static final double DRIVE_MOTOR_KD = 0.01;
 
@@ -170,7 +170,7 @@ public final class Constants {
 			/**
 			 *  Specify whether telemetry will be printed and/or the robot will apply power to the motors
 			 */
-			public static final SwerveDriveOrTelemetry swerveDriveOrTelemetry = SwerveDriveOrTelemetry.DRIVE_AND_TELEMETRY;
+			public static final SwerveDriveOrTelemetry swerveDriveOrTelemetry = SwerveDriveOrTelemetry.DRIVE_ONLY;
 			
 			/**
 			 *  Print odometry telemetry every 20 milliseconds.

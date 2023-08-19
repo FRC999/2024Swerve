@@ -309,6 +309,8 @@ private boolean getDriverFieldCentric() {
       new JoystickButton(driveStick, 8)
               .whileTrue(new TurnToAngleZeroHeadingCommand(Rotation2d.fromDegrees(0)))
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+      new JoystickButton(turnStick, 12)
+              .whileTrue(new InstantCommand(RobotContainer.driveSubsystem::testOdometryUpdates));
         
 
   }
