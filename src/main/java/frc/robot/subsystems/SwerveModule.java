@@ -7,7 +7,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
-import frc.robot.Constants.Swerve.SwerveModuleConstants;
 import frc.robot.Constants.Swerve.SwerveTelemetry;
 import frc.robot.PassThroughSystems.Motor.BaseMotorPassthrough;
 

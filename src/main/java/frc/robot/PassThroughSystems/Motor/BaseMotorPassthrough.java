@@ -1,9 +1,7 @@
 package frc.robot.PassThroughSystems.Motor;
 
 import frc.robot.Constants;
-import frc.robot.Constants.Swerve;
 import frc.robot.Constants.Swerve.BaseMotorControllerTypes;
-import frc.robot.Constants.Swerve.SwerveModuleConstants;
 
 /*
  * The motor object should be instantiated from this class. The class has a selector that will

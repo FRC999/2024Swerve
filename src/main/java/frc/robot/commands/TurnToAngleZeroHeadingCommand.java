@@ -36,7 +36,7 @@ public class TurnToAngleZeroHeadingCommand extends CommandBase {
 	@Override
 	public void execute() {
 		double omegaDegPerSec = profiledPID.calculate(RobotContainer.imuSubsystem.getYaw());
-		driveSubsystem.drive(0, 0, Units.degreesToRadians(omegaDegPerSec));
+		driveSubsystem.drive(0, 0, Units.degreesToRadians(omegaDegPerSec), true);
 	}
 
 }

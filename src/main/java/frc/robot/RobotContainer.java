@@ -19,12 +19,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 
-import javax.net.ssl.TrustManager;
-
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -73,7 +68,7 @@ public class RobotContainer {
                 () -> getDriverXAxis(),
                 () -> getDriverYAxis(),
                 () -> getDriverOmegaAxis(),
-                () -> true
+                () -> getDriverFieldCentric()
             )
     );
                     
@@ -154,8 +149,14 @@ private double getDriverOmegaAxis() {
     return -turnStick.getLeftStickOmega();
 }
 
+/**
+ * If the button is pressed, use robot-centric swerve
+ * Otherwise use field-centric swerve (default).
+ * Currently it's set to a numbered button on a joystick, but if you use Xbox or similar controller, you may need to modify this
+ * @return - true if robot-centric swerve should be used
+ */
 private boolean getDriverFieldCentric() {
-    return !turnStick.getRawButton(OIConstants.fieldCentricButton);
+    return !turnStick.getRawButton(OIConstants.robotCentricButton);
 }
 
   /**
@@ -283,6 +284,9 @@ private boolean getDriverFieldCentric() {
         );
   }
 
+  /**
+   * Bindings to test simple swerve trajectories done in PathPlanner
+   */
   public void trajectoryCalibration() {
       new JoystickButton(driveStick, 11)
               .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1MeterForward"))
@@ -308,13 +312,6 @@ private boolean getDriverFieldCentric() {
         
 
   }
-
-  
-    
-
-  
-
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

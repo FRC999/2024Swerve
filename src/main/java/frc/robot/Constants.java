@@ -368,7 +368,7 @@ public final class Constants {
 	public static final class OIConstants {
 		public static final int driverControllerPort = 0;
 
-		public static final int fieldCentricButton = 2;
+		public static final int robotCentricButton = 2;
 
 		public static enum ControllerDeviceType {
 			LOGITECH,
