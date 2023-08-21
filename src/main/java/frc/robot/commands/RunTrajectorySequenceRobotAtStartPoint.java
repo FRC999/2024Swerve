@@ -17,7 +17,11 @@ import frc.robot.RobotContainer;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGroup {
-  /** Creates a new RunTrajectorySequenceRobotAtStartPoint. */
+  /** Creates a new RunTrajectorySequenceRobotAtStartPoint.
+   * This command reads a PathPlanner trajectory from a file specified by name in the first parameter,
+   * optionally applies max velocity and max acceleration restrictions as well as reverse if needed,
+   * and runs the adjusted trajectory via AutonomousTrajectoryRioCommand command.
+   */
 
   PathPlannerTrajectory trajectoryPath;
   boolean isReversed = false;

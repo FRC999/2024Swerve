@@ -20,7 +20,15 @@ import frc.robot.Constants.Swerve;
  * That should be done by a separate command preceding this one.
  */
 public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
-  /** Creates a new AutonomousTrajectoryRioCommand. */
+  /** Creates a new AutonomousTrajectoryRioCommand.
+   * This command runs the trajectory using PathPlanner holonomic trajectory controller.
+   * The trajectory provided to this command must be in a form of PathPlannerTrajectory object.
+   * That means that any adjustments, such as reducing its speed, reversal etc must be
+   * applied before the trajectory is passed to this command.
+   * Note that PathPlanner ends trajectories on time rather that completion of the distance.
+   * Therefore, PID constants provided to the PID controller may have an impact on the end result,
+   * especially for the holonomic component.
+   */
 
   TrajectoryConfig config;
 
@@ -29,7 +37,9 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
   public AutonomousTrajectoryRioCommand(PathPlannerTrajectory trajectoryPath) {
     // Use addRequirements() here to declare subsystem dependencies.
     
-    
+    // Since we extend PPSwerveControllerCommand, we need to call its constructor properly
+    // This command was done to provide better control and telemetry over the execution of
+    // the PathPlanner trajectory
     super(
       trajectoryPath,
       RobotContainer.driveSubsystem::getPose,
@@ -106,6 +116,9 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
 
     
     boolean f = super.isFinished();
+
+    //TODO: this is *** TEMPORARY *** to troubleshoot holonomic trajectories
+    // Make sure to return this code back to normal
     System.out.println("f: " + f);
     //return f;
     return false;

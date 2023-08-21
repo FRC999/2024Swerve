@@ -57,7 +57,7 @@ public final class Constants {
 
 		/*
 		 * Ramp Rates and Current Limits. Assumed to be the same for all motors of the
-		 * same type/purpose
+		 * same type/purpose.
 		 */
 		public static final double DRIVE_CLOSED_LOOP_RAMP = 0;
 		public static final double DRIVE_OPEN_LOOP_RAMP = 0.25;
@@ -66,7 +66,10 @@ public final class Constants {
 		public static final int DRIVE_MOTOR_SMART_CURRENT = 40;
 		public static final double DRIVE_MOTOR_SECONDARY_LIMIT = 60;
 
-		/* Angle Motor PID. Assumed to be the same for all angle motors */
+		/**
+		 * Angle Motor PID. Assumed to be the same for all angle motors
+		 * These PID constants are only used for auto trajectory driving, and not teleop.
+		 */
 		public static final double ANGLE_MOTOR_KP = 0.75;
 		public static final double ANGLE_MOTOR_KI = 0.005;
 		public static final double ANGLE_MOTOR_KD = 0.01;
@@ -80,13 +83,14 @@ public final class Constants {
 																								// tick/100ms to
 																								// degree/s
 		
-		/* Drive Motor PID. Assumed to be the same for all drive motors */
+		/**
+		 * Drive Motor PID. Assumed to be the same for all drive motors
+		 * These PID constants are only used for auto trajectory driving, and not teleop.
+		 */
 		public static final double DRIVE_MOTOR_KP = 3.0;
 		public static final double DRIVE_MOTOR_KI = 0.005;
 		public static final double DRIVE_MOTOR_KD = 0.01;
 
-
-																								
 		/**
 		 * Maximum linear speed of chassis in meters per second
 		 * Note that not determining this number precisely up front will not affect your teleop driving
@@ -108,7 +112,13 @@ public final class Constants {
 		// For trajectory driving.
 		public static final double MAX_ACCELERATION = 2.0;
 
-		//Parameters for BaseMotorTalonSRX class
+		/**
+		 * Parameters for BaseMotorTalonSRX class
+		 * This class is specific to the motors controlled by TalonSRX controller.
+		 * Parameters specified here are primarily used in the motor configuration methods, as well as
+		 * getters that translate encoder outputs from encoder-specific units to the SI units.
+		 * Other motor controller implementations will likely have a different set of constants.
+		 */
 		public static final class TalonSRXSwerveConfiguration {
 
 			// We assume that all TalonSRX controlers need the same PID and some other hardware configuration parameters
@@ -160,6 +170,13 @@ public final class Constants {
 
 		}
 
+		/**
+		 * The following constants are used to print swerve telemetry. Please, note that excessive telemetry
+		 * will cause excessive CPU usage, and ultimately will result in a packet loss.
+		 * If after enabling telemetry you will see CPU approaching 100% in the RIO log, such settings will not be
+		 * usable for extensive driving or competition. These settings were put in place so a team can
+		 * troubleshoot teleop and trajectory driving.
+		 */
 		public static final class SwerveTelemetry {
 			public static enum SwerveDriveOrTelemetry {
 				DRIVE_ONLY,

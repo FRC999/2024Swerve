@@ -56,108 +56,128 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    // Configure driver interface - binding joystick objects to port numbers
-    configureDriverInterface();
+      // Configure driver interface - binding joystick objects to port numbers
+      configureDriverInterface();
 
-    // Configure the trigger bindings
-    configureBindings();
+      // Configure the trigger bindings
+      configureBindings();
 
-    
-    driveSubsystem.setDefaultCommand(
-            new DriveManuallyCommand(
-                () -> getDriverXAxis(),
-                () -> getDriverYAxis(),
-                () -> getDriverOmegaAxis(),
-                () -> getDriverFieldCentric()
-            )
-    );
-                    
-}
+      // This command should be for the teleop driving
+      // Note that the first three of its parameters are DoubleSupplier, and the last one is a
+      // BooleanSupplier
+      driveSubsystem.setDefaultCommand(
+              new DriveManuallyCommand(
+                      () -> getDriverXAxis(),
+                      () -> getDriverYAxis(),
+                      () -> getDriverOmegaAxis(),
+                      () -> getDriverFieldCentric()));
 
-   /**
+  }
+
+  /**
    * Use this method to define your controllers depending on the
    * {@link DriveInterface}
    */
   private void configureDriverInterface() {
 
-    /**
-     * We tried driving with a single Logitech joystick that has X,Y and turn axis.
-     * However, the team decided to move the turn to the second joystick for now.
-     * Note that Controller objects are only used to provide DoubleSupplier methods to the
-     * commands that need manual control input (e.g. DriveManuallyCommand)
-     */
-    driveStick = new Controller(ControllerDevice.DRIVESTICK);
-    turnStick = new Controller(ControllerDevice.TURNSTICK);
-    System.out.println("Driver interface configured");
+      /**
+       * We tried driving with a single Logitech joystick that has X,Y and turn axis.
+       * However, the team decided to move the turn to the second joystick for now.
+       * Note that Controller objects are only used to provide DoubleSupplier methods
+       * to the
+       * commands that need manual control input (e.g. DriveManuallyCommand)
+       */
+      driveStick = new Controller(ControllerDevice.DRIVESTICK);
+      turnStick = new Controller(ControllerDevice.TURNSTICK);
+      System.out.println("Driver interface configured");
   }
 
   /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * Use this method to define your trigger->command mappings. Triggers can be
+   * created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+   * an arbitrary
    * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+   * {@link
+   * CommandXboxController
+   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or
+   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+      // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+      new Trigger(m_exampleSubsystem::exampleCondition)
+              .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    // pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+      // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+      // pressed,
+      // cancelling on release.
+      m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-    //swerveValuesTesting();
+      // swerveValuesTesting();
 
-    trajectoryCalibration();
+      trajectoryCalibration();
 
-}
+  }
 
-/**
- * Swerve control inputs will be supplied as lambdas to the manual drive command.
- * This way it would be easy to be switch between different input devices such as joystick or Xbox controller.
- * In order to do a switch appropriate analog axis of the device would need to be specificed in one of the three
- * methods below.
- */
+  /**
+   * Swerve control inputs will be supplied as lambdas to the manual drive
+   * command.
+   * This way it would be easy to be switch between different input devices such
+   * as joystick or Xbox controller.
+   * In order to do a switch appropriate analog axis of the device would need to
+   * be specificed in one of the three
+   * methods below.
+   */
 
- /**
-  * Logitech joystick returns -1 of Y axis when pushed all the way forward and +1 when pushed all the way backwards.
-  * Since the robot is oriented on the X axis of the field, pushing joystick forward means robot to go forward
-  * along the X axis.
-  * The next three commands are used for teleop driving, and they should represent the controller inputs from the field point of view
-  * meaning getDriverXAxis() should provide positive value for robot moving towards the opposite side of the field where the other team is
-  * located if your team's location is on the left side of the field.
-  * getDriverYAxis() positive value will cause the robot move to the left of your team's location on the field.
-  * getDriverOmegaAxis() positive value causes the robot to rotate counterclockwise.
-  *
-  * If you use just one joystick or other controllers, modify the methods below to return the value from the appropriate controler axis.
-  *
-  * @return
-  */
-private double getDriverXAxis() {
-    return -driveStick.getLeftStickY();
-}
+  /**
+   * Logitech joystick returns -1 of Y axis when pushed all the way forward and +1
+   * when pushed all the way backwards.
+   * Since the robot is oriented on the X axis of the field, pushing joystick
+   * forward means robot to go forward
+   * along the X axis.
+   * The next three commands are used for teleop driving, and they should
+   * represent the controller inputs from the field point of view
+   * meaning getDriverXAxis() should provide positive value for robot moving
+   * towards the opposite side of the field where the other team is
+   * located if your team's location is on the left side of the field.
+   * getDriverYAxis() positive value will cause the robot move to the left of your
+   * team's location on the field.
+   * getDriverOmegaAxis() positive value causes the robot to rotate
+   * counterclockwise.
+   *
+   * If you use just one joystick or other controllers, modify the methods below
+   * to return the value from the appropriate controler axis.
+   *
+   * @return
+   */
+  private double getDriverXAxis() {
+      return -driveStick.getLeftStickY();
+  }
 
-private double getDriverYAxis() {
-    return -driveStick.getLeftStickX();
-}
+  private double getDriverYAxis() {
+      return -driveStick.getLeftStickX();
+  }
 
-private double getDriverOmegaAxis() {
-    return -turnStick.getLeftStickOmega();
-}
+  private double getDriverOmegaAxis() {
+      return -turnStick.getLeftStickOmega();
+  }
 
-/**
- * If the button is pressed, use robot-centric swerve
- * Otherwise use field-centric swerve (default).
- * Currently it's set to a numbered button on a joystick, but if you use Xbox or similar controller, you may need to modify this
- * @return - true if robot-centric swerve should be used
- */
-private boolean getDriverFieldCentric() {
-    return !turnStick.getRawButton(OIConstants.robotCentricButton);
-}
+  /**
+   * If the button is pressed, use robot-centric swerve
+   * Otherwise use field-centric swerve (default).
+   * Currently it's set to a numbered button on a joystick, but if you use Xbox or
+   * similar controller, you may need to modify this
+   * On Logitech joystick button #2 seemed to be the most convenient, though we
+   * may consider moving it to the drivestick.
+   * 
+   * @return - true if robot-centric swerve should be used
+   */
+  private boolean getDriverFieldCentric() {
+      return !turnStick.getRawButton(OIConstants.robotCentricButton);
+  }
 
   /**
    * 

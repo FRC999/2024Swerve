@@ -59,7 +59,7 @@ public class IMUPigeon2 implements IMUInterface {
         //System.out.println(ypr[0]);
         //return ypr[0];
 
-        return pigeon2.getYaw(); //TODO: Check this method returns values in degrees
+        return pigeon2.getYaw(); // With Pigeon2 this method returns values in degrees
     }
 
     public Rotation2d getYawRotation2d() {
