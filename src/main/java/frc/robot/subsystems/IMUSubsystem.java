@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -66,6 +65,10 @@ public class IMUSubsystem extends SubsystemBase implements IMUInterface {
 
   }
 
+  /**
+   * Note that all IMU methods that take or return values should do so in SI units.
+   */
+
   public double getPitch() {
     return imu.getPitch();
   }
@@ -91,16 +94,23 @@ public class IMUSubsystem extends SubsystemBase implements IMUInterface {
   }
 
   /**
-   * Remember starting Yaw before trajectory so it can be restored
+   * This method is used when we want to "snap" the chassis to a trajectory start, meaning
+   * assuming that the robot is at the starting point of the trajectory.
+   * Here we remember starting Yaw before trajectory so it can be restored
    * back after trajectory
-   * @param y
-   * @return
+   * @param y - starting Yaw of the trajectory
+   * @return - old value of the Yaw (we do not currently use it)
    */
   public double setYawForTrajectory(double y) {
     trajectoryAdjustmentIMU = RobotContainer.imuSubsystem.getYaw() - y;
     return imu.setYaw(y);
   }
 
+  /**
+   * Once the trajectory is done, we want to readjust the Yaw considering the value that we "remember", so
+   * the field-centric drive axis will not change. That may allow one to drive automated trajectories in teleop
+   * without losing the Yaw direction.
+   */
   public void restoreYawAfterTrajectory() {
     imu.setYaw(RobotContainer.imuSubsystem.getYaw() + trajectoryAdjustmentIMU);
   }

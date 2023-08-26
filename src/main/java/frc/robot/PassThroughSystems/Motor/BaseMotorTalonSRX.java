@@ -2,17 +2,12 @@ package frc.robot.PassThroughSystems.Motor;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
-import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
-import frc.robot.Constants.SwerveChassis;
-import frc.robot.Constants.PIDConstants.SRXAngle;
+import frc.robot.Constants.PIDConstantsForSwerveModules.SRXAngle;
 import frc.robot.Constants.SwerveChassis.SwerveModuleConstants;
 import frc.robot.Constants.SwerveChassis.TalonSRXSwerveConfiguration;
 
@@ -214,13 +209,9 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         double difference = getDriveAbsEncoder() - c.getAngleOffset()*4096.0/360.0;
         double encoderSetting = 0.0;
 
-        // System.out.println("I0 d " + difference);
-
         if (difference < 0) {
             difference += TalonSRXSwerveConfiguration.clicksSRXPerFullRotation;
         }
-
-        // System.out.println("I1 d " + difference);
 
         if (difference <= TalonSRXSwerveConfiguration.clicksSRXPerFullRotation / 2) {
             encoderSetting = difference;

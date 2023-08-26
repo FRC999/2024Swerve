@@ -18,7 +18,9 @@ public class DriveManuallyCommand extends CommandBase {
 	private final DoubleSupplier mOmegaSupplier;
   private final BooleanSupplier mFieldCentrSupplier;
 
-  /** Creates a new DriveManuallyCommand. */
+  /** Creates a new DriveManuallyCommand.
+   * This is the command used for teleop manual driving
+   */
   public DriveManuallyCommand(DoubleSupplier vxSupplier, DoubleSupplier vySupplier, DoubleSupplier omegaSupplier, BooleanSupplier fieldCentrSupplier) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.driveSubsystem);
@@ -30,6 +32,12 @@ public class DriveManuallyCommand extends CommandBase {
 
   }
 
+  /**
+   * This method man be used when troubleshooting controller inputs
+   * @param dx
+   * @param dy
+   * @param dm
+   */
   private void driveControlTelemetry(double dx, double dy, double dm){
     System.out.print("DX "+ dx);
     System.out.print(" DY "+ dy);

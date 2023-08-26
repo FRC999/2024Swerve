@@ -95,7 +95,11 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
 
     //System.out.println("O");
 
-    //TODO: Currently update odometry in DriveSubsystem, but it is really used here.
+    /**
+     * In this example project we only update field odometry when needed, meaning when running
+     * automated trajectories. However, you may need to update it in other situations, especially
+     * when using vision to determine robot's position on the field.
+     */
     RobotContainer.driveSubsystem.updateTrajectoryOdometry();
 
     super.execute();
@@ -112,15 +116,7 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
   @Override
   public boolean isFinished() {
 
-    //RobotContainer.driveSubsystem.updateOdometry();
+    return super.isFinished();
 
-    
-    boolean f = super.isFinished();
-
-    //TODO: this is *** TEMPORARY *** to troubleshoot holonomic trajectories
-    // Make sure to return this code back to normal
-    //System.out.println("f: " + f);
-    return f;
-    //return false;
   }
 }

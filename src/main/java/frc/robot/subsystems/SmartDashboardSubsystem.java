@@ -32,15 +32,10 @@ public class SmartDashboardSubsystem extends SubsystemBase {
   }
 
 
-
-  
-
   public void updateAllDisplays(){
     updateOdometryTelemetry();
     updateIMUTelemetry();
   }
-
-
 
   @Override
   public void periodic() {

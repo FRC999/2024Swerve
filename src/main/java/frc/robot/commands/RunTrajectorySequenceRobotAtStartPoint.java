@@ -18,15 +18,15 @@ import frc.robot.RobotContainer;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGroup {
+
+  PathPlannerTrajectory trajectoryPath;
+  boolean isReversed = false;
+
   /** Creates a new RunTrajectorySequenceRobotAtStartPoint.
    * This command reads a PathPlanner trajectory from a file specified by name in the first parameter,
    * optionally applies max velocity and max acceleration restrictions as well as reverse if needed,
    * and runs the adjusted trajectory via AutonomousTrajectoryRioCommand command.
    */
-
-  PathPlannerTrajectory trajectoryPath;
-  boolean isReversed = false;
-
   public RunTrajectorySequenceRobotAtStartPoint(String trajectory, double maxVelocity, double maxAcceleration, boolean reversed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -57,11 +57,17 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
     System.out.println("*** Run trajectory non-reversed"+ trajectory);
   }
 
+  /**
+   * Run trajectory from a saved PathPlanner trajectory file with the maximum velocity and acceleration
+   * defined in Constant file.
+   * @param trajectory - name of the trajectory file without extension
+   * @param reversed - whether the trajectory should run in reverse
+   */
   public RunTrajectorySequenceRobotAtStartPoint(String trajectory, boolean reversed) {
 
     //this(trajectory, 0.5, 0.05, reversed);
     this(trajectory, Constants.SwerveChassis.MAX_VELOCITY, Constants.SwerveChassis.MAX_ACCELERATION, reversed);
-    System.out.println("*** Run trajectory "+ trajectory+" reversed:"+reversed);
+    System.out.println("*** Run trajectory "+ trajectory+" reversed:"+reversed+" with max velocity and acceleration");
   }
 
 }

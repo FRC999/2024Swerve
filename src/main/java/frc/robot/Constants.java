@@ -21,6 +21,11 @@ public final class Constants {
 		public static final int kDriverControllerPort = 0;
 	}
 
+	/**
+	 * This class contains configuration constants for the chassis, the individual swerve modules and the motors
+	 * We try to distinguish between them by proper naming.
+	 * It's likely we will need to do some additional cleanup here to make them easy to undrstand
+	 */
 	public static final class SwerveChassis {
 
 		// TRAJECTORY PARAMETERS 3039
@@ -56,7 +61,7 @@ public final class Constants {
 				new Translation2d(-WHEEL_BASE / 2.0, -TRACK_WIDTH / 2.0));
 
 		/*
-		 * Ramp Rates and Current Limits. Assumed to be the same for all motors of the
+		 * Ramp Rates and Current Limits. Assumed to be the same for all drivetrain motors of the
 		 * same type/purpose.
 		 */
 		public static final double DRIVE_CLOSED_LOOP_RAMP = 0;
@@ -69,6 +74,9 @@ public final class Constants {
 		/**
 		 * Angle Motor PID. Assumed to be the same for all angle motors
 		 * These PID constants are only used for auto trajectory driving, and not teleop.
+		 * Changes to these constants will have a substantial impact on the precision of your
+		 * trajectory if it includes holonomic rotation.
+		 * Make sure to test the values and adjust them as needed for your robot.
 		 */
 		public static final double ANGLE_CHASSIS_KP = 6.25;
 		public static final double ANGLE_CHASSIS_KI = 0.4;
@@ -86,6 +94,8 @@ public final class Constants {
 		/**
 		 * Drive Motor PID. Assumed to be the same for all drive motors
 		 * These PID constants are only used for auto trajectory driving, and not teleop.
+		 * We found that changing them a bit will not have a substantial impact on the trajectory with PathPlanner
+		 * even if a trajectory includes a holonomic component.
 		 */
 		public static final double DRIVE_CHASSIS_KP = 3.0;
 		public static final double DRIVE_CHASSIS_KI = 0.05;
@@ -358,9 +368,13 @@ public final class Constants {
 		}
 	} // End IMUConstants
 
-	public static final class PIDConstants {
+	/**
+	 *  These Hardware PID constants are used by the individual swerve modules, and are used only by turn motors.
+	 *  We do not currently use Hardware PID for manual or trajectory driving.
+	 */
+	public static final class PIDConstantsForSwerveModules {
 
-		// PID constants for motors controlled by TalonSRX
+		// Hardware PID-related constants for angle motors controlled by TalonSRX
 		public static final class SRXAngle {
 
 			public static final int SLOT_0 = 0;
@@ -382,6 +396,10 @@ public final class Constants {
 		}
 
 	}
+	/**
+	 * Controller-related constants.
+	 * Here we define port numbers, axis, deadbands, button numbers and various ability flags, such as use of the cube driving
+	 */
 	public static final class OIConstants {
 		public static final int driverControllerPort = 0;
 
