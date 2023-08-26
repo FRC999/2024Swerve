@@ -318,10 +318,13 @@ public class RobotContainer {
               .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag"))
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
       new JoystickButton(driveStick, 10)
-              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("2MeterStraightTurn90"))
+              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("MeterStraightTurn90"))
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
       new JoystickButton(turnStick, 11)
               .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("InPlaceTurn90"))
+              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+      new JoystickButton(turnStick, 10)
+              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("SwiggleWiggle"))
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
       new JoystickButton(driveStick, 7)
               .whileTrue(new ZeroHeadingCommand())
