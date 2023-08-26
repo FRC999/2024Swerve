@@ -3,12 +3,12 @@ package frc.robot.Devices;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants;
-import frc.robot.Constants.OIConstants.ControllerDevice;
+import frc.robot.Constants.OIConstants.LogitechControllerDevice;
 import frc.robot.Constants.OIConstants.ControllerDeviceType;
 
 public class Controller extends Joystick {
 
-    ControllerDevice cd;
+    LogitechControllerDevice cd;
     ControllerDeviceType cdt;
     double dx; // X deadband for performance
     double dy; // Y deadband for performance
@@ -24,7 +24,7 @@ public class Controller extends Joystick {
     private double cubeDeadbandY;
     private double cubeDeadbandOmega;
     
-    public Controller(Constants.OIConstants.ControllerDevice cd) {
+    public Controller(Constants.OIConstants.LogitechControllerDevice cd) {
         super(cd.getPortNumber()); // This needs to be done because the joystick parent class has a non-default constructor
         this.cd = cd;
         this.cdt = cd.getControllerDeviceType();  // This is done so the controller type is not 

@@ -6,7 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.OIConstants.ControllerDevice;
+import frc.robot.Constants.OIConstants.LogitechControllerDevice;
 import frc.robot.Devices.Controller;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
@@ -87,8 +87,8 @@ public class RobotContainer {
        * to the
        * commands that need manual control input (e.g. DriveManuallyCommand)
        */
-      driveStick = new Controller(ControllerDevice.DRIVESTICK);
-      turnStick = new Controller(ControllerDevice.TURNSTICK);
+      driveStick = new Controller(LogitechControllerDevice.DRIVESTICK);
+      turnStick = new Controller(LogitechControllerDevice.TURNSTICK);
       System.out.println("Driver interface configured");
   }
 

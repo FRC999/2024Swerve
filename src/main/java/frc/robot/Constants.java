@@ -411,7 +411,7 @@ public final class Constants {
 			XBOX
 		} 
 
-		public static enum ControllerDevice {
+		public static enum LogitechControllerDevice {
 			DRIVESTICK(
 				0, // Port Number
 				ControllerDeviceType.LOGITECH,
@@ -440,7 +440,78 @@ public final class Constants {
 			private boolean cubeControllerLeftStick;
 			private boolean cubeControllerRightStick;
 
-			ControllerDevice(int pn, ControllerDeviceType cdt, double dx, double dy, double dm, boolean ccL, boolean ccR) {
+			LogitechControllerDevice(int pn, ControllerDeviceType cdt, double dx, double dy, double dm, boolean ccL, boolean ccR) {
+				this.portNumber = pn;
+				this.controllerDeviceType = cdt;
+				this.deadbandX = dx;
+				this.deadbandY = dy;
+				this.deadbandOmega = dm;
+				this.cubeControllerLeftStick = ccL;
+				this.cubeControllerRightStick = ccR;
+			}
+
+			public ControllerDeviceType getControllerDeviceType() {
+				return controllerDeviceType;
+			}
+
+			public int getPortNumber() {
+				return portNumber;
+			}
+
+			public double getDeadbandX() {
+				return deadbandX;
+			}
+
+			public double getDeadbandY() {
+				return deadbandY;
+			}
+
+			public double getDeadbandOmega() {
+				return deadbandOmega;
+			}
+
+			public boolean isCubeControllerLeftStick() {
+				return cubeControllerLeftStick;
+			}
+
+			public boolean isCubeControllerRightStick() {
+				return cubeControllerRightStick;
+			}
+
+			
+
+		}
+
+		public static enum XboxControllerDevice {
+			DRIVESTICK(
+				4, // Port Number
+				ControllerDeviceType.XBOX,
+				0.02, // deadband X
+				0.02, // deadband Y
+				0.02,  // deadband Omega
+				true, // cubeControllerLeft
+				true // cubeControllerRight
+			),
+
+			TURNSTICK(	//Controls the rotation of the swervebot
+				1, // Port Number
+				ControllerDeviceType.XBOX,
+				0.02, // deadband X
+				0.02, // deadband Y
+				0.02,  // deadband Omega
+				true, // cubeControllerLeft
+				true // cubeControllerRight
+			);
+
+			private ControllerDeviceType controllerDeviceType;
+			private int portNumber;
+			private double deadbandX;
+			private double deadbandY;
+			private double deadbandOmega;
+			private boolean cubeControllerLeftStick;
+			private boolean cubeControllerRightStick;
+
+			LogitechControllerDevice(int pn, ControllerDeviceType cdt, double dx, double dy, double dm, boolean ccL, boolean ccR) {
 				this.portNumber = pn;
 				this.controllerDeviceType = cdt;
 				this.deadbandX = dx;
