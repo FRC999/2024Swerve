@@ -13,7 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.Swerve;
+import frc.robot.Constants.SwerveChassis;
 
 /**
  * Runs trajectory. The command will not update initial odometry of the robot.
@@ -43,16 +43,16 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
     super(
       trajectoryPath,
       RobotContainer.driveSubsystem::getPose,
-      Constants.Swerve.SWERVE_KINEMATICS,
-      new PIDController(Constants.Swerve.DRIVE_MOTOR_KP,
-                        Constants.Swerve.DRIVE_MOTOR_KI,
-                        Constants.Swerve.DRIVE_MOTOR_KD),
-      new PIDController(Constants.Swerve.DRIVE_MOTOR_KP,
-                        Constants.Swerve.DRIVE_MOTOR_KI,
-                        Constants.Swerve.DRIVE_MOTOR_KD),
-      new PIDController(Constants.Swerve.ANGLE_MOTOR_KP,
-                        Constants.Swerve.ANGLE_MOTOR_KI,
-                        Constants.Swerve.ANGLE_MOTOR_KD),
+      Constants.SwerveChassis.SWERVE_KINEMATICS,
+      new PIDController(Constants.SwerveChassis.DRIVE_CHASSIS_KP,
+                        Constants.SwerveChassis.DRIVE_CHASSIS_KI,
+                        Constants.SwerveChassis.DRIVE_CHASSIS_KD),
+      new PIDController(Constants.SwerveChassis.DRIVE_CHASSIS_KP,
+                        Constants.SwerveChassis.DRIVE_CHASSIS_KI,
+                        Constants.SwerveChassis.DRIVE_CHASSIS_KD),
+      new PIDController(Constants.SwerveChassis.ANGLE_CHASSIS_KP,
+                        Constants.SwerveChassis.ANGLE_CHASSIS_KI,
+                        Constants.SwerveChassis.ANGLE_CHASSIS_KD),
       RobotContainer.driveSubsystem::setDesiredStates,
       false,
       RobotContainer.driveSubsystem
@@ -77,7 +77,7 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
    */
   public AutonomousTrajectoryRioCommand(String trajectoryName){
     this(PathPlanner.loadPath(trajectoryName, 
-      new PathConstraints(Swerve.MAX_SPEED, Swerve.MAX_ACCELERATION)));
+      new PathConstraints(SwerveChassis.MAX_VELOCITY, SwerveChassis.MAX_ACCELERATION)));
   }
 
 
@@ -119,8 +119,8 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
 
     //TODO: this is *** TEMPORARY *** to troubleshoot holonomic trajectories
     // Make sure to return this code back to normal
-    System.out.println("f: " + f);
-    //return f;
-    return false;
+    //System.out.println("f: " + f);
+    return f;
+    //return false;
   }
 }

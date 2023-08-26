@@ -318,7 +318,7 @@ public class RobotContainer {
               .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag"))
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
       new JoystickButton(driveStick, 10)
-              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag2"))
+              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("2MeterStraightTurn90"))
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
       new JoystickButton(turnStick, 11)
               .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("InPlaceTurn90"))

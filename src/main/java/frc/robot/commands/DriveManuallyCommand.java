@@ -9,7 +9,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.Swerve;
+import frc.robot.Constants.SwerveChassis;
 
 public class DriveManuallyCommand extends CommandBase {
 
@@ -51,9 +51,9 @@ public class DriveManuallyCommand extends CommandBase {
     //driveControlTelemetry(xInput, yInput, omegaInput);
     
     RobotContainer.driveSubsystem.drive(
-      xInput * Swerve.MAX_SPEED,
-      yInput * Swerve.MAX_SPEED,
-      omegaInput * Swerve.MAX_ANGULAR_VELOCITY,
+      xInput * SwerveChassis.MAX_VELOCITY,
+      yInput * SwerveChassis.MAX_VELOCITY,
+      omegaInput * SwerveChassis.MAX_ANGULAR_VELOCITY,
       mFieldCentrSupplier.getAsBoolean()
     );
 

@@ -11,6 +11,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -37,7 +38,7 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
       //new InstantCommand(RobotContainer.driveSubsystem::zeroDriveEncoders),
       new PrintCommand("****Starting trajectory****"),
       //new WaitCommand(0.4),
-      new InstantCommand( () -> RobotContainer.imuSubsystem.setYaw(trajectoryPath.getInitialHolonomicPose().getRotation().getDegrees()) ),
+      new InstantCommand( () -> RobotContainer.imuSubsystem.setYawForTrajectory(trajectoryPath.getInitialHolonomicPose().getRotation().getDegrees()) ),
       new InstantCommand( () -> RobotContainer.driveSubsystem.resetOdometry(trajectoryPath.getInitialHolonomicPose()  ) ),
       //new PrintCommand(
       //  "START IX:" + trajectoryPath.getInitialPose().getX()+
@@ -45,6 +46,7 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
       //  " IA:" + trajectoryPath.getInitialPose().getRotation().getDegrees()
       //  ),  // Set the initial pose of the robot to the one in a trajectory
       new AutonomousTrajectoryRioCommand(trajectoryPath), // Run a trajectory
+      new InstantCommand( () -> RobotContainer.imuSubsystem.restoreYawAfterTrajectory()),
       new PrintCommand("****End trajectory****")
     );
   }
@@ -57,8 +59,8 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
 
   public RunTrajectorySequenceRobotAtStartPoint(String trajectory, boolean reversed) {
 
-    this(trajectory, 0.5, 0.05, reversed);
-    //this(trajectory, DriveConstants.maxVelocityDefault, DriveConstants.maxAccelerationDefault, reversed);
+    //this(trajectory, 0.5, 0.05, reversed);
+    this(trajectory, Constants.SwerveChassis.MAX_VELOCITY, Constants.SwerveChassis.MAX_ACCELERATION, reversed);
     System.out.println("*** Run trajectory "+ trajectory+" reversed:"+reversed);
   }
 

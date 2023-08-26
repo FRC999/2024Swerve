@@ -16,8 +16,8 @@ public class TurnToAngleZeroHeadingCommand extends CommandBase {
 	private final double kD = 0;
 	Rotation2d angle = Rotation2d.fromDegrees(0);
 	DriveSubsystem driveSubsystem = new DriveSubsystem();
-	private double kMaxSpeed = Constants.Swerve.MAX_ANGULAR_VELOCITY;
-	private double kMaxAccel = Constants.Swerve.MAX_ACCELERATION;
+	private double kMaxSpeed = Constants.SwerveChassis.MAX_ANGULAR_VELOCITY;
+	private double kMaxAccel = Constants.SwerveChassis.MAX_ACCELERATION;
 	private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(kMaxSpeed, kMaxAccel);
 	private ProfiledPIDController profiledPID = new ProfiledPIDController(kP, kI, kD, constraints);
 

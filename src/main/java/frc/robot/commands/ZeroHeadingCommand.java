@@ -25,7 +25,7 @@ public class ZeroHeadingCommand extends SequentialCommandGroup {
 
       new AutonomousTrajectoryRioCommand(
         PathPlanner.generatePath(
-          new PathConstraints(Constants.Swerve.MAX_SPEED,Constants.Swerve.MAX_ACCELERATION ), 
+          new PathConstraints(Constants.SwerveChassis.MAX_VELOCITY,Constants.SwerveChassis.MAX_ACCELERATION ), 
           new PathPoint(
             RobotContainer.driveSubsystem.getPose().getTranslation(), 
             RobotContainer.driveSubsystem.getPose().getRotation(),

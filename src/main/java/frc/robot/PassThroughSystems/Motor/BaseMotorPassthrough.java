@@ -1,7 +1,7 @@
 package frc.robot.PassThroughSystems.Motor;
 
 import frc.robot.Constants;
-import frc.robot.Constants.Swerve.BaseMotorControllerTypes;
+import frc.robot.Constants.SwerveChassis.BaseMotorControllerTypes;
 
 /*
  * The motor object should be instantiated from this class. The class has a selector that will
@@ -39,11 +39,11 @@ public class BaseMotorPassthrough implements BaseMotorInterface {
     }
   }
 
-  public void configureDriveMotor(Constants.Swerve.SwerveModuleConstants c) {
+  public void configureDriveMotor(Constants.SwerveChassis.SwerveModuleConstants c) {
     baseMotorInterface.configureDriveMotor(c);
   }
 
-  public void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c) {
+  public void configureAngleMotor(Constants.SwerveChassis.SwerveModuleConstants c) {
     baseMotorInterface.configureAngleMotor(c);
   }
 

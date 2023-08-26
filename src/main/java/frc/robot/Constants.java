@@ -21,7 +21,7 @@ public final class Constants {
 		public static final int kDriverControllerPort = 0;
 	}
 
-	public static final class Swerve {
+	public static final class SwerveChassis {
 
 		// TRAJECTORY PARAMETERS 3039
 		/* Drive Feedforward */
@@ -70,9 +70,9 @@ public final class Constants {
 		 * Angle Motor PID. Assumed to be the same for all angle motors
 		 * These PID constants are only used for auto trajectory driving, and not teleop.
 		 */
-		public static final double ANGLE_MOTOR_KP = 0.75;
-		public static final double ANGLE_MOTOR_KI = 0.005;
-		public static final double ANGLE_MOTOR_KD = 0.01;
+		public static final double ANGLE_CHASSIS_KP = 6.25;
+		public static final double ANGLE_CHASSIS_KI = 0.4;
+		public static final double ANGLE_CHASSIS_KD = 0.7;
 
 		public static final double ANGLE_MOTOR_MIN_OUTPUT = -1;
 		public static final double ANGLE_MOTOR_MAX_OUTPUT = 1;
@@ -87,9 +87,9 @@ public final class Constants {
 		 * Drive Motor PID. Assumed to be the same for all drive motors
 		 * These PID constants are only used for auto trajectory driving, and not teleop.
 		 */
-		public static final double DRIVE_MOTOR_KP = 3.0;
-		public static final double DRIVE_MOTOR_KI = 0.005;
-		public static final double DRIVE_MOTOR_KD = 0.01;
+		public static final double DRIVE_CHASSIS_KP = 3.0;
+		public static final double DRIVE_CHASSIS_KI = 0.05;
+		public static final double DRIVE_CHASSIS_KD = 0.01;
 
 		/**
 		 * Maximum linear speed of chassis in meters per second
@@ -97,7 +97,7 @@ public final class Constants {
 		 * as the teleop logic will simply use it as a point of reference.
 		 * Changing this number will not require any other changes in the teleop code.
 		 */
-		public static final double MAX_SPEED = 3.0;
+		public static final double MAX_VELOCITY = 3.0;
 		
 		/**
 		 * Radians per second.
@@ -107,7 +107,7 @@ public final class Constants {
 		 * the radius of rotation, which can be calculated by halving the distance between the opposing swerve 
 		 * modules such as the front left and rear right.
 		 */
-		public static final double MAX_ANGULAR_VELOCITY = MAX_SPEED/(Math.sqrt(TRACK_WIDTH*TRACK_WIDTH+WHEEL_BASE*WHEEL_BASE)/2);
+		public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY/(Math.sqrt(TRACK_WIDTH*TRACK_WIDTH+WHEEL_BASE*WHEEL_BASE)/2);
 
 		// For trajectory driving.
 		public static final double MAX_ACCELERATION = 2.0;
@@ -128,7 +128,7 @@ public final class Constants {
 															 // in that time; otherwise assume the error
 
 			// Customize the following values to your prototype
-			public static final double metersPerTick = 1.0/30000.0;	//TODO: measure this number on the robot
+			public static final double metersPerTick = 1.0/1462.25;	//TODO: measure this number on the robot
 			public static final double degreePerTick = 360.0/4096.0 ; // On our swerve prototype 1 angular rotation of the wheel = 1 full rotation of the encoder
 
 			// Absolute encoder setup
@@ -192,7 +192,7 @@ public final class Constants {
 			/**
 			 *  Print odometry telemetry every 20 milliseconds.
 			 */
-			public static final boolean odometryTelemetryPrint = true;
+			public static final boolean odometryTelemetryPrint = false;
 			
 		}
 		

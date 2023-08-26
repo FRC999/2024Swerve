@@ -11,10 +11,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
-import frc.robot.Constants.Swerve;
+import frc.robot.Constants.SwerveChassis;
 import frc.robot.Constants.PIDConstants.SRXAngle;
-import frc.robot.Constants.Swerve.SwerveModuleConstants;
-import frc.robot.Constants.Swerve.TalonSRXSwerveConfiguration;
+import frc.robot.Constants.SwerveChassis.SwerveModuleConstants;
+import frc.robot.Constants.SwerveChassis.TalonSRXSwerveConfiguration;
 
 /*
  * This is a specific base motor implementation for the motors connected to TalonSRX
@@ -29,15 +29,15 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         motorTalonSRX = new WPI_TalonSRX(CANID);
     }
 
-    public void configureDriveMotor(Constants.Swerve.SwerveModuleConstants c) {
+    public void configureDriveMotor(Constants.SwerveChassis.SwerveModuleConstants c) {
 
         motorTalonSRX.configFactoryDefault();
         motorTalonSRX.setInverted(c.isDriveMotorInverted());
 
         // Encoder configuration
         motorTalonSRX.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Relative,
-                Constants.Swerve.TalonSRXSwerveConfiguration.kPIDLoopIdx,
-                Constants.Swerve.TalonSRXSwerveConfiguration.configureTimeoutMs);
+                Constants.SwerveChassis.TalonSRXSwerveConfiguration.kPIDLoopIdx,
+                Constants.SwerveChassis.TalonSRXSwerveConfiguration.configureTimeoutMs);
 
         motorTalonSRX.setSensorPhase(c.getDriveMotorSensorPhase());
 
@@ -57,8 +57,8 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
          * These encoders can be used as both absolute and relative encoders at the same time.
          */
         motorTalonSRX.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.CTRE_MagEncoder_Absolute,
-                Constants.Swerve.TalonSRXSwerveConfiguration.kPIDLoopIdx,
-                Constants.Swerve.TalonSRXSwerveConfiguration.configureTimeoutMs);
+                Constants.SwerveChassis.TalonSRXSwerveConfiguration.kPIDLoopIdx,
+                Constants.SwerveChassis.TalonSRXSwerveConfiguration.configureTimeoutMs);
 
         motorTalonSRX.setSensorPhase(c.getAngleMotorSensorPhase());
 
@@ -93,19 +93,19 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
     }
 
     public double getDriveEncoderPositionSI() {
-        return motorTalonSRX.getSelectedSensorPosition()*Constants.Swerve.TalonSRXSwerveConfiguration.metersPerTick;
+        return motorTalonSRX.getSelectedSensorPosition()*Constants.SwerveChassis.TalonSRXSwerveConfiguration.metersPerTick;
     }
 
     public double getAngleEncoderPositionSI() {
-        return motorTalonSRX.getSelectedSensorPosition()*Constants.Swerve.TalonSRXSwerveConfiguration.degreePerTick;
+        return motorTalonSRX.getSelectedSensorPosition()*Constants.SwerveChassis.TalonSRXSwerveConfiguration.degreePerTick;
     }
 
     public double getDriveEncoderVelocitySI() {
-        return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.Swerve.TalonSRXSwerveConfiguration.metersPerTick;
+        return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.SwerveChassis.TalonSRXSwerveConfiguration.metersPerTick;
     }
 
     public double getAngleEncoderVelocitySI() {
-        return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.Swerve.TalonSRXSwerveConfiguration.degreePerTick;
+        return motorTalonSRX.getSelectedSensorVelocity()*10.0*Constants.SwerveChassis.TalonSRXSwerveConfiguration.degreePerTick;
     }
 
     private int getDriveAbsEncoder() {
@@ -130,7 +130,7 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
     
 
-    private void configureMotionMagicAngle(Constants.Swerve.SwerveModuleConstants c) {
+    private void configureMotionMagicAngle(Constants.SwerveChassis.SwerveModuleConstants c) {
 
         // Disable motor safety so we can use hardware PID
         motorTalonSRX.setSafetyEnabled(false);

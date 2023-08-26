@@ -17,9 +17,9 @@ import frc.robot.Constants;
  */
 public interface BaseMotorInterface {
 
-    void configureDriveMotor(Constants.Swerve.SwerveModuleConstants c);
+    void configureDriveMotor(Constants.SwerveChassis.SwerveModuleConstants c);
 
-    void configureAngleMotor(Constants.Swerve.SwerveModuleConstants c);
+    void configureAngleMotor(Constants.SwerveChassis.SwerveModuleConstants c);
 
     /*
      * The methods below expose encoder values for position and speed.

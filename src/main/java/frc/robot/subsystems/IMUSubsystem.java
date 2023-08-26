@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.PassThroughSystems.IMU.IMUInterface;
 import frc.robot.PassThroughSystems.IMU.IMUNavX;
 import frc.robot.PassThroughSystems.IMU.IMUPigeon2;
@@ -22,7 +24,10 @@ import frc.robot.PassThroughSystems.IMU.IMUPigeon2;
 public class IMUSubsystem extends SubsystemBase implements IMUInterface {
 
   private IMUInterface imu; // We will use downcasting to set this - it will point to methods either in NavX
-  // or Pigeon subsystems
+                            // or Pigeon subsystems
+
+  private double trajectoryAdjustmentIMU; // This is the value we need to adjust the IMU by after Trajectory
+                                          // is completed
 
   /**
    * Creates a new IMUSubsystem.
@@ -83,6 +88,21 @@ public class IMUSubsystem extends SubsystemBase implements IMUInterface {
 
   public double setYaw(double y) {
     return imu.setYaw(y);
+  }
+
+  /**
+   * Remember starting Yaw before trajectory so it can be restored
+   * back after trajectory
+   * @param y
+   * @return
+   */
+  public double setYawForTrajectory(double y) {
+    trajectoryAdjustmentIMU = RobotContainer.imuSubsystem.getYaw() - y;
+    return imu.setYaw(y);
+  }
+
+  public void restoreYawAfterTrajectory() {
+    imu.setYaw(RobotContainer.imuSubsystem.getYaw() + trajectoryAdjustmentIMU);
   }
 
   public double getTurnRate() {

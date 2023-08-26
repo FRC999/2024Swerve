@@ -15,8 +15,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.Swerve;
-import frc.robot.Constants.Swerve.*;
+import frc.robot.Constants.SwerveChassis;
+import frc.robot.Constants.SwerveChassis.*;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -51,11 +51,11 @@ public class DriveSubsystem extends SubsystemBase {
     // When the robot is turned on, both the IMU and drive encoders will be set to 0.
     // So, the initial odometry X,Y,Angle will be set to 0,0,0
     // This may need to be updated later either by th auto-driviing routines, or by camera inputs based on the AprilTags
-    swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.SWERVE_KINEMATICS, RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
+    swerveOdometry = new SwerveDriveOdometry(Constants.SwerveChassis.SWERVE_KINEMATICS, RobotContainer.imuSubsystem.getYawRotation2d(), getPositions());
 
     // This object will help tracking Swerve pose changes based on the odometry
     // So it will likely be used only for telemetry
-    swervePoseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.SWERVE_KINEMATICS, RobotContainer.imuSubsystem.getYawRotation2d(), getPositions(), new Pose2d());
+    swervePoseEstimator = new SwerveDrivePoseEstimator(Constants.SwerveChassis.SWERVE_KINEMATICS, RobotContainer.imuSubsystem.getYawRotation2d(), getPositions(), new Pose2d());
   
   }
 
@@ -114,14 +114,14 @@ public class DriveSubsystem extends SubsystemBase {
     SwerveModuleState[] swerveModuleStates;
 
     if (fieldcentric) { // field-centric swerve
-      swerveModuleStates = Swerve.SWERVE_KINEMATICS.toSwerveModuleStates(
+      swerveModuleStates = SwerveChassis.SWERVE_KINEMATICS.toSwerveModuleStates(
           ChassisSpeeds.fromFieldRelativeSpeeds(
               xVelocity_m_per_s,
               yVelocity_m_per_s,
               omega_rad_per_s,
               Rotation2d.fromDegrees(RobotContainer.imuSubsystem.getYaw())));
     } else { // robot-centric swerve; does not use IMU
-      swerveModuleStates = Swerve.SWERVE_KINEMATICS.toSwerveModuleStates(
+      swerveModuleStates = SwerveChassis.SWERVE_KINEMATICS.toSwerveModuleStates(
           new ChassisSpeeds(
               xVelocity_m_per_s,
               yVelocity_m_per_s,
@@ -133,7 +133,7 @@ public class DriveSubsystem extends SubsystemBase {
     // Hence if any of the vectors have a scalar value greater than 1, we need to divide all of them by the largest scalar value
     // of a vector we have. That will preserve the direction of the robot even it is concurrently combioned with the
     // holonomic rotation.
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Swerve.MAX_SPEED);
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, SwerveChassis.MAX_VELOCITY);
 
     for (SwerveModule mod : swerveMods) {
       mod.setDesiredState(swerveModuleStates[mod.getModuleNumber()]); 
@@ -148,7 +148,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void setDesiredStatesCalibration(SwerveModuleState[] swerveModuleStates) {
   
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Swerve.MAX_SPEED);
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, SwerveChassis.MAX_VELOCITY);
 
     for (SwerveModule mod : swerveMods) {
       mod.setDesiredStateCalibration(swerveModuleStates[mod.getModuleNumber()]); 
@@ -163,7 +163,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void setDesiredStates(SwerveModuleState[] swerveModuleStates) {
   
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Swerve.MAX_SPEED);
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, SwerveChassis.MAX_VELOCITY);
 
     for (SwerveModule mod : swerveMods) {
       mod.setDesiredState(swerveModuleStates[mod.getModuleNumber()]); 

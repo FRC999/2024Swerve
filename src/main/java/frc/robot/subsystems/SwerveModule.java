@@ -6,8 +6,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
-import frc.robot.Constants.Swerve;
-import frc.robot.Constants.Swerve.SwerveTelemetry;
+import frc.robot.Constants.SwerveChassis;
+import frc.robot.Constants.SwerveChassis.SwerveTelemetry;
 import frc.robot.PassThroughSystems.Motor.BaseMotorPassthrough;
 
 
@@ -24,8 +24,8 @@ public class SwerveModule extends SubsystemBase {
     private Rotation2d currentAngle = new Rotation2d();
 
     // This is not used for the manual teleop driving
-    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.DRIVE_KS,
-            Constants.Swerve.DRIVE_KV, Constants.Swerve.DRIVE_KA);
+    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.SwerveChassis.DRIVE_KS,
+            Constants.SwerveChassis.DRIVE_KV, Constants.SwerveChassis.DRIVE_KA);
 
     /**
      * This subsystem instantiates and manages a single swerve module.
@@ -41,7 +41,7 @@ public class SwerveModule extends SubsystemBase {
      * @param moduleNumber - identifies module numerically (e.g. 0,1,2,3) - primarily used for logging
      * @param moduleConstants - supplies module configuration parameters via enum defined in Constants
      */
-    public SwerveModule(int moduleNumber, Constants.Swerve.SwerveModuleConstants moduleConstants) {
+    public SwerveModule(int moduleNumber, Constants.SwerveChassis.SwerveModuleConstants moduleConstants) {
         this.moduleNumber = moduleNumber;
         angleOffset = moduleConstants.getAngleOffset();
 
@@ -118,7 +118,7 @@ public class SwerveModule extends SubsystemBase {
         switch (SwerveTelemetry.swerveDriveOrTelemetry) {
             case DRIVE_ONLY:
                  // This is the code that makes the robot move by applying the power to the motors
-                driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
+                driveMotor.applyPower(desiredState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
                 angleMotor.setAngleMotorChassisAngleSI(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
                 break;
             case TELEMETRY_ONLY:
@@ -127,7 +127,7 @@ public class SwerveModule extends SubsystemBase {
             case DRIVE_AND_TELEMETRY:
                 printSwerveModuleState(desiredState);
                 // This is the code that makes the robot move by applying the power to the motors
-                driveMotor.applyPower(desiredState.speedMetersPerSecond / Swerve.MAX_SPEED);
+                driveMotor.applyPower(desiredState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
                 angleMotor.setAngleMotorChassisAngleSI(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
                 break;
         }            
@@ -146,7 +146,7 @@ public class SwerveModule extends SubsystemBase {
 
     public void printSwerveModuleState(SwerveModuleState moduleState) {
         System.out.print(" SM: "+moduleNumber);
-        System.out.print(" P: "+moduleState.speedMetersPerSecond / Swerve.MAX_SPEED);
+        System.out.print(" P: "+moduleState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
         System.out.println(" A: "+moduleState.angle.getDegrees());
     }
 
