@@ -2,13 +2,14 @@ package frc.robot.Devices;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
-import frc.robot.Constants.OIConstants.LogitechControllerDevice;
+import frc.robot.Constants.OIConstants.ControllerDevice;
 import frc.robot.Constants.OIConstants.ControllerDeviceType;
 
 public class Controller extends Joystick {
 
-    LogitechControllerDevice cd;
+    ControllerDevice cd;
     ControllerDeviceType cdt;
     double dx; // X deadband for performance
     double dy; // Y deadband for performance
@@ -23,8 +24,10 @@ public class Controller extends Joystick {
     private double cubeDeadbandX;
     private double cubeDeadbandY;
     private double cubeDeadbandOmega;
+
+    private XboxController xboxController;
     
-    public Controller(Constants.OIConstants.LogitechControllerDevice cd) {
+    public Controller(Constants.OIConstants.ControllerDevice cd) {
         super(cd.getPortNumber()); // This needs to be done because the joystick parent class has a non-default constructor
         this.cd = cd;
         this.cdt = cd.getControllerDeviceType();  // This is done so the controller type is not 
@@ -114,5 +117,20 @@ public class Controller extends Joystick {
                 return result;
         }
         return 0; // Unknown controller type
+    }
+
+    public double getLeftStickY_Xbox() {
+        double rawY = xboxController.getRawAxis(3); //TODO: Need to check axis number
+        return rawY;
+    }
+
+    public double getLeftStickX_Xbox() {
+        double rawX = xboxController.getRawAxis(4); //TODO: Need to check axis number
+        return rawX;
+    }
+
+    public double getLeftStickOmega_Xbox() {
+        double rawOmega = xboxController.getRawAxis(5); //TODO: Need to check axis number
+        return rawOmega;
     }
 }

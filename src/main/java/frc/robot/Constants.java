@@ -9,11 +9,15 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
@@ -22,9 +26,11 @@ public final class Constants {
 	}
 
 	/**
-	 * This class contains configuration constants for the chassis, the individual swerve modules and the motors
+	 * This class contains configuration constants for the chassis, the individual
+	 * swerve modules and the motors
 	 * We try to distinguish between them by proper naming.
-	 * It's likely we will need to do some additional cleanup here to make them easy to undrstand
+	 * It's likely we will need to do some additional cleanup here to make them easy
+	 * to undrstand
 	 */
 	public static final class SwerveChassis {
 
@@ -44,14 +50,20 @@ public final class Constants {
 		public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
 		/**
-		 * This class lists locating of each of the swerve modules from the center of the robot.
-		 * It is assumed that there are four swerve modules located at the edges of a rectangle.
-		 * It is also assumed that the center of rotation is at the center of that rectangle.
+		 * This class lists locating of each of the swerve modules from the center of
+		 * the robot.
+		 * It is assumed that there are four swerve modules located at the edges of a
+		 * rectangle.
+		 * It is also assumed that the center of rotation is at the center of that
+		 * rectangle.
 		 * 
-		 * If your center of rotation is far off the center of that rectangle, which may happen
-		 * due to the very scewed CG or uneven traction, you may want to adjust the numbers below
+		 * If your center of rotation is far off the center of that rectangle, which may
+		 * happen
+		 * due to the very scewed CG or uneven traction, you may want to adjust the
+		 * numbers below
 		 * based on the center of rotation.
-		 * The order of the wheels location definition must match the order of the swerve modules
+		 * The order of the wheels location definition must match the order of the
+		 * swerve modules
 		 * defined in the DriveSubsystem for the SwerveModule array.
 		 */
 		public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
@@ -61,7 +73,8 @@ public final class Constants {
 				new Translation2d(-WHEEL_BASE / 2.0, -TRACK_WIDTH / 2.0));
 
 		/*
-		 * Ramp Rates and Current Limits. Assumed to be the same for all drivetrain motors of the
+		 * Ramp Rates and Current Limits. Assumed to be the same for all drivetrain
+		 * motors of the
 		 * same type/purpose.
 		 */
 		public static final double DRIVE_CLOSED_LOOP_RAMP = 0;
@@ -73,8 +86,10 @@ public final class Constants {
 
 		/**
 		 * Angle Motor PID. Assumed to be the same for all angle motors
-		 * These PID constants are only used for auto trajectory driving, and not teleop.
-		 * Changes to these constants will have a substantial impact on the precision of your
+		 * These PID constants are only used for auto trajectory driving, and not
+		 * teleop.
+		 * Changes to these constants will have a substantial impact on the precision of
+		 * your
 		 * trajectory if it includes holonomic rotation.
 		 * Make sure to test the values and adjust them as needed for your robot.
 		 */
@@ -90,11 +105,13 @@ public final class Constants {
 		public static final double ANGLE_MOTOR_VELOCITY_CONVERSION = (360.0 * 10.0) / 4096.0; // conversion factor from
 																								// tick/100ms to
 																								// degree/s
-		
+
 		/**
 		 * Drive Motor PID. Assumed to be the same for all drive motors
-		 * These PID constants are only used for auto trajectory driving, and not teleop.
-		 * We found that changing them a bit will not have a substantial impact on the trajectory with PathPlanner
+		 * These PID constants are only used for auto trajectory driving, and not
+		 * teleop.
+		 * We found that changing them a bit will not have a substantial impact on the
+		 * trajectory with PathPlanner
 		 * even if a trajectory includes a holonomic component.
 		 */
 		public static final double DRIVE_CHASSIS_KP = 3.0;
@@ -103,21 +120,26 @@ public final class Constants {
 
 		/**
 		 * Maximum linear speed of chassis in meters per second
-		 * Note that not determining this number precisely up front will not affect your teleop driving
+		 * Note that not determining this number precisely up front will not affect your
+		 * teleop driving
 		 * as the teleop logic will simply use it as a point of reference.
 		 * Changing this number will not require any other changes in the teleop code.
 		 */
 		public static final double MAX_VELOCITY = 3.0;
-		
+
 		/**
 		 * Radians per second.
-		 * Swerve chassis assumes that the maximum linear speed during rotation is the same as the 
+		 * Swerve chassis assumes that the maximum linear speed during rotation is the
+		 * same as the
 		 * maxiumum linear speed during forward drive.
-		 * That means the maximum angular speed can be calculated by dividing the maximum linear speed by 
-		 * the radius of rotation, which can be calculated by halving the distance between the opposing swerve 
+		 * That means the maximum angular speed can be calculated by dividing the
+		 * maximum linear speed by
+		 * the radius of rotation, which can be calculated by halving the distance
+		 * between the opposing swerve
 		 * modules such as the front left and rear right.
 		 */
-		public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY/(Math.sqrt(TRACK_WIDTH*TRACK_WIDTH+WHEEL_BASE*WHEEL_BASE)/2);
+		public static final double MAX_ANGULAR_VELOCITY = MAX_VELOCITY
+				/ (Math.sqrt(TRACK_WIDTH * TRACK_WIDTH + WHEEL_BASE * WHEEL_BASE) / 2);
 
 		// For trajectory driving.
 		public static final double MAX_ACCELERATION = 2.0;
@@ -125,42 +147,56 @@ public final class Constants {
 		/**
 		 * Parameters for BaseMotorTalonSRX class
 		 * This class is specific to the motors controlled by TalonSRX controller.
-		 * Parameters specified here are primarily used in the motor configuration methods, as well as
-		 * getters that translate encoder outputs from encoder-specific units to the SI units.
-		 * Other motor controller implementations will likely have a different set of constants.
+		 * Parameters specified here are primarily used in the motor configuration
+		 * methods, as well as
+		 * getters that translate encoder outputs from encoder-specific units to the SI
+		 * units.
+		 * Other motor controller implementations will likely have a different set of
+		 * constants.
 		 */
 		public static final class TalonSRXSwerveConfiguration {
 
-			// We assume that all TalonSRX controlers need the same PID and some other hardware configuration parameters
-			public static final int kPIDLoopIdx = 0;  // Talon Loop ID
-			public static final int configureTimeoutMs = 30; // Hardware Talon Configuration TimeoutMs (probably need to be larger than CAN cycle of 20ms)
-															 // For Talon configuration command it means - you expect a reply from the controller
-															 // in that time; otherwise assume the error
+			// We assume that all TalonSRX controlers need the same PID and some other
+			// hardware configuration parameters
+			public static final int kPIDLoopIdx = 0; // Talon Loop ID
+			public static final int configureTimeoutMs = 30; // Hardware Talon Configuration TimeoutMs (probably need to
+																// be larger than CAN cycle of 20ms)
+																// For Talon configuration command it means - you expect
+																// a reply from the controller
+																// in that time; otherwise assume the error
 
 			// Customize the following values to your prototype
-			public static final double metersPerTick = 1.0/1462.25;	//TODO: measure this number on the robot
-			public static final double degreePerTick = 360.0/4096.0 ; // On our swerve prototype 1 angular rotation of the wheel = 1 full rotation of the encoder
+			public static final double metersPerTick = 1.0 / 1462.25; // TODO: measure this number on the robot
+			public static final double degreePerTick = 360.0 / 4096.0; // On our swerve prototype 1 angular rotation of
+																		// the wheel = 1 full rotation of the encoder
 
 			// Absolute encoder setup
-          	public static final boolean kDiscontinuityPresent = true;
-			public static final int kBookEnd_0 = 910;	/* 80 deg */
-			public static final int kBookEnd_1 = 1137;	/* 100 deg */
-			public static final int clicksSRXPerFullRotation = 4096; //rollover on 999 swerve encoder - we use CTR Mag encoders for angle with 1:1 ratio
+			public static final boolean kDiscontinuityPresent = true;
+			public static final int kBookEnd_0 = 910; /* 80 deg */
+			public static final int kBookEnd_1 = 1137; /* 100 deg */
+			public static final int clicksSRXPerFullRotation = 4096; // rollover on 999 swerve encoder - we use CTR Mag
+																		// encoders for angle with 1:1 ratio
 
-			
 			/**
 			 * Current limiters
 			 * 
 			 * In TalonSRX the limiters limit the input current (not the stator current)
 			 * and work in the following way:
-			 * If the current demand exceeds peak current for more than a specified duration,
-			 * the current will be limited to the continuous limit until the power demand drops
-			 * below the continuous limit. After that the limiter "resets" and will watch for peak current again.
-			 * For instance in this case if the peak demand on the angle motor exceeds 40amp for more than 1 second,
-			 * the max draw on it will be limited to 25amp until the demand falls below 25amp.
+			 * If the current demand exceeds peak current for more than a specified
+			 * duration,
+			 * the current will be limited to the continuous limit until the power demand
+			 * drops
+			 * below the continuous limit. After that the limiter "resets" and will watch
+			 * for peak current again.
+			 * For instance in this case if the peak demand on the angle motor exceeds 40amp
+			 * for more than 1 second,
+			 * the max draw on it will be limited to 25amp until the demand falls below
+			 * 25amp.
 			 * 
-			 * The reason for the limits - you want to make sure you do not trip the breakers, and Rio will not
-			 * go into brownout protection mode. Note that PDP breakers do not immediately trip when you exceed the
+			 * The reason for the limits - you want to make sure you do not trip the
+			 * breakers, and Rio will not
+			 * go into brownout protection mode. Note that PDP breakers do not immediately
+			 * trip when you exceed the
 			 * power limit written on them.
 			 * Good discussions about brownouts as well as breakers are here:
 			 * https://docs.wpilib.org/en/latest/docs/software/roborio-info/roborio-brownouts.html
@@ -169,7 +205,7 @@ public final class Constants {
 			 */
 
 			public static final int angleContinuousCurrentLimit = 25; // amperes
-        	public static final int anglePeakCurrentLimit = 40; // amperes
+			public static final int anglePeakCurrentLimit = 40; // amperes
 			public static final int anglePeakCurrentDuration = 1000; // Milliseconds
 			public static final boolean angleEnableCurrentLimit = true;
 
@@ -181,10 +217,13 @@ public final class Constants {
 		}
 
 		/**
-		 * The following constants are used to print swerve telemetry. Please, note that excessive telemetry
+		 * The following constants are used to print swerve telemetry. Please, note that
+		 * excessive telemetry
 		 * will cause excessive CPU usage, and ultimately will result in a packet loss.
-		 * If after enabling telemetry you will see CPU approaching 100% in the RIO log, such settings will not be
-		 * usable for extensive driving or competition. These settings were put in place so a team can
+		 * If after enabling telemetry you will see CPU approaching 100% in the RIO log,
+		 * such settings will not be
+		 * usable for extensive driving or competition. These settings were put in place
+		 * so a team can
 		 * troubleshoot teleop and trajectory driving.
 		 */
 		public static final class SwerveTelemetry {
@@ -195,21 +234,23 @@ public final class Constants {
 			}
 
 			/**
-			 *  Specify whether telemetry will be printed and/or the robot will apply power to the motors
+			 * Specify whether telemetry will be printed and/or the robot will apply power
+			 * to the motors
 			 */
 			public static final SwerveDriveOrTelemetry swerveDriveOrTelemetry = SwerveDriveOrTelemetry.DRIVE_ONLY;
-			
+
 			/**
-			 *  Print odometry telemetry every 20 milliseconds.
+			 * Print odometry telemetry every 20 milliseconds.
 			 */
 			public static final boolean odometryTelemetryPrint = false;
-			
+
 		}
-		
 
 		/*
-		 * Add controller types for each supported motor controller including simulated ones
-		 * Make sure to modify BaseMotorPassthrough.java and add specific implementation class
+		 * Add controller types for each supported motor controller including simulated
+		 * ones
+		 * Make sure to modify BaseMotorPassthrough.java and add specific implementation
+		 * class
 		 * under the "Motor" folder
 		 */
 		public static enum BaseMotorControllerTypes {
@@ -219,8 +260,10 @@ public final class Constants {
 
 		/**
 		 * Swerve Module Constants for each module including
-		 * driveMotorType - type of the motor controller (e.g. TalonSRX vs NEO vs simulations)
-		 * angleMotorType - type of the motor controller (e.g. TalonSRX vs NEO vs simulations)
+		 * driveMotorType - type of the motor controller (e.g. TalonSRX vs NEO vs
+		 * simulations)
+		 * angleMotorType - type of the motor controller (e.g. TalonSRX vs NEO vs
+		 * simulations)
 		 * driveMotorID - CAN ID of the drive motors
 		 * angleMotorID - CAN ID of the rotation motors
 		 * angleOffset - Angle deviation of the absolute encoder when the
@@ -232,7 +275,7 @@ public final class Constants {
 		 * 
 		 * For sensor phase we should use PID rule - when the positive power is applied,
 		 * the motor should propell the robot "forward" and the corresponding encoder
-		 * value should increase. Also for the angle motors the "positive"  direction
+		 * value should increase. Also for the angle motors the "positive" direction
 		 * is counterclockwise.
 		 * 
 		 * Only include constants that may differ for each motor.
@@ -251,7 +294,7 @@ public final class Constants {
 					true, // Inversion for drive motor
 					false, // Inversion for angle motor
 					false, // Sensor phase for drive motor
-					false  // Sensor phase for angle motor
+					false // Sensor phase for angle motor
 			),
 			MOD1( // Front Right
 					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
@@ -262,7 +305,7 @@ public final class Constants {
 					true, // Inversion for drive motor
 					false, // Inversion for angle motor
 					false, // Sensor phase for drive motor
-					false  // Sensor phase for angle motor
+					false // Sensor phase for angle motor
 
 			),
 			MOD2( // Back Left
@@ -274,7 +317,7 @@ public final class Constants {
 					true, // Inversion for drive motor
 					false, // Inversion for angle motor
 					true, // Sensor phase for drive motor
-					false  // Sensor phase for angle motor
+					false // Sensor phase for angle motor
 
 			),
 			MOD3( // Back Right
@@ -286,7 +329,7 @@ public final class Constants {
 					true, // Inversion for drive motor
 					false, // Inversion for angle motor
 					true, // Sensor phase for drive motor
-					false  // Sensor phase for angle motor
+					false // Sensor phase for angle motor
 
 			);
 
@@ -369,8 +412,9 @@ public final class Constants {
 	} // End IMUConstants
 
 	/**
-	 *  These Hardware PID constants are used by the individual swerve modules, and are used only by turn motors.
-	 *  We do not currently use Hardware PID for manual or trajectory driving.
+	 * These Hardware PID constants are used by the individual swerve modules, and
+	 * are used only by turn motors.
+	 * We do not currently use Hardware PID for manual or trajectory driving.
 	 */
 	public static final class PIDConstantsForSwerveModules {
 
@@ -384,7 +428,8 @@ public final class Constants {
 			public static final double kF = 0;
 			public static final double Acceleration = 6750; // raw sensor units per 100 ms per second
 			public static final double CruiseVelocity = 6750; // raw sensor units per 100 ms
-			public static final int Smoothing = 3; // CurveStrength. 0 to use Trapezoidal Motion Profile. [1,8] for S-Curve (greater value yields greater smoothing).
+			public static final int Smoothing = 3; // CurveStrength. 0 to use Trapezoidal Motion Profile. [1,8] for
+													// S-Curve (greater value yields greater smoothing).
 			public static final double DefaultAcceptableError = 5; // Sensor units
 			public static final double Izone = 500;
 			public static final double PeakOutput = 0.5; // Closed Loop peak output
@@ -396,9 +441,11 @@ public final class Constants {
 		}
 
 	}
+
 	/**
 	 * Controller-related constants.
-	 * Here we define port numbers, axis, deadbands, button numbers and various ability flags, such as use of the cube driving
+	 * Here we define port numbers, axis, deadbands, button numbers and various
+	 * ability flags, such as use of the cube driving
 	 */
 	public static final class OIConstants {
 		public static final int driverControllerPort = 0;
@@ -409,28 +456,37 @@ public final class Constants {
 			LOGITECH,
 			PS5,
 			XBOX
-		} 
+		}
 
-		public static enum LogitechControllerDevice {
+		public static enum ControllerDevice {
 			DRIVESTICK(
-				0, // Port Number
-				ControllerDeviceType.LOGITECH,
-				0.02, // deadband X
-				0.02, // deadband Y
-				0.02,  // deadband Omega
-				true, // cubeControllerLeft
-				true // cubeControllerRight
+					0, // Port Number
+					ControllerDeviceType.LOGITECH,
+					0.02, // deadband X
+					0.02, // deadband Y
+					0.02, // deadband Omega
+					true, // cubeControllerLeft
+					true // cubeControllerRight
 			),
 
-			TURNSTICK(	//Controls the rotation of the swervebot
-				1, // Port Number
-				ControllerDeviceType.LOGITECH,
-				0.02, // deadband X
-				0.02, // deadband Y
-				0.02,  // deadband Omega
-				true, // cubeControllerLeft
-				true // cubeControllerRight
-			);
+			TURNSTICK( // Controls the rotation of the swervebot
+					1, // Port Number
+					ControllerDeviceType.LOGITECH,
+					0.02, // deadband X
+					0.02, // deadband Y
+					0.02, // deadband Omega
+					true, // cubeControllerLeft
+					true // cubeControllerRight
+			),
+
+			XBOX_CONTROLLER(
+					4, // Port Number for Xbox controller
+					ControllerDeviceType.XBOX,
+					0.03, // deadband X for Xbox
+					0.03, // deadband Y for Xbox       //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER
+					0.03, // deadband Omega for Xbox
+					false, // No cube controller configuration for Xbox yet
+					false);
 
 			private ControllerDeviceType controllerDeviceType;
 			private int portNumber;
@@ -440,7 +496,14 @@ public final class Constants {
 			private boolean cubeControllerLeftStick;
 			private boolean cubeControllerRightStick;
 
-			LogitechControllerDevice(int pn, ControllerDeviceType cdt, double dx, double dy, double dm, boolean ccL, boolean ccR) {
+			ControllerDevice(
+					int pn,
+					ControllerDeviceType cdt,
+					double dx,
+					double dy,
+					double dm,
+					boolean ccL,
+					boolean ccR) {
 				this.portNumber = pn;
 				this.controllerDeviceType = cdt;
 				this.deadbandX = dx;
@@ -477,81 +540,7 @@ public final class Constants {
 			public boolean isCubeControllerRightStick() {
 				return cubeControllerRightStick;
 			}
-
-			
-
 		}
-
-		public static enum XboxControllerDevice {
-			DRIVESTICK(
-				4, // Port Number
-				ControllerDeviceType.XBOX,
-				0.02, // deadband X
-				0.02, // deadband Y
-				0.02,  // deadband Omega
-				true, // cubeControllerLeft
-				true // cubeControllerRight
-			),
-
-			TURNSTICK(	//Controls the rotation of the swervebot
-				1, // Port Number
-				ControllerDeviceType.XBOX,
-				0.02, // deadband X
-				0.02, // deadband Y
-				0.02,  // deadband Omega
-				true, // cubeControllerLeft
-				true // cubeControllerRight
-			);
-
-			private ControllerDeviceType controllerDeviceType;
-			private int portNumber;
-			private double deadbandX;
-			private double deadbandY;
-			private double deadbandOmega;
-			private boolean cubeControllerLeftStick;
-			private boolean cubeControllerRightStick;
-
-			LogitechControllerDevice(int pn, ControllerDeviceType cdt, double dx, double dy, double dm, boolean ccL, boolean ccR) {
-				this.portNumber = pn;
-				this.controllerDeviceType = cdt;
-				this.deadbandX = dx;
-				this.deadbandY = dy;
-				this.deadbandOmega = dm;
-				this.cubeControllerLeftStick = ccL;
-				this.cubeControllerRightStick = ccR;
-			}
-
-			public ControllerDeviceType getControllerDeviceType() {
-				return controllerDeviceType;
-			}
-
-			public int getPortNumber() {
-				return portNumber;
-			}
-
-			public double getDeadbandX() {
-				return deadbandX;
-			}
-
-			public double getDeadbandY() {
-				return deadbandY;
-			}
-
-			public double getDeadbandOmega() {
-				return deadbandOmega;
-			}
-
-			public boolean isCubeControllerLeftStick() {
-				return cubeControllerLeftStick;
-			}
-
-			public boolean isCubeControllerRightStick() {
-				return cubeControllerRightStick;
-			}
-
-			
-
-		}
-				
 	}
+
 }
