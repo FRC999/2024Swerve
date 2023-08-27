@@ -430,7 +430,16 @@ public final class Constants {
 				0.02,  // deadband Omega
 				true, // cubeControllerLeft
 				true // cubeControllerRight
-			);
+			),
+
+			XBOX_CONTROLLER(
+					4, // Port Number for Xbox controller
+					ControllerDeviceType.XBOX,
+					0.03, // deadband X for Xbox
+					0.03, // deadband Y for Xbox       //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER
+					0.03, // deadband Omega for Xbox
+					false, // No cube controller configuration for Xbox yet
+					false);
 
 			private ControllerDeviceType controllerDeviceType;
 			private int portNumber;

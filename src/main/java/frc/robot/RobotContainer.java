@@ -44,6 +44,8 @@ public class RobotContainer {
 
   public static Controller turnStick;
 
+  public static Controller xboxController;
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -89,6 +91,8 @@ public class RobotContainer {
        */
       driveStick = new Controller(ControllerDevice.DRIVESTICK);
       turnStick = new Controller(ControllerDevice.TURNSTICK);
+      xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
+
       System.out.println("Driver interface configured");
   }
 
@@ -154,15 +158,18 @@ public class RobotContainer {
    * @return
    */
   private double getDriverXAxis() {
-      return -driveStick.getLeftStickY();
+     // return -driveStick.getLeftStickY();
+     return -xboxController.getLeftStickY();
   }
 
   private double getDriverYAxis() {
-      return -driveStick.getLeftStickX();
+     // return -driveStick.getLeftStickX();
+     return -xboxController.getLeftStickX();
   }
 
   private double getDriverOmegaAxis() {
-      return -turnStick.getLeftStickOmega();
+     // return -turnStick.getLeftStickOmega();
+     return -xboxController.getLeftStickOmega();
   }
 
   /**

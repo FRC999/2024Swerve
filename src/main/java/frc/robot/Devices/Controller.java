@@ -63,56 +63,78 @@ public class Controller extends Joystick {
      */
 
     public double getLeftStickY() {
-        double rawY = this.getY();
+        double rawY;
         double result;
 
         switch(cdt){
             case LOGITECH:
-                if (this.cubeControllerLeftStick) {
-                    double cubeY = rawY*rawY*rawY;
-                    result = (cubeY - (rawY > 0 ? 1 : -1) * cubeDeadbandY)/(1 - cubeDeadbandY); // cubeController
-                    result = Math.abs(result) > this.cubeDeadbandY ? result : 0; // Ignores range of deadband values
-                } else {
-                    result = (MathUtil.applyDeadband(rawY, dy)); // linear controller values
-                }
-                return result;
+                rawY = this.getY();
+                break;
+            case XBOX:
+                rawY = this.getRawAxis(5);
+                break;
+            default:
+                return 0; // Unknown controller type
         }
-        return 0; // Unknown controller type
+        if (this.cubeControllerLeftStick) {
+            double cubeY = rawY*rawY*rawY;
+            result = (cubeY - (rawY > 0 ? 1 : -1) * cubeDeadbandY)/(1 - cubeDeadbandY); // cubeController
+            result = Math.abs(result) > this.cubeDeadbandY ? result : 0; // Ignores range of deadband values
+        } else {
+            result = (MathUtil.applyDeadband(rawY, dy)); // linear controller values
+        }
+        return result;
+        
     }
 
     public double getLeftStickX() {
-        double rawX = this.getX();
+        double rawX;
         double result;
 
         switch(cdt){
             case LOGITECH:
-                if (this.cubeControllerLeftStick) {
-                    double cubeX = rawX*rawX*rawX;
-                    result = (cubeX - (rawX > 0 ? 1 : -1) * cubeDeadbandX)/(1 - cubeDeadbandX); // cubeController
-                    result = Math.abs(result) > this.cubeDeadbandX ? result : 0; // Ignores range of deadband values
-                } else {
-                    result = (MathUtil.applyDeadband(rawX, dx)); // linear controller values
-                }
-                return result;
+                rawX = this.getX();
+                break;
+            case XBOX:
+                rawX = this.getRawAxis(4);
+                break;
+            default:
+                return 0; // Unknown controller type
+               
         }
-        return 0; // Unknown controller type
+        if (this.cubeControllerLeftStick) {
+            double cubeX = rawX*rawX*rawX;
+            result = (cubeX - (rawX > 0 ? 1 : -1) * cubeDeadbandX)/(1 - cubeDeadbandX); // cubeController
+            result = Math.abs(result) > this.cubeDeadbandX ? result : 0; // Ignores range of deadband values
+        } else {
+            result = (MathUtil.applyDeadband(rawX, dx)); // linear controller values
+        }
+        return result;
+        
     }
 
     public double getLeftStickOmega() {
-        double rawOmega = this.getTwist();
+        double rawOmega;
         double result;
 
         switch(cdt){
             case LOGITECH:
-                if (this.cubeControllerRightStick) {
-                    double cubeOmega = rawOmega*rawOmega*rawOmega;
-                    result = (cubeOmega - (rawOmega > 0 ? 1 : -1) * cubeDeadbandOmega)/(1 - cubeDeadbandOmega); // cubeController
-                    result = Math.abs(result) > this.cubeDeadbandOmega ? result : 0; // Ignores range of deadband values
-                } else {
-                    result = (MathUtil.applyDeadband(rawOmega, dm)); // linear controller values
-                }
-                return result;
+                rawOmega = this.getTwist();
+                break;
+            case XBOX:
+                rawOmega = this.getRawAxis(0);
+                break;
+            default:
+                return 0; // Unknown controller type
         }
-        return 0; // Unknown controller type
+        if (this.cubeControllerRightStick) {
+            double cubeOmega = rawOmega*rawOmega*rawOmega;
+            result = (cubeOmega - (rawOmega > 0 ? 1 : -1) * cubeDeadbandOmega)/(1 - cubeDeadbandOmega); // cubeController
+            result = Math.abs(result) > this.cubeDeadbandOmega ? result : 0; // Ignores range of deadband values
+        } else {
+            result = (MathUtil.applyDeadband(rawOmega, dm)); // linear controller values
+        }
+        return result;
+        
     }
 }
