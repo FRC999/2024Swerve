@@ -96,7 +96,7 @@ public class Controller extends Joystick {
                 rawX = this.getX();
                 break;
             case XBOX:
-                rawX = this.getRawAxis(4);
+                rawX = this.getRawAxis(0);
                 break;
             default:
                 return 0; // Unknown controller type
@@ -122,7 +122,7 @@ public class Controller extends Joystick {
                 rawOmega = this.getTwist();
                 break;
             case XBOX:
-                rawOmega = this.getRawAxis(0);
+                rawOmega = this.getRawAxis(3)-this.getRawAxis(2);
                 break;
             default:
                 return 0; // Unknown controller type
