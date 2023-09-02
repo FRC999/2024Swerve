@@ -188,6 +188,13 @@ public final class Constants {
 		 * troubleshoot teleop and trajectory driving.
 		 */
 		public static final class SwerveTelemetry {
+
+			/**
+			 * Collect telemetry using Data Log Manager
+			 */
+			public static final boolean saveDataUsingDataLogManager = true;
+			public static final String logFileName = "/home/lvuser/LittleSwerve";
+
 			public static enum SwerveDriveOrTelemetry {
 				DRIVE_ONLY,
 				TELEMETRY_ONLY,
@@ -197,12 +204,12 @@ public final class Constants {
 			/**
 			 *  Specify whether telemetry will be printed and/or the robot will apply power to the motors
 			 */
-			public static final SwerveDriveOrTelemetry swerveDriveOrTelemetry = SwerveDriveOrTelemetry.DRIVE_ONLY;
+			public static final SwerveDriveOrTelemetry swerveDriveOrTelemetry = SwerveDriveOrTelemetry.DRIVE_AND_TELEMETRY;
 			
 			/**
 			 *  Print odometry telemetry every 20 milliseconds.
 			 */
-			public static final boolean odometryTelemetryPrint = false;
+			public static final boolean odometryTelemetryPrint = true;
 			
 		}
 		

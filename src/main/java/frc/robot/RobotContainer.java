@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.OIConstants.ControllerDevice;
+import frc.robot.Constants.SwerveChassis.SwerveTelemetry;
 import frc.robot.Devices.Controller;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
@@ -20,6 +21,9 @@ import frc.robot.subsystems.IMUSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -54,9 +58,18 @@ public class RobotContainer {
   
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  
+  // A Data Log Manager file handle
+  public static StringLogEntry myStringLog;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    
+      if(SwerveTelemetry.saveDataUsingDataLogManager) {
+        DataLogManager.start();
+        DataLog log = DataLogManager.getLog();
+        myStringLog = new StringLogEntry(log, SwerveTelemetry.logFileName);
+      }
 
       // Configure driver interface - binding joystick objects to port numbers
       configureDriverInterface();
@@ -65,7 +78,8 @@ public class RobotContainer {
       configureBindings();
 
       // This command should be for the teleop driving
-      // Note that the first three of its parameters are DoubleSupplier, and the last one is a
+      // Note that the first three of its parameters are DoubleSupplier, and the last
+      // one is a
       // BooleanSupplier
       driveSubsystem.setDefaultCommand(
               new DriveManuallyCommand(
@@ -323,9 +337,6 @@ public class RobotContainer {
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
       new JoystickButton(driveStick, 9)
               .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag"))
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-      new JoystickButton(driveStick, 10)
-              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("MeterStraightTurn90"))
               .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
       new JoystickButton(turnStick, 11)
               .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("InPlaceTurn90"))
