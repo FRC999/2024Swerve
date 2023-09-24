@@ -18,6 +18,7 @@ import frc.robot.commands.ZeroHeadingCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
+import frc.robot.subsystems.NetworkTablesSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -41,6 +42,8 @@ public class RobotContainer {
   public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
 
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+
+  public static final NetworkTablesSubsystem networkTablesSubsystem = new NetworkTablesSubsystem();
 
   public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
 
@@ -136,7 +139,9 @@ public class RobotContainer {
 
       // swerveValuesTesting();
 
-      trajectoryCalibration();
+      //trajectoryCalibration();
+
+      visionTesting();
 
   }
 
@@ -323,6 +328,16 @@ public class RobotContainer {
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
         );
+  }
+
+  private void visionTesting() {
+    new JoystickButton(driveStick, 11)
+        .onTrue(new InstantCommand(RobotContainer.networkTablesSubsystem::seeCone));
+    new JoystickButton(driveStick, 12)
+        .onTrue(new InstantCommand(RobotContainer.networkTablesSubsystem::getVisionTargetX));
+    new JoystickButton(driveStick, 9)
+        .whileTrue(new TurnToAngleZeroHeadingCommand(Rotation2d.fromDegrees(0)))
+        .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
   }
 
   /**

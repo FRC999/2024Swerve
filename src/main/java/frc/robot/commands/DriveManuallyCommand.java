@@ -65,6 +65,8 @@ public class DriveManuallyCommand extends CommandBase {
       mFieldCentrSupplier.getAsBoolean()
     );
 
+    //System.out.println("***O: "+omegaInput * SwerveChassis.MAX_ANGULAR_VELOCITY);
+
   }
 
   // Called once the command ends or is interrupted.
