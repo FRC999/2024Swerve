@@ -34,6 +34,9 @@ public class BaseMotorPassthrough implements BaseMotorInterface {
       case TALON_SRX:
         baseMotorInterface = new BaseMotorTalonSRX(CANID);
         break;
+      case SPARKMAX:
+        baseMotorInterface = new BaseMotorNEO(CANID);
+        break;
       default:
 
     }

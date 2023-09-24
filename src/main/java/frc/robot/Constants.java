@@ -214,6 +214,13 @@ public final class Constants {
 			public static final int drivePeakCurrentDuration = 500; // Milliseconds
 			public static final boolean driveEnableCurrentLimit = true;
 
+
+
+		}
+
+		public static final class NEOSwerveConfiguration {
+			public static final double metersPerTick = 1.0 / 1462.25; // TODO: measure this number on the robot
+			public static final double degreePerTick = 360.0 / 4096.0; // BOTH are copied over from TalonSRX
 		}
 
 		/**
