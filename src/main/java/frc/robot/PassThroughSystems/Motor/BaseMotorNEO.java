@@ -3,6 +3,7 @@ package frc.robot.PassThroughSystems.Motor;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import frc.robot.Constants;
@@ -38,7 +39,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
     }
 
     public double getAngleEncoderPosition() {
-        return motorNEO.getEncoder().getPosition();
+        return motorNEO.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
     }
 
     public double getDriveEncoderVelocity() {
@@ -46,7 +47,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
     }
 
     public double getAngleEncoderVelocity() {
-        return motorNEO.getEncoder().getVelocity();
+        return motorNEO.getAbsoluteEncoder(Type.kDutyCycle).getVelocity();
     }
 
     public double getDriveEncoderPositionSI() {
@@ -81,8 +82,8 @@ public class BaseMotorNEO implements BaseMotorInterface {
         motorNEO.set(power);
     }
 
-    private void brakeMode(){
-        motorNEO.setIdleMode(CANSparkMax.IdleMode brake);
+    private void motorBrakeMode(){
+        motorNEO.setIdleMode(IdleMode.kBrake);
     }
 
 
