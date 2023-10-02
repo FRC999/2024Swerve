@@ -44,8 +44,8 @@ public final class Constants {
 		 * Drive train properties
 		 * All measurements are in meters
 		 */
-		public static final double TRACK_WIDTH = 0.385; // left to right
-		public static final double WHEEL_BASE = 0.44; // front to back
+		public static final double TRACK_WIDTH = 0.64; // left to right
+		public static final double WHEEL_BASE = 0.64; // front to back
 		public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
 		public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
@@ -102,7 +102,7 @@ public final class Constants {
 
 		public static final double ANGLE_MOTOR_PID_TIMEOUT = 30; // milliseconds
 
-		public static final double ANGLE_MOTOR_VELOCITY_CONVERSION = (360.0 * 10.0) / 4096.0; // conversion factor from
+		public static final double ANGLE_MOTOR_VELOCITY_CONVERSION = 360.0 / 2048.0; // conversion factor from
 																								// tick/100ms to
 																								// degree/s
 
@@ -220,7 +220,7 @@ public final class Constants {
 
 		public static final class NEOSwerveConfiguration {
 			public static final double metersPerTick = 1.0 / 1462.25; // TODO: measure this number on the robot
-			public static final double degreePerTick = 360.0 / 4096.0; // BOTH are copied over from TalonSRX
+			public static final double degreePerTick = 360.0 / 2048.0; // BOTH are copied over from TalonSRX
 		}
 
 		/**
@@ -293,50 +293,50 @@ public final class Constants {
 		 */
 		public static enum SwerveModuleConstants {
 			MOD0( // Front Left
-					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
-					BaseMotorControllerTypes.TALON_SRX, // Angle motor type
-					7, // driveMotorID
-					8, // angleMotorID
-					(3268.0 * 360.0) / 4096.0, // angleOffset
-					true, // Inversion for drive motor
-					false, // Inversion for angle motor
+					BaseMotorControllerTypes.SPARKMAX, // Drive motor type
+					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
+					2, // driveMotorID
+					1, // angleMotorID
+					(826.73 * 360.0) / 2048.0, // angleOffset
+					false, // Inversion for drive motor
+					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
-					false // Sensor phase for angle motor
+					true // Sensor phase for angle motor
 			),
 			MOD1( // Front Right
-					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
-					BaseMotorControllerTypes.TALON_SRX, // Angle motor type
-					5, // driveMotorID
-					6, // angleMotorID
-					(433.0 * 360.0) / 4096.0, // angleOffset
-					true, // Inversion for drive motor
-					false, // Inversion for angle motor
+					BaseMotorControllerTypes.SPARKMAX, // Drive motor type
+					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
+					4, // driveMotorID
+					3, // angleMotorID
+					(1073.54 * 360.0) / 2048.0, // angleOffset
+					false, // Inversion for drive motor
+					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
-					false // Sensor phase for angle motor
+					true // Sensor phase for angle motor
 
 			),
 			MOD2( // Back Left
-					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
-					BaseMotorControllerTypes.TALON_SRX, // Angle motor type
-					1, // driveMotorID
-					2, // angleMotorID
-					(3489.0 * 360.0) / 4096.0, // angleOffset
-					true, // Inversion for drive motor
-					false, // Inversion for angle motor
-					true, // Sensor phase for drive motor
-					false // Sensor phase for angle motor
+					BaseMotorControllerTypes.SPARKMAX, // Drive motor type
+					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
+					6, // driveMotorID
+					5, // angleMotorID
+					(926.59 * 360.0) / 2048.0, // angleOffset
+					false, // Inversion for drive motor
+					true, // Inversion for angle motor
+					false, // Sensor phase for drive motor
+					true // Sensor phase for angle motor
 
 			),
 			MOD3( // Back Right
-					BaseMotorControllerTypes.TALON_SRX, // Drive motor type
-					BaseMotorControllerTypes.TALON_SRX, // Angle motor type
-					3, // driveMotorID
-					4, // angleMotorID
-					(3307.0 * 360.0) / 4096.0, // angleOffset
-					true, // Inversion for drive motor
-					false, // Inversion for angle motor
-					true, // Sensor phase for drive motor
-					false // Sensor phase for angle motor
+					BaseMotorControllerTypes.SPARKMAX, // Drive motor type
+					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
+					8, // driveMotorID
+					7, // angleMotorID
+					(741.31 * 360.0) / 2048.0, // angleOffset
+					false, // Inversion for drive motor
+					true, // Inversion for angle motor
+					false, // Sensor phase for drive motor
+					true // Sensor phase for angle motor
 
 			);
 
@@ -410,7 +410,7 @@ public final class Constants {
 			NavX;
 		}
 
-		public static final IMUTypes imuType = IMUTypes.Pigeon2;
+		public static final IMUTypes imuType = IMUTypes.NavX;
 
 		public static final class Pigeon2Constants {
 			public static final int pigeonIMUId = 15; // TODO: Make sure Pigeon ID is correct, this value is a
@@ -444,6 +444,22 @@ public final class Constants {
 			public static final int periodMs = 10; // status frame period
 			public static final int timeoutMs = 30; // status frame timeout
 			public static final int closedLoopPeriod = 1; // 1ms for TalonSRX and locally connected encoder
+
+		}
+
+		
+		public static final class Angle {
+
+			public static final double kP = 0.75;
+			public static final double kI = 0.005;
+			public static final double kD = 0.01;
+			public static final double kF = 0;
+			public static final double Acceleration = 6750; // raw sensor units per 100 ms per second
+			public static final double CruiseVelocity = 6750; // raw sensor units per 100 ms
+			public static final double DefaultAcceptableError = 5; // Sensor units
+			public static final double Izone = 250;
+			public static final double PeakOutput = 0.5; // Closed Loop peak output
+			public static final double NeutralDeadband = 0.001;
 
 		}
 

@@ -65,6 +65,7 @@ public class RobotContainer {
       // This command should be for the teleop driving
       // Note that the first three of its parameters are DoubleSupplier, and the last one is a
       // BooleanSupplier
+      
       driveSubsystem.setDefaultCommand(
               new DriveManuallyCommand(
                       () -> getDriverXAxis(),
@@ -118,7 +119,8 @@ public class RobotContainer {
 
       // swerveValuesTesting();
 
-      trajectoryCalibration();
+      //trajectoryCalibration();
+      //testCalibrateMotorsAndEncodersButtonBindings();
 
   }
 
