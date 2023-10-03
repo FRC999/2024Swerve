@@ -121,7 +121,7 @@ public class RobotContainer {
 
       //trajectoryCalibration();
       //testCalibrateMotorsAndEncodersButtonBindings();
-
+      //swerveValuesTesting();
   }
 
   /**
@@ -229,8 +229,8 @@ public class RobotContainer {
 
     // Move robot to the left
     new JoystickButton(driveStick, 3)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,3,0, true)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
+        .onTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,2,0, true)))
+        .onFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))

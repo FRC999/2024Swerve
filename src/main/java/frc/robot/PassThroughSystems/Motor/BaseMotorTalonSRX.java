@@ -24,6 +24,7 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         System.out.println("**** Activating TalonSRX CANID:" + CANID);
 
         motorTalonSRX = new WPI_TalonSRX(CANID);
+
     }
 
     public void configureDriveMotor(Constants.SwerveChassis.SwerveModuleConstants c) {

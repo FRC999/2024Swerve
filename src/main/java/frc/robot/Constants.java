@@ -220,7 +220,10 @@ public final class Constants {
 
 		public static final class NEOSwerveConfiguration {
 			public static final double metersPerTick = 1.0 / 1462.25; // TODO: measure this number on the robot
-			public static final double degreePerTick = 360.0 / 2048.0; // BOTH are copied over from TalonSRX
+			public static final double ticksPerFullRotation = 2048.0; 
+			public static final double degreePerTick = 360.0 / ticksPerFullRotation; // BOTH are copied over from TalonSRX
+			
+
 		}
 
 		/**
@@ -244,7 +247,7 @@ public final class Constants {
 			 * Specify whether telemetry will be printed and/or the robot will apply power
 			 * to the motors
 			 */
-			public static final SwerveDriveOrTelemetry swerveDriveOrTelemetry = SwerveDriveOrTelemetry.DRIVE_ONLY;
+			public static final SwerveDriveOrTelemetry swerveDriveOrTelemetry = SwerveDriveOrTelemetry.DRIVE_AND_TELEMETRY;
 
 			/**
 			 * Print odometry telemetry every 20 milliseconds.
@@ -320,7 +323,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					6, // driveMotorID
 					5, // angleMotorID
-					(926.59 * 360.0) / 2048.0, // angleOffset
+					(966.0 * 360.0) / 2048.0, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -448,11 +451,11 @@ public final class Constants {
 		}
 
 		
-		public static final class Angle {
+		public static final class NEOAngle {
 
-			public static final double kP = 0.75;
-			public static final double kI = 0.005;
-			public static final double kD = 0.01;
+			public static final double kP = 0.0008;
+			public static final double kI = 0.0;
+			public static final double kD = 0.0;
 			public static final double kF = 0;
 			public static final double Acceleration = 6750; // raw sensor units per 100 ms per second
 			public static final double CruiseVelocity = 6750; // raw sensor units per 100 ms
@@ -505,9 +508,9 @@ public final class Constants {
 			XBOX_CONTROLLER(
 					4, // Port Number for Xbox controller
 					ControllerDeviceType.XBOX,
-					0.03, // deadband X for Xbox
-					0.03, // deadband Y for Xbox       //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER
-					0.03, // deadband Omega for Xbox
+					0.1, // deadband X for Xbox
+					0.1, // deadband Y for Xbox       //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER
+					0.1, // deadband Omega for Xbox
 					false, // No cube controller configuration for Xbox yet
 					false);
 
