@@ -1,12 +1,19 @@
 package frc.robot.PassThroughSystems.Motor;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+
+import edu.wpi.first.math.controller.PIDController;
+
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import frc.robot.Constants;
+import frc.robot.Constants.SwerveChassis;
 import frc.robot.Constants.PIDConstantsForSwerveModules.NEOAngle;
 import frc.robot.Constants.PIDConstantsForSwerveModules.SRXAngle;
 import frc.robot.Constants.SwerveChassis.NEOSwerveConfiguration;
@@ -19,18 +26,76 @@ public class BaseMotorNEO implements BaseMotorInterface {
     private CANSparkMax motorNEO;
     private int CANID;
     private SwerveModuleConstants cAngle;
+    private RelativeEncoder driveEncoder;
+    private SparkMaxAbsoluteEncoder angleEncoder;
+    private SparkMaxPIDController pid;
 
     public BaseMotorNEO(int CANID) {
         System.out.println("**** Activating SparkMAX NEO CANID:" + CANID);
 
         motorNEO = new CANSparkMax(CANID, MotorType.kBrushless);
 
+        driveEncoder = motorNEO.getEncoder();
+        angleEncoder = motorNEO.getAbsoluteEncoder(Type.kDutyCycle);
+
         this.CANID=CANID;
+
+
 
     }
 
+    public static double calculateMetersPerRotation(
+      double wheelDiameter, double driveGearRatio, double pulsePerRotation)
+    {
+    return (Math.PI * wheelDiameter) / (driveGearRatio * pulsePerRotation);
+    }
+
+    public static double calculateDegreesPerSteeringRotation(
+      double angleGearRatio, double pulsePerRotation)
+    {
+        return 360 / (angleGearRatio * pulsePerRotation);
+    }
+
     public void configureDriveMotor(Constants.SwerveChassis.SwerveModuleConstants c) {
-        //TODO: Add logic to configureDriveMotor
+
+
+        motorNEO.restoreFactoryDefaults();
+        motorNEO.clearFaults();
+
+        motorNEO.setInverted(c.isDriveMotorInverted());
+        //driveEncoder.setInverted(c.getDriveMotorSensorPhase());
+
+        pid = motorNEO.getPIDController();
+
+        driveEncoder.setPositionConversionFactor((calculateMetersPerRotation(
+            SwerveChassis.WHEEL_DIAMETER,
+            SwerveChassis.DRIVE_GEAR_RATIO,
+            NEOSwerveConfiguration.DRIVE_PULSE_PER_ROTATION)));
+        driveEncoder.setVelocityConversionFactor((calculateMetersPerRotation(
+            SwerveChassis.WHEEL_DIAMETER,
+            SwerveChassis.DRIVE_GEAR_RATIO,
+            NEOSwerveConfiguration.DRIVE_PULSE_PER_ROTATION)) / 60);
+
+        motorNEO.setCANTimeout(0);
+
+        motorNEO.enableVoltageCompensation(NEOSwerveConfiguration.nominalVoltage);
+        motorNEO.setSmartCurrentLimit(NEOSwerveConfiguration.driveMotorCurrentLimit);
+        motorNEO.setOpenLoopRampRate(NEOSwerveConfiguration.rampRate);
+        motorNEO.setClosedLoopRampRate(NEOSwerveConfiguration.rampRate);
+
+        pid.setPositionPIDWrappingEnabled(true);
+        pid.setPositionPIDWrappingMinInput(NEOSwerveConfiguration.minInput);
+        pid.setPositionPIDWrappingMaxInput(NEOSwerveConfiguration.maxInput);
+
+
+        pid.setP(NEOAngle.kP);
+        pid.setI(NEOAngle.kI);
+        pid.setD(NEOAngle.kD);
+        pid.setFF(NEOAngle.kF);
+        pid.setIZone(NEOAngle.kiz);
+        pid.setOutputRange(NEOAngle.outputMin, NEOAngle.outputMax);
+
+        motorNEO.burnFlash();
 
         motorBrakeMode();
     }
@@ -39,15 +104,54 @@ public class BaseMotorNEO implements BaseMotorInterface {
 
         this.cAngle=c;
 
-        //TODO: Add logic to configureAngleMotor
+        motorNEO.restoreFactoryDefaults();
+        motorNEO.clearFaults();
+
+        motorNEO.setInverted(c.isAngleMotorInverted());
+        //angleEncoder.setInverted(c.getAngleMotorSensorPhase());
+        angleEncoder.setInverted(true);
+
+        pid = motorNEO.getPIDController();
+
+        // angleEncoder.setPositionConversionFactor((calculateMetersPerRotation(
+        //     SwerveChassis.WHEEL_DIAMETER,
+        //     SwerveChassis.ANGLE_GEAR_RATIO,
+        //     NEOSwerveConfiguration.ANGLE_PULSE_PER_ROTATION)));
+        // angleEncoder.setVelocityConversionFactor(calculateDegreesPerSteeringRotation(
+        //     SwerveChassis.WHEEL_DIAMETER,
+        //     SwerveChassis.ANGLE_GEAR_RATIO));
+
+        angleEncoder.setPositionConversionFactor(NEOSwerveConfiguration.maxInput);
+        angleEncoder.setVelocityConversionFactor(NEOSwerveConfiguration.maxInput);
+
+        //angleEncoder.setZeroOffset(1-((c.getAngleOffset())/360));
+        //angleEncoder.setZeroOffset(0.6);
+       
+    
+        motorNEO.setCANTimeout(0);
+
+        motorNEO.enableVoltageCompensation(NEOSwerveConfiguration.nominalVoltage);
+        motorNEO.setSmartCurrentLimit(NEOSwerveConfiguration.angleMotorCurrentLimit);
+        motorNEO.setOpenLoopRampRate(NEOSwerveConfiguration.rampRate);
+        motorNEO.setClosedLoopRampRate(NEOSwerveConfiguration.rampRate);
+        
+        pid.setPositionPIDWrappingEnabled(true);
+        pid.setPositionPIDWrappingMinInput(NEOSwerveConfiguration.minInput);
+        pid.setPositionPIDWrappingMaxInput(NEOSwerveConfiguration.maxInput);
+        
 
         // Configure PID values
 
-        motorNEO.getPIDController().setP(NEOAngle.kP);
-        motorNEO.getPIDController().setI(NEOAngle.kI);
-        motorNEO.getPIDController().setD(NEOAngle.kD);
+        pid.setP(NEOAngle.kP);
+        pid.setI(NEOAngle.kI);
+        pid.setD(NEOAngle.kD);
+        pid.setFF(NEOAngle.kF);
+        pid.setIZone(NEOAngle.kiz);
+        pid.setOutputRange(NEOAngle.outputMin, NEOAngle.outputMax);
 
-        motorNEO.setCANTimeout(0);
+        motorNEO.burnFlash();
+
+        
         motorBrakeMode();
 
         // if (CANID == 1) {
@@ -57,19 +161,19 @@ public class BaseMotorNEO implements BaseMotorInterface {
     }
 
     public double getDriveEncoderPosition() {
-        return motorNEO.getEncoder().getPosition();
+        return driveEncoder.getPosition();
     }
 
     public double getAngleEncoderPosition() {
-        return motorNEO.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
+        return angleEncoder.getPosition();
     }
 
     public double getDriveEncoderVelocity() {
-        return motorNEO.getEncoder().getVelocity();
+        return driveEncoder.getVelocity();
     }
 
     public double getAngleEncoderVelocity() {
-        return motorNEO.getAbsoluteEncoder(Type.kDutyCycle).getVelocity();
+        return angleEncoder.getVelocity();
     }
 
     public double getDriveEncoderPositionSI() {

@@ -48,6 +48,8 @@ public final class Constants {
 		public static final double WHEEL_BASE = 0.64; // front to back
 		public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
 		public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
+		public static final double ANGLE_GEAR_RATIO = 1.0;
+		public static final double DRIVE_GEAR_RATIO = 8.0;
 
 		/**
 		 * This class lists locating of each of the swerve modules from the center of
@@ -222,6 +224,26 @@ public final class Constants {
 			public static final double metersPerTick = 1.0 / 1462.25; // TODO: measure this number on the robot
 			public static final double ticksPerFullRotation = 2048.0; 
 			public static final double degreePerTick = 360.0 / ticksPerFullRotation; // BOTH are copied over from TalonSRX
+
+			public static final double nominalVoltage = 12.0;
+
+			public static final int angleMotorCurrentLimit = 20;
+			public static final int driveMotorCurrentLimit = 40;
+
+			public static final double rampRate = 0.25;
+
+			public static final double minInput = 0;
+			public static final double maxInput = 359.99;
+
+			public static final double positionConversionFactor = 0;
+
+			public static final double DRIVE_PULSE_PER_ROTATION = 42;
+
+			public static final double ANGLE_PULSE_PER_ROTATION = 0;
+
+
+			//TODO: find that value pulse per rot
+
 			
 
 		}
@@ -453,16 +475,20 @@ public final class Constants {
 		
 		public static final class NEOAngle {
 
-			public static final double kP = 0.0008;
+			public static final double kP = 0.008;
 			public static final double kI = 0.0;
 			public static final double kD = 0.0;
 			public static final double kF = 0;
+			public static final double kiz = 0; // I-zone
 			public static final double Acceleration = 6750; // raw sensor units per 100 ms per second
 			public static final double CruiseVelocity = 6750; // raw sensor units per 100 ms
 			public static final double DefaultAcceptableError = 5; // Sensor units
 			public static final double Izone = 250;
 			public static final double PeakOutput = 0.5; // Closed Loop peak output
 			public static final double NeutralDeadband = 0.001;
+
+			public static final double outputMin= -0.5;
+			public static final double outputMax = 0.5;
 
 		}
 

@@ -60,18 +60,18 @@ public class RobotContainer {
       configureDriverInterface();
 
       // Configure the trigger bindings
-      configureBindings();
+      //configureBindings();
 
       // This command should be for the teleop driving
       // Note that the first three of its parameters are DoubleSupplier, and the last one is a
       // BooleanSupplier
       
-      driveSubsystem.setDefaultCommand(
-              new DriveManuallyCommand(
-                      () -> getDriverXAxis(),
-                      () -> getDriverYAxis(),
-                      () -> getDriverOmegaAxis(),
-                      () -> getDriverFieldCentric()));
+    //   driveSubsystem.setDefaultCommand(
+    //           new DriveManuallyCommand(
+    //                   () -> getDriverXAxis(),
+    //                   () -> getDriverYAxis(),
+    //                   () -> getDriverOmegaAxis(),
+    //                   () -> getDriverFieldCentric()));
 
   }
 
