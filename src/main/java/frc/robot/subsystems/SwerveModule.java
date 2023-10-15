@@ -119,7 +119,7 @@ public class SwerveModule extends SubsystemBase {
             case DRIVE_ONLY:
                  // This is the code that makes the robot move by applying the power to the motors
                 driveMotor.applyPower(desiredState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
-                angleMotor.setAngleMotorChassisAngleSI(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
+                angleMotor.setAngleMotorChassisAngleSI((desiredState.angle.getDegrees()+360.0)%360.0); // Rotation2d angle does not give degrees
                 break;
             case TELEMETRY_ONLY:
                 printSwerveModuleState(desiredState);
@@ -128,7 +128,7 @@ public class SwerveModule extends SubsystemBase {
                 printSwerveModuleState(desiredState);
                 // This is the code that makes the robot move by applying the power to the motors
                 driveMotor.applyPower(desiredState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
-                angleMotor.setAngleMotorChassisAngleSI(desiredState.angle.getDegrees()); // Rotation2d angle does not give degrees
+                angleMotor.setAngleMotorChassisAngleSI((desiredState.angle.getDegrees()+360.0)%360.0); // Rotation2d angle does not give degrees
                 break;
         }            
     }
@@ -147,7 +147,7 @@ public class SwerveModule extends SubsystemBase {
     public void printSwerveModuleState(SwerveModuleState moduleState) {
         System.out.print(" SM: "+moduleNumber);
         System.out.print(" P: "+moduleState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
-        System.out.println(" A: "+moduleState.angle.getDegrees());
+        System.out.println(" A: "+((moduleState.angle.getDegrees()+360.0)%360.0));
     }
 
     //TODO: This position is currently set in the encoder units. This may need to change to the SI units. Investigate.

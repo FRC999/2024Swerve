@@ -222,8 +222,10 @@ public final class Constants {
 
 		public static final class NEOSwerveConfiguration {
 			public static final double metersPerTick = 1.0 / 1462.25; // TODO: measure this number on the robot
-			public static final double ticksPerFullRotation = 2048.0; 
-			public static final double degreePerTick = 360.0 / ticksPerFullRotation; // BOTH are copied over from TalonSRX
+			//public static final double ticksPerFullRotation = 2048.0; 
+			//public static final double degreePerTick = 360.0 / ticksPerFullRotation; // BOTH are copied over from TalonSRX
+			public static final double ticksPerFullRotation = 359.99;
+			public static final double degreePerTick = 1;
 
 			public static final double nominalVoltage = 12.0;
 
@@ -475,7 +477,7 @@ public final class Constants {
 		
 		public static final class NEOAngle {
 
-			public static final double kP = 0.008;
+			public static final double kP = 0.0016;
 			public static final double kI = 0.0;
 			public static final double kD = 0.0;
 			public static final double kF = 0;

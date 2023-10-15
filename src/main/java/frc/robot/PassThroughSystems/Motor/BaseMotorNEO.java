@@ -1,14 +1,20 @@
 package frc.robot.PassThroughSystems.Motor;
 
+import com.revrobotics.CANSensor;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.MotorFeedbackSensor;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.CAN;
+import edu.wpi.first.wpilibj.DutyCycle;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
@@ -108,6 +114,9 @@ public class BaseMotorNEO implements BaseMotorInterface {
         motorNEO.clearFaults();
 
         motorNEO.setInverted(c.isAngleMotorInverted());
+
+        //motorNEO.set
+
         //angleEncoder.setInverted(c.getAngleMotorSensorPhase());
         angleEncoder.setInverted(true);
 
@@ -126,6 +135,8 @@ public class BaseMotorNEO implements BaseMotorInterface {
 
         //angleEncoder.setZeroOffset(1-((c.getAngleOffset())/360));
         //angleEncoder.setZeroOffset(0.6);
+
+        //motorNEO.getPIDController().setFeedbackDevice(MotorFeedbackSensor.DutyCycleEncoder);
        
     
         motorNEO.setCANTimeout(0);
@@ -139,6 +150,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
         pid.setPositionPIDWrappingMinInput(NEOSwerveConfiguration.minInput);
         pid.setPositionPIDWrappingMaxInput(NEOSwerveConfiguration.maxInput);
         
+        motorNEO.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 20);
 
         // Configure PID values
 
@@ -197,6 +209,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
     }
 
     public void setAngleMotorChassisAngleSI(double angle) {
+        System.out.println("T:"+degreesToTicks(angle));
         motorNEO.getPIDController().setReference(degreesToTicks(angle), ControlType.kPosition);
         
     }

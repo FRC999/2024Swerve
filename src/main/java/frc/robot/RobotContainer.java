@@ -60,7 +60,7 @@ public class RobotContainer {
       configureDriverInterface();
 
       // Configure the trigger bindings
-      //configureBindings();
+      configureBindings();
 
       // This command should be for the teleop driving
       // Note that the first three of its parameters are DoubleSupplier, and the last one is a
@@ -121,7 +121,7 @@ public class RobotContainer {
 
       //trajectoryCalibration();
       //testCalibrateMotorsAndEncodersButtonBindings();
-      //swerveValuesTesting();
+      swerveValuesTesting();
   }
 
   /**
