@@ -224,8 +224,8 @@ public final class Constants {
 			public static final double metersPerTick = 1.0 / 1462.25; // TODO: measure this number on the robot
 			//public static final double ticksPerFullRotation = 2048.0; 
 			//public static final double degreePerTick = 360.0 / ticksPerFullRotation; // BOTH are copied over from TalonSRX
-			public static final double ticksPerFullRotation = 359.99;
-			public static final double degreePerTick = 1;
+			public static final double ticksPerFullRotation = 2 * Math.PI;
+			public static final double degreePerTick = 360/ticksPerFullRotation;
 
 			public static final double nominalVoltage = 12.0;
 
@@ -235,7 +235,7 @@ public final class Constants {
 			public static final double rampRate = 0.25;
 
 			public static final double minInput = 0;
-			public static final double maxInput = 359.99;
+			public static final double maxInput = 2*Math.PI;
 
 			public static final double positionConversionFactor = 0;
 
@@ -324,7 +324,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					2, // driveMotorID
 					1, // angleMotorID
-					(826.73 * 360.0) / 2048.0, // angleOffset
+					2.51184335 *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -335,7 +335,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					4, // driveMotorID
 					3, // angleMotorID
-					(1073.54 * 360.0) / 2048.0, // angleOffset
+					0.162798 *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -347,7 +347,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					6, // driveMotorID
 					5, // angleMotorID
-					(966.0 * 360.0) / 2048.0, // angleOffset
+					6.162460 *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -359,7 +359,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					8, // driveMotorID
 					7, // angleMotorID
-					(741.31 * 360.0) / 2048.0, // angleOffset
+					5.415143 *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -477,10 +477,10 @@ public final class Constants {
 		
 		public static final class NEOAngle {
 
-			public static final double kP = 0.0016;
+			public static final double kP = 0.4;
 			public static final double kI = 0.0;
-			public static final double kD = 0.0;
-			public static final double kF = 0;
+			public static final double kD = 0.8;
+			public static final double kF = 0.0;
 			public static final double kiz = 0; // I-zone
 			public static final double Acceleration = 6750; // raw sensor units per 100 ms per second
 			public static final double CruiseVelocity = 6750; // raw sensor units per 100 ms
@@ -489,8 +489,8 @@ public final class Constants {
 			public static final double PeakOutput = 0.5; // Closed Loop peak output
 			public static final double NeutralDeadband = 0.001;
 
-			public static final double outputMin= -0.5;
-			public static final double outputMax = 0.5;
+			public static final double outputMin= -1.0;
+			public static final double outputMax = 1.0;
 
 		}
 

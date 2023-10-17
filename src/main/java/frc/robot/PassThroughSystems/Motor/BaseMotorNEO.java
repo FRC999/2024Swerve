@@ -115,42 +115,18 @@ public class BaseMotorNEO implements BaseMotorInterface {
 
         motorNEO.setInverted(c.isAngleMotorInverted());
 
-        //motorNEO.set
-
-        //angleEncoder.setInverted(c.getAngleMotorSensorPhase());
-        angleEncoder.setInverted(true);
-
         pid = motorNEO.getPIDController();
 
-        // angleEncoder.setPositionConversionFactor((calculateMetersPerRotation(
-        //     SwerveChassis.WHEEL_DIAMETER,
-        //     SwerveChassis.ANGLE_GEAR_RATIO,
-        //     NEOSwerveConfiguration.ANGLE_PULSE_PER_ROTATION)));
-        // angleEncoder.setVelocityConversionFactor(calculateDegreesPerSteeringRotation(
-        //     SwerveChassis.WHEEL_DIAMETER,
-        //     SwerveChassis.ANGLE_GEAR_RATIO));
+        pid.setFeedbackDevice(angleEncoder);
 
         angleEncoder.setPositionConversionFactor(NEOSwerveConfiguration.maxInput);
         angleEncoder.setVelocityConversionFactor(NEOSwerveConfiguration.maxInput);
 
-        //angleEncoder.setZeroOffset(1-((c.getAngleOffset())/360));
-        //angleEncoder.setZeroOffset(0.6);
+        angleEncoder.setInverted(true);
 
-        //motorNEO.getPIDController().setFeedbackDevice(MotorFeedbackSensor.DutyCycleEncoder);
-       
-    
-        motorNEO.setCANTimeout(0);
-
-        motorNEO.enableVoltageCompensation(NEOSwerveConfiguration.nominalVoltage);
-        motorNEO.setSmartCurrentLimit(NEOSwerveConfiguration.angleMotorCurrentLimit);
-        motorNEO.setOpenLoopRampRate(NEOSwerveConfiguration.rampRate);
-        motorNEO.setClosedLoopRampRate(NEOSwerveConfiguration.rampRate);
-        
         pid.setPositionPIDWrappingEnabled(true);
         pid.setPositionPIDWrappingMinInput(NEOSwerveConfiguration.minInput);
         pid.setPositionPIDWrappingMaxInput(NEOSwerveConfiguration.maxInput);
-        
-        motorNEO.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 20);
 
         // Configure PID values
 
@@ -158,8 +134,12 @@ public class BaseMotorNEO implements BaseMotorInterface {
         pid.setI(NEOAngle.kI);
         pid.setD(NEOAngle.kD);
         pid.setFF(NEOAngle.kF);
-        pid.setIZone(NEOAngle.kiz);
         pid.setOutputRange(NEOAngle.outputMin, NEOAngle.outputMax);
+
+        motorNEO.setIdleMode(IdleMode.kBrake);
+        //motorNEO.set
+
+        motorNEO.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 20);
 
         motorNEO.burnFlash();
 
@@ -167,7 +147,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
         motorBrakeMode();
 
         // if (CANID == 1) {
-        //     setAngleMotorChassisAngleSI(0);
+            setAngleMotorChassisAngleSI(0);
         // }
         //setAngleMotorChassisAngleSI(0);
     }
