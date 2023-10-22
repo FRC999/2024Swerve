@@ -90,6 +90,7 @@ public class RobotContainer {
        */
       driveStick = new Controller(ControllerDevice.DRIVESTICK);
       turnStick = new Controller(ControllerDevice.TURNSTICK);
+      xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
       System.out.println("Driver interface configured");
   }
 
