@@ -68,12 +68,12 @@ public class RobotContainer {
       // Note that the first three of its parameters are DoubleSupplier, and the last one is a
       // BooleanSupplier
       
-      driveSubsystem.setDefaultCommand(
-              new DriveManuallyCommand(
-                      () -> getDriverXAxis(),
-                      () -> getDriverYAxis(),
-                      () -> getDriverOmegaAxis(),
-                      () -> getDriverFieldCentric()));
+    //   driveSubsystem.setDefaultCommand(
+    //           new DriveManuallyCommand(
+    //                   () -> getDriverXAxis(),
+    //                   () -> getDriverYAxis(),
+    //                   () -> getDriverOmegaAxis(),
+    //                   () -> getDriverFieldCentric()));
 
   }
 
@@ -120,7 +120,7 @@ public class RobotContainer {
       // cancelling on release.
       m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-      // swerveValuesTesting();
+      swerveValuesTesting();
 
       //trajectoryCalibration();
       //testCalibrateMotorsAndEncodersButtonBindings();
@@ -172,6 +172,9 @@ public class RobotContainer {
 
 private double getDriverXAxis() {
     // return -driveStick.getLeftStickY();
+
+    //System.out.println("***--- DX:"+-xboxController.getLeftStickY());
+
     return -xboxController.getLeftStickY();
  }
 
@@ -324,6 +327,10 @@ private double getDriverXAxis() {
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
         );
+    
+    new JoystickButton(turnStick, 10)
+              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("SwiggleWiggle"))
+              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
   }
 
   /**

@@ -324,7 +324,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					2, // driveMotorID
 					1, // angleMotorID
-					2.51184335 *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(2.51184335+Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -335,7 +335,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					4, // driveMotorID
 					3, // angleMotorID
-					0.162798 *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(0.162798+Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -347,7 +347,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					6, // driveMotorID
 					5, // angleMotorID
-					6.162460 *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(6.162460-Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -359,7 +359,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					8, // driveMotorID
 					7, // angleMotorID
-					5.415143 *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(5.415143-Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -534,7 +534,7 @@ public final class Constants {
 			),
 
 			XBOX_CONTROLLER(
-					4, // Port Number for Xbox controller
+					5, // Port Number for Xbox controller
 					ControllerDeviceType.XBOX,
 					0.1, // deadband X for Xbox
 					0.1, // deadband Y for Xbox       //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER

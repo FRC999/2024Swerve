@@ -69,6 +69,9 @@ public class Controller extends Joystick {
         double rawY;
         double result;
 
+        // test
+        //System.out.println("CT:"+cdt);
+
         switch(cdt){
             case LOGITECH:
                 rawY = this.getY();
@@ -79,6 +82,11 @@ public class Controller extends Joystick {
             default:
                 return 0; // Unknown controller type
         }
+
+        // test
+        //System.out.println("CRAWY:"+rawY);
+
+
         if (this.cubeControllerLeftStick) {
             double cubeY = rawY*rawY*rawY;
             result = (cubeY - (rawY > 0 ? 1 : -1) * cubeDeadbandY)/(1 - cubeDeadbandY); // cubeController
