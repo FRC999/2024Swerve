@@ -110,7 +110,7 @@ public class SwerveModule extends SubsystemBase {
 
         // Minimizes angle movement of angle motor by limiting movement to 90 degrees and 
         // reversing power to negative value if necessary
-        desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
+        //desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
 
         // Use this flag for chassis testing, if you want to see the angle and power numbers provided by the Swerve calculations
         // instead of actually moving the robot

@@ -147,7 +147,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
         motorBrakeMode();
 
         // if (CANID == 1) {
-            setAngleMotorChassisAngleSI(0);
+            //setAngleMotorChassisAngleSI(0);
         // }
         //setAngleMotorChassisAngleSI(0);
     }

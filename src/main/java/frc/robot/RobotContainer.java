@@ -124,7 +124,7 @@ public class RobotContainer {
 
       //trajectoryCalibration();
       //testCalibrateMotorsAndEncodersButtonBindings();
-      swerveValuesTesting();
+      //swerveValuesTesting();
   }
 
   /**
@@ -172,7 +172,7 @@ public class RobotContainer {
 
 private double getDriverXAxis() {
     // return -driveStick.getLeftStickY();
-    return -xboxController.getLeftStickY();
+    return -xboxController.getLeftStickY_Xbox();
  }
 
  private double getDriverYAxis() {
