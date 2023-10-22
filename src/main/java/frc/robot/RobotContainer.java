@@ -177,12 +177,12 @@ private double getDriverXAxis() {
 
  private double getDriverYAxis() {
     // return -driveStick.getLeftStickX();
-    return -xboxController.getLeftStickX();
+    return -xboxController.getLeftStickX_Xbox();
  }
 
  private double getDriverOmegaAxis() {
     // return -turnStick.getLeftStickOmega();
-    return -xboxController.getLeftStickOmega();
+    return -xboxController.getLeftStickOmega_Xbox();
  }
 
   
