@@ -82,6 +82,10 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
         return motorTalonSRX.getSelectedSensorPosition();
     }
 
+    public double getAngleEncoderPositionCorrected() {
+        return getAngleEncoderPosition();
+    }
+
     public double getDriveEncoderVelocity() {
         return motorTalonSRX.getSelectedSensorVelocity();
     }
@@ -96,6 +100,10 @@ public class BaseMotorTalonSRX implements BaseMotorInterface {
 
     public double getAngleEncoderPositionSI() {
         return motorTalonSRX.getSelectedSensorPosition()*Constants.SwerveChassis.TalonSRXSwerveConfiguration.degreePerTick;
+    }
+
+    public double getAngleEncoderPositionSICorrected() {
+        return getAngleEncoderPositionSI();
     }
 
     public double getDriveEncoderVelocitySI() {

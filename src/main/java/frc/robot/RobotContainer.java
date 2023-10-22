@@ -66,12 +66,12 @@ public class RobotContainer {
       // Note that the first three of its parameters are DoubleSupplier, and the last one is a
       // BooleanSupplier
       
-    //   driveSubsystem.setDefaultCommand(
-    //           new DriveManuallyCommand(
-    //                   () -> getDriverXAxis(),
-    //                   () -> getDriverYAxis(),
-    //                   () -> getDriverOmegaAxis(),
-    //                   () -> getDriverFieldCentric()));
+      driveSubsystem.setDefaultCommand(
+              new DriveManuallyCommand(
+                      () -> getDriverXAxis(),
+                      () -> getDriverYAxis(),
+                      () -> getDriverOmegaAxis(),
+                      () -> getDriverFieldCentric()));
 
   }
 
@@ -229,7 +229,7 @@ public class RobotContainer {
 
     // Move robot to the left
     new JoystickButton(driveStick, 3)
-        .onTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,2,0, true)))
+        .onTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,0.8,0, true)))
         .onFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
@@ -242,7 +242,7 @@ public class RobotContainer {
 
     // Move robot forward
     new JoystickButton(driveStick, 4)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(3,0,0, true)))
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0.8,0,0, true)))
         .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
@@ -255,7 +255,7 @@ public class RobotContainer {
 
     // Move robot to the right
     new JoystickButton(driveStick, 5)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,-3,0, true)))
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,-0.8,0, true)))
         .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
@@ -268,7 +268,7 @@ public class RobotContainer {
 
     // Move robot backwards
     new JoystickButton(driveStick, 6)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(-3,0,0, true)))
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(-0.8,0,0, true)))
         .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
@@ -281,7 +281,7 @@ public class RobotContainer {
 
     // Turn robot counterclockwise
     new JoystickButton(driveStick, 7)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,0, 10, true)))
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,0, 1.5, true)))
         .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
@@ -294,7 +294,7 @@ public class RobotContainer {
 
     // Turn robot clockwise
     new JoystickButton(driveStick, 8)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,0, -10, true)))
+        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,0, -1.5, true)))
         .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
            .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))

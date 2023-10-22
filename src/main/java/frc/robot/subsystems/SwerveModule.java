@@ -64,11 +64,11 @@ public class SwerveModule extends SubsystemBase {
     }
 
     public double telemetryAngleEncoder(){
-        return angleMotor.getAngleEncoderPosition();
+        return angleMotor.getAngleEncoderPositionCorrected();
     }
 
     public double telemetryAngleEncoderSI(){
-        return angleMotor.getAngleEncoderPositionSI();
+        return angleMotor.getAngleEncoderPositionSICorrected();
     }
 
     public double telemetryDriveEncoder(){

@@ -160,6 +160,10 @@ public class BaseMotorNEO implements BaseMotorInterface {
         return angleEncoder.getPosition();
     }
 
+    public double getAngleEncoderPositionCorrected() {
+        return angleEncoder.getPosition() + cAngle.getAngleOffset();
+    }
+
     public double getDriveEncoderVelocity() {
         return driveEncoder.getVelocity();
     }
@@ -178,6 +182,11 @@ public class BaseMotorNEO implements BaseMotorInterface {
         return getAngleEncoderPosition()*Constants.SwerveChassis.NEOSwerveConfiguration.degreePerTick;
     }
 
+    public double getAngleEncoderPositionSICorrected() {
+      
+        return (getAngleEncoderPosition() + cAngle.getAngleOffset())*Constants.SwerveChassis.NEOSwerveConfiguration.degreePerTick;
+    }
+
     public double getDriveEncoderVelocitySI() {
    
         return getDriveEncoderVelocity()*Constants.SwerveChassis.NEOSwerveConfiguration.metersPerTick;
@@ -189,7 +198,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
     }
 
     public void setAngleMotorChassisAngleSI(double angle) {
-        System.out.println("T:"+degreesToTicks(angle));
+        System.out.println("T:"+degreesToTicks(angle) + " A: "+angle);
         motorNEO.getPIDController().setReference(degreesToTicks(angle), ControlType.kPosition);
         
     }
@@ -211,6 +220,10 @@ public class BaseMotorNEO implements BaseMotorInterface {
          % 
         (NEOSwerveConfiguration.ticksPerFullRotation);
     }
+
+     
+
+    
 
 
 }
