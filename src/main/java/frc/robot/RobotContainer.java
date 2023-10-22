@@ -158,17 +158,34 @@ public class RobotContainer {
    *
    * @return
    */
-  private double getDriverXAxis() {
-      return -driveStick.getLeftStickY();
-  }
+//   private double getDriverXAxis() {
+//       return -driveStick.getLeftStickY();
+//   }
 
-  private double getDriverYAxis() {
-      return -driveStick.getLeftStickX();
-  }
+//   private double getDriverYAxis() {
+//       return -driveStick.getLeftStickX();
+//   }
 
-  private double getDriverOmegaAxis() {
-      return -turnStick.getLeftStickOmega();
-  }
+//   private double getDriverOmegaAxis() {
+//       return -turnStick.getLeftStickOmega();
+//   }
+
+private double getDriverXAxis() {
+    // return -driveStick.getLeftStickY();
+    return -xboxController.getLeftStickY();
+ }
+
+ private double getDriverYAxis() {
+    // return -driveStick.getLeftStickX();
+    return -xboxController.getLeftStickX();
+ }
+
+ private double getDriverOmegaAxis() {
+    // return -turnStick.getLeftStickOmega();
+    return -xboxController.getLeftStickOmega();
+ }
+
+  
 
   /**
    * If the button is pressed, use robot-centric swerve
