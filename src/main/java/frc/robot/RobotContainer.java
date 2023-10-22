@@ -44,6 +44,8 @@ public class RobotContainer {
 
   public static Controller turnStick;
 
+  public static Controller xboxController;
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
