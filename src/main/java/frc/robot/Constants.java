@@ -324,7 +324,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					2, // driveMotorID
 					1, // angleMotorID
-					(2.51184335+Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(2.51184335) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
