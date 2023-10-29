@@ -410,7 +410,14 @@ public final class Constants {
 	public static final class OIConstants {
 		public static final int driverControllerPort = 0;
 
+		public static final int bblPort = 4;
+		public static final int bbrPort = 3;
+
+		public static final int driverInterfaceSwitchButton = 1;
+
 		public static final int robotCentricButton = 2;
+
+		public static ControllerDeviceType driverInterfaceType = ControllerDeviceType.XBOX;
 
 		public static enum ControllerDeviceType {
 			LOGITECH,
@@ -440,7 +447,7 @@ public final class Constants {
 			),
 
 			XBOX_CONTROLLER(
-					4, // Port Number for Xbox controller
+					5, // Port Number for Xbox controller
 					ControllerDeviceType.XBOX,
 					0.03, // deadband X for Xbox
 					0.03, // deadband Y for Xbox       //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER

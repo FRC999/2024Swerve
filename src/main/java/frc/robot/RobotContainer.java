@@ -24,6 +24,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -49,6 +50,9 @@ public class RobotContainer {
   public static Controller turnStick;
 
   public static Controller xboxController;
+
+  public static Joystick bbl;
+  public static Joystick bbr;
 
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -106,6 +110,8 @@ public class RobotContainer {
       driveStick = new Controller(ControllerDevice.DRIVESTICK);
       turnStick = new Controller(ControllerDevice.TURNSTICK);
       xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
+      bbl = new Joystick(OIConstants.bblPort);
+      bbr = new Joystick(OIConstants.bbrPort);
 
       System.out.println("Driver interface configured");
   }
@@ -137,6 +143,21 @@ public class RobotContainer {
       // swerveValuesTesting();
 
       trajectoryCalibration();
+
+  }
+
+  public void setDrivingToXBox() {
+    OIConstants.driverInterfaceType = OIConstants.ControllerDeviceType.XBOX;
+  }
+
+  public void setDrivingToLogitech() {
+    OIConstants.driverInterfaceType = OIConstants.ControllerDeviceType.LOGITECH;
+  }
+
+  public void driveTypeSelector() {
+    new JoystickButton(bbl, OIConstants.driverInterfaceSwitchButton)
+        .onTrue(new InstantCommand(() -> setDrivingToLogitech()))
+        .onFalse(new InstantCommand(() -> setDrivingToXBox()));
 
   }
 
@@ -172,19 +193,35 @@ public class RobotContainer {
    * @return
    */
   private double getDriverXAxis() {
-     // return -driveStick.getLeftStickY();
-     return -xboxController.getLeftStickY();
-  }
+    // return -driveStick.getLeftStickY();
 
-  private double getDriverYAxis() {
-     // return -driveStick.getLeftStickX();
-     return -xboxController.getLeftStickX();
-  }
+    //System.out.println("***--- DX:"+-xboxController.getLeftStickY());
+    switch (OIConstants.driverInterfaceType){
+        case XBOX: return -xboxController.getLeftStickY();
+        case LOGITECH: return -driveStick.getLeftStickY();
+    }
+    return 0;
+ }
 
-  private double getDriverOmegaAxis() {
-     // return -turnStick.getLeftStickOmega();
-     return -xboxController.getLeftStickOmega();
-  }
+ private double getDriverYAxis() {
+    // return -driveStick.getLeftStickX();
+    //System.out.println("Test Y "+ OIConstants.driverInterfaceType);
+    switch (OIConstants.driverInterfaceType){
+        case XBOX: return -xboxController.getLeftStickX();
+        case LOGITECH: return -driveStick.getLeftStickX();
+    }
+    return 0; 
+ }
+
+ private double getDriverOmegaAxis() {
+    // return -turnStick.getLeftStickOmega();
+    switch (OIConstants.driverInterfaceType){
+        case XBOX: return -xboxController.getLeftStickOmega();
+        case LOGITECH: return -turnStick.getLeftStickOmega();
+    }
+    return 0;
+ }
+
 
   /**
    * If the button is pressed, use robot-centric swerve

@@ -97,6 +97,7 @@ public class Controller extends Joystick {
                 break;
             case XBOX:
                 rawX = this.getRawAxis(0);
+                //System.out.println("rawX: " + rawX);
                 break;
             default:
                 return 0; // Unknown controller type
