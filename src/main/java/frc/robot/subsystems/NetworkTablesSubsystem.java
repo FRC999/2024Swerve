@@ -16,16 +16,25 @@ public class NetworkTablesSubsystem extends SubsystemBase {
   /** Creates a new NetworkTablesSystem. */
   private NetworkTableInstance ntInst;
   private double[][] distanceTableUpright ={
-    {0.5,125.0},
-    {1.0,105.0},
-    {1.5,73.0},
-    {2.0,53.0},
-    {2.5,41.0},
-    {3.0,32.0},
-    {3.5,26.5},
-    {4.0,25.0}
+    {0.5,130.0},
+    {1.0,100.0},
+    {1.5,66.0},
+    {2.0,50.0},
+    {2.5,40.0},
+    {3.0,35.0},
+    {3.5,31.0}
 
   };
+
+  private double[][] distanceTableSide ={
+    {0.5,85.0},
+    {1.0,62.0},
+    {1.5,43.0},
+    {2.0,27.0},
+    {2.5,23.0}
+
+  };
+
   public NetworkTablesSubsystem() {
     ntInst = NetworkTableInstance.getDefault();
     System.out.println(); //TODO: print the array parameters
@@ -59,22 +68,38 @@ public class NetworkTablesSubsystem extends SubsystemBase {
     return upright;
   }
 
-   public double getDistance(double v) {
-      if (v > distanceTableUpright[0][1]){
-        return 0.0;
-      }
-      if (v < distanceTableUpright[distanceTableUpright.length-1][1]){
-        return 10.0; 
-      }
-      for(int i = 0; i < distanceTableUpright.length - 1; i++){
-        if (distanceTableUpright[i][1] <= v && v <= distanceTableUpright[i+1][1]){
-          return (distanceTableUpright[i][0]+distanceTableUpright[i+1][0])/2.0;
-        
-        }
-      }
-      return 100;
-   }
+  public double getDistance(double v, double h) {
 
+    System.out.println("v: " + v + " h: " + h);
+
+    if (v == 0 || h == 0) { // Do not see the cone
+      return Double.NaN;
+    }
+    double[][] distanceTable;
+    if (v / h >= 1.3) { // Cone is vertical
+
+      distanceTable = distanceTableUpright;
+      System.out.println("Vertical");
+    } else {
+      distanceTable = distanceTableSide;
+      System.out.println("Horizontal");
+    }
+    if (v > distanceTable[0][1]) {
+      return 0.0;
+    }
+    if (v < distanceTable[distanceTable.length - 1][1]) {
+      return 10.0;
+    }
+    for (int i = 0; i < distanceTable.length - 1; i++) {
+      if (distanceTable[i][1] >= v && v >= distanceTable[i + 1][1]) {
+        return (distanceTable[i][0] + (distanceTable[i + 1][0]-distanceTable[i][0])
+                *(v-distanceTable[i][1])/
+                (distanceTable[i+1][1]-distanceTable[i][1]));
+
+      }
+    }
+    return 100;
+  }
   
   @Override
   public void periodic() {
@@ -82,6 +107,6 @@ public class NetworkTablesSubsystem extends SubsystemBase {
     getVisionTargetXBoxRough();
     getVisionTargetYBoxRough();
     isUpRight();
-    SmartDashboard.putNumber("***See Distance: ", getDistance(getVisionTargetYBoxRough()));
+    SmartDashboard.putNumber("***See Distance: ", getDistance(getVisionTargetYBoxRough(), getVisionTargetXBoxRough()));
   }
 }
