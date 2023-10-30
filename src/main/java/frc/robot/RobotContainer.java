@@ -144,14 +144,20 @@ public class RobotContainer {
 
       trajectoryCalibration();
 
+      driveTypeSelector();
+
   }
 
   public void setDrivingToXBox() {
     OIConstants.driverInterfaceType = OIConstants.ControllerDeviceType.XBOX;
+    
+    System.out.println("*** Control switch to Xbox");
   }
 
   public void setDrivingToLogitech() {
     OIConstants.driverInterfaceType = OIConstants.ControllerDeviceType.LOGITECH;
+
+    System.out.println("*** Control switch to Logitech");
   }
 
   public void driveTypeSelector() {
