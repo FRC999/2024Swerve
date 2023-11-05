@@ -100,6 +100,10 @@ public class NetworkTablesSubsystem extends SubsystemBase {
     }
     return 100;
   }
+
+  public double getDistanceToCone() {
+    return getDistance(getVisionTargetYBoxRough(), getVisionTargetXBoxRough());
+  }
   
   @Override
   public void periodic() {
@@ -107,6 +111,6 @@ public class NetworkTablesSubsystem extends SubsystemBase {
     getVisionTargetXBoxRough();
     getVisionTargetYBoxRough();
     isUpRight();
-    SmartDashboard.putNumber("***See Distance: ", getDistance(getVisionTargetYBoxRough(), getVisionTargetXBoxRough()));
+    SmartDashboard.putNumber("***See Distance: ", getDistanceToCone());
   }
 }

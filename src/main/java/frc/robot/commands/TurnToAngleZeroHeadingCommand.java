@@ -43,8 +43,8 @@ public class TurnToAngleZeroHeadingCommand extends CommandBase {
 		double omegaDegPerSec = profiledPID.calculate(RobotContainer.imuSubsystem.getYaw());
 		if (seeCone) {
 			RobotContainer.driveSubsystem.drive(0, 0, Units.degreesToRadians(omegaDegPerSec)* SwerveChassis.MAX_ANGULAR_VELOCITY, true);
-		}
-		profiledPID.setGoal(RobotContainer.imuSubsystem.getYaw() + RobotContainer.networkTablesSubsystem.getVisionTargetX());
+		}profiledPID.setGoal(RobotContainer.imuSubsystem.getYaw() + RobotContainer.networkTablesSubsystem.getVisionTargetX());
+		
 		SmartDashboard.putNumber("***Rotation Command Angle: ", Units.degreesToRadians(omegaDegPerSec)* SwerveChassis.MAX_ANGULAR_VELOCITY);
 		System.out.println("***See: "+ seeCone + " ***A: "+ Units.degreesToRadians(omegaDegPerSec)* SwerveChassis.MAX_ANGULAR_VELOCITY);
 	}

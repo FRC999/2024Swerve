@@ -11,6 +11,7 @@ import frc.robot.Constants.SwerveChassis.SwerveTelemetry;
 import frc.robot.Devices.Controller;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
+import frc.robot.commands.DriveToTarget;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.TurnToAngleZeroHeadingCommand;
@@ -337,6 +338,11 @@ public class RobotContainer {
         .onTrue(new InstantCommand(RobotContainer.networkTablesSubsystem::getVisionTargetX));
     new JoystickButton(driveStick, 9)
         .whileTrue(new TurnToAngleZeroHeadingCommand(Rotation2d.fromDegrees(0)))
+        .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+    new JoystickButton(driveStick, 10)
+        .whileTrue(new DriveToTarget(
+            RobotContainer.networkTablesSubsystem.getDistanceToCone(),
+            RobotContainer.networkTablesSubsystem.getVisionTargetX()))
         .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
   }
 
