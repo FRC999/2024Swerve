@@ -70,7 +70,7 @@ public class NetworkTablesSubsystem extends SubsystemBase {
 
   public double getDistance(double v, double h) {
 
-    System.out.println("v: " + v + " h: " + h);
+    //System.out.println("v: " + v + " h: " + h);
 
     if (v == 0 || h == 0) { // Do not see the cone
       return Double.NaN;
@@ -79,10 +79,10 @@ public class NetworkTablesSubsystem extends SubsystemBase {
     if (v / h >= 1.3) { // Cone is vertical
 
       distanceTable = distanceTableUpright;
-      System.out.println("Vertical");
+      //System.out.println("Vertical");
     } else {
       distanceTable = distanceTableSide;
-      System.out.println("Horizontal");
+      //System.out.println("Horizontal");
     }
     if (v > distanceTable[0][1]) {
       return 0.0;

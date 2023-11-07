@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -17,17 +18,19 @@ public class DriveToTarget extends CommandBase {
   private double distance; //distance to target
   private double angle; //angle to target
   private double chassisAngle;
-  private final double stoppingDistance = 0.1;
-  private final double kP = 0.5;
+  private final double stoppingDistance = 0.12;
+  private final double kP = 4.0;
 	private final double kI = 0;
 	private final double kD = 0;
-  private double kMaxSpeed = 1.5;
+  private double kMaxSpeed = 2.5;
 	private double kMaxAccel = 3.0;
   private TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(kMaxSpeed, kMaxAccel);
-  private ProfiledPIDController profiledPID = new ProfiledPIDController(kP, kI, kD, constraints);
+  //private ProfiledPIDController profiledPID = new ProfiledPIDController(kP, kI, kD, constraints);
+  private PIDController profiledPID = new PIDController(kP, kI, kD);
   private Pose2d initialPose2d;
   private Pose2d finalPose2d;
   private Translation2d finalTranslation2d;
+  private double pidError;
 
   /** Creates a new DriveToTarget. */
   public DriveToTarget(double dst, double ang) {
@@ -49,8 +52,8 @@ public class DriveToTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    profiledPID.reset(-distance);
-    profiledPID.setGoal(0);
+    // profiledPID. (-distance);
+    // profiledPID.setSetpoint(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -59,15 +62,16 @@ public class DriveToTarget extends CommandBase {
     
     RobotContainer.driveSubsystem.updateTrajectoryOdometry();
     Pose2d currentPose2d = RobotContainer.driveSubsystem.getPose();
-    double pidError = -finalTranslation2d.
+    pidError = -finalTranslation2d.
           getDistance(currentPose2d.getTranslation());
     if (initialPose2d.getTranslation().
           getDistance(currentPose2d.getTranslation())>distance){
       pidError = -pidError;
     }
-    double power = profiledPID.calculate(pidError);
+    System.out.println("*****PID Error: "+pidError);
+    double power = profiledPID.calculate(pidError, 0);
   
-    System.out.println("p:"+power);
+    //System.out.println("p:"+power);
 
     RobotContainer.driveSubsystem.drive(power*Math.cos(chassisAngle + angle), 
         power*Math.sin(chassisAngle + angle), 0, true);
@@ -75,11 +79,13 @@ public class DriveToTarget extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Drive to Cone Ended: "+interrupted);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(pidError)<stoppingDistance;
   }
 }
