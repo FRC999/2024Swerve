@@ -12,6 +12,7 @@ import frc.robot.Devices.Controller;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.DriveToTarget;
+import frc.robot.commands.DriveToTargetPP1;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.TurnToAngleZeroHeadingCommand;
@@ -343,6 +344,12 @@ public class RobotContainer {
         .whileTrue(new DriveToTarget(
             RobotContainer.networkTablesSubsystem.getDistanceToCone(),
             RobotContainer.networkTablesSubsystem.getVisionTargetX()))
+        .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+    new JoystickButton(driveStick, 7)
+        .whileTrue(new DriveToTargetPP1(
+            RobotContainer.networkTablesSubsystem.getDistanceToCone(),
+            RobotContainer.networkTablesSubsystem.getVisionTargetX(),
+            2, 1))
         .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
   }
 
