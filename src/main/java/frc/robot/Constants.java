@@ -417,12 +417,16 @@ public final class Constants {
 
 		public static final int robotCentricButton = 2;
 
-		public static ControllerDeviceType driverInterfaceType = ControllerDeviceType.XBOX;
-
+		public static ControllerDeviceType driverInterfaceType = ControllerDeviceType.WHEEL;
+		public static final int leftRotationButton = 6;
+		public static final int rightRotationButton = 5;
+		public static final int fastRotationButton = 3;
+		
 		public static enum ControllerDeviceType {
 			LOGITECH,
 			PS5,
-			XBOX
+			XBOX,
+			WHEEL
 		} 
 
 		public static enum ControllerDevice {
@@ -453,6 +457,15 @@ public final class Constants {
 					0.03, // deadband Y for Xbox       //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER
 					0.03, // deadband Omega for Xbox
 					false, // No cube controller configuration for Xbox yet
+					false),
+
+			WHEEL(
+					2, // Port Number for Wheel
+					ControllerDeviceType.WHEEL,
+					0.01, // deadband X for Pedal
+					0.04, // deadband Y for WHEEL      //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER
+					0.0, // deadband Omega 
+					false, // No cube controller configuration for WHEEL yet
 					false);
 
 			private ControllerDeviceType controllerDeviceType;
