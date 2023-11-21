@@ -3,6 +3,7 @@ package frc.robot.Devices;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants;
+import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OIConstants.ControllerDevice;
 import frc.robot.Constants.OIConstants.ControllerDeviceType;
 
@@ -74,7 +75,8 @@ public class Controller extends Joystick {
                 rawY = this.getRawAxis(5);
                 break;
             case WHEEL:
-                rawY = -2 * this.getRawAxis(1) + 1 + 2 * this.getRawAxis(3) + 1;
+                rawY = 0.5 * this.getRawAxis(1) - 0.5 - 0.5 * this.getRawAxis(3) +0.5;
+              //  System.out.println("WY: " + (-0.5 * this.getRawAxis(1) + 0.5 + 0.5 * this.getRawAxis(3) -0.5));
                 break;
             default:
                 return 0; // Unknown controller type
@@ -103,7 +105,9 @@ public class Controller extends Joystick {
                 //System.out.println("rawX: " + rawX);
                 break;
             case WHEEL:
-                rawX = -this.getRawAxis(0);
+                rawX = this.getRawAxis(0);
+                //System.out.println("rawX: " + rawX);
+                break;
             default:
                 return 0; // Unknown controller type
                
@@ -130,6 +134,27 @@ public class Controller extends Joystick {
             case XBOX:
                 rawOmega = this.getRawAxis(3)-this.getRawAxis(2);
                 break;
+            case WHEEL:
+                if (this.getRawButton(OIConstants.rightRotationButton) &&
+                    !this.getRawButton(OIConstants.leftRotationButton)) {
+                    if (this.getRawButton(OIConstants.fastRotationButton)) {
+                        return OIConstants.fastRotation;
+                    }
+                    else {
+                        return OIConstants.slowRotation;
+                    }
+                } else if (this.getRawButton(OIConstants.leftRotationButton) &&
+                !this.getRawButton(OIConstants.rightRotationButton)) {
+                    if (this.getRawButton(OIConstants.fastRotationButton)) {
+                        return -OIConstants.fastRotation;
+                    }
+                    else {
+                        return -OIConstants.slowRotation;
+                    }
+                }
+                return 0;
+
+                
             default:
                 return 0; // Unknown controller type
         }

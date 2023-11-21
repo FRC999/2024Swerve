@@ -20,6 +20,8 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 
+import javax.sound.sampled.Control;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.StringLogEntry;
@@ -48,6 +50,8 @@ public class RobotContainer {
   public static Controller driveStick;
 
   public static Controller turnStick;
+
+  public static Controller wheelController;
 
   public static Controller xboxController;
 
@@ -110,6 +114,7 @@ public class RobotContainer {
       driveStick = new Controller(ControllerDevice.DRIVESTICK);
       turnStick = new Controller(ControllerDevice.TURNSTICK);
       xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
+      wheelController = new Controller(ControllerDevice.WHEEL);
       bbl = new Joystick(OIConstants.bblPort);
       bbr = new Joystick(OIConstants.bbrPort);
 
@@ -205,6 +210,7 @@ public class RobotContainer {
     switch (OIConstants.driverInterfaceType){
         case XBOX: return -xboxController.getLeftStickY();
         case LOGITECH: return -driveStick.getLeftStickY();
+        case WHEEL: return -wheelController.getLeftStickY();
     }
     return 0;
  }
@@ -215,6 +221,7 @@ public class RobotContainer {
     switch (OIConstants.driverInterfaceType){
         case XBOX: return -xboxController.getLeftStickX();
         case LOGITECH: return -driveStick.getLeftStickX();
+        case WHEEL: return -wheelController.getLeftStickX();
     }
     return 0; 
  }
@@ -224,6 +231,7 @@ public class RobotContainer {
     switch (OIConstants.driverInterfaceType){
         case XBOX: return -xboxController.getLeftStickOmega();
         case LOGITECH: return -turnStick.getLeftStickOmega();
+        case WHEEL: return -wheelController.getLeftStickOmega();
     }
     return 0;
  }

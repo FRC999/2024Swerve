@@ -421,6 +421,8 @@ public final class Constants {
 		public static final int leftRotationButton = 6;
 		public static final int rightRotationButton = 5;
 		public static final int fastRotationButton = 3;
+		public static final double slowRotation = 0.18;
+		public static final double fastRotation = 0.78;
 		
 		public static enum ControllerDeviceType {
 			LOGITECH,
