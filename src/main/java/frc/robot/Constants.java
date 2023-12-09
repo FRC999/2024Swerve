@@ -417,7 +417,7 @@ public final class Constants {
 
 		public static final int robotCentricButton = 2;
 
-		public static ControllerDeviceType driverInterfaceType = ControllerDeviceType.XBOX;
+		public static ControllerDeviceType driverInterfaceType = ControllerDeviceType.XBOX_ONEDRIVE;
 
 		public static enum ControllerDeviceType {
 			LOGITECH,
