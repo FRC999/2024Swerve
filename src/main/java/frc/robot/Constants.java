@@ -422,7 +422,8 @@ public final class Constants {
 		public static enum ControllerDeviceType {
 			LOGITECH,
 			PS5,
-			XBOX
+			XBOX,			// RightJ F/B, LeftJ L/R, L2/R2 - rotation
+			XBOX_ONEDRIVE	// RIghtJ F/B/L/R, LeftJ - rotation
 		} 
 
 		public static enum ControllerDevice {

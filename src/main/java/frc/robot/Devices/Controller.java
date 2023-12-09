@@ -71,7 +71,7 @@ public class Controller extends Joystick {
                 rawY = this.getY();
                 break;
             case XBOX:
-                rawY = this.getRawAxis(5);
+                rawY = this.getRawAxis(1);
                 break;
             default:
                 return 0; // Unknown controller type
@@ -136,6 +136,55 @@ public class Controller extends Joystick {
             result = (MathUtil.applyDeadband(rawOmega, dm)); // linear controller values
         }
         return result;
-        
+
+    }
+
+    public double getRightStickY() {
+        double rawY;
+        double result;
+
+        switch (cdt) {
+            case XBOX:
+                rawY = this.getRawAxis(5);
+                break;
+            default:
+                return 0; // Unknown controller type
+        }
+        if (this.cubeControllerLeftStick) {
+            double cubeY = rawY * rawY * rawY;
+            result = (cubeY - (rawY > 0 ? 1 : -1) * cubeDeadbandY) / (1 - cubeDeadbandY); // cubeController
+            result = Math.abs(result) > this.cubeDeadbandY ? result : 0; // Ignores range of deadband values
+        } else {
+            result = (MathUtil.applyDeadband(rawY, dy)); // linear controller values
+        }
+        return result;
+
+    }
+
+    public double getRightStickX() {
+        double rawX;
+        double result;
+
+        switch (cdt) {
+            case LOGITECH:
+                rawX = this.getX();
+                break;
+            case XBOX:
+                rawX = this.getRawAxis(4);
+                // System.out.println("rawX: " + rawX);
+                break;
+            default:
+                return 0; // Unknown controller type
+
+        }
+        if (this.cubeControllerLeftStick) {
+            double cubeX = rawX * rawX * rawX;
+            result = (cubeX - (rawX > 0 ? 1 : -1) * cubeDeadbandX) / (1 - cubeDeadbandX); // cubeController
+            result = Math.abs(result) > this.cubeDeadbandX ? result : 0; // Ignores range of deadband values
+        } else {
+            result = (MathUtil.applyDeadband(rawX, dx)); // linear controller values
+        }
+        return result;
+
     }
 }

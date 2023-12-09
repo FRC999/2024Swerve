@@ -142,9 +142,9 @@ public class RobotContainer {
 
       // swerveValuesTesting();
 
-      trajectoryCalibration();
+      //trajectoryCalibration();
 
-      driveTypeSelector();
+      //driveTypeSelector();
 
   }
 
@@ -205,6 +205,7 @@ public class RobotContainer {
     switch (OIConstants.driverInterfaceType){
         case XBOX: return -xboxController.getLeftStickY();
         case LOGITECH: return -driveStick.getLeftStickY();
+        case XBOX_ONEDRIVE: return -xboxController.getRightStickY();
     }
     return 0;
  }
@@ -215,6 +216,7 @@ public class RobotContainer {
     switch (OIConstants.driverInterfaceType){
         case XBOX: return -xboxController.getLeftStickX();
         case LOGITECH: return -driveStick.getLeftStickX();
+        case XBOX_ONEDRIVE: return -xboxController.getRightStickX();
     }
     return 0; 
  }
@@ -224,6 +226,7 @@ public class RobotContainer {
     switch (OIConstants.driverInterfaceType){
         case XBOX: return -xboxController.getLeftStickOmega();
         case LOGITECH: return -turnStick.getLeftStickOmega();
+        case XBOX_ONEDRIVE: return xboxController.getLeftStickX();
     }
     return 0;
  }
