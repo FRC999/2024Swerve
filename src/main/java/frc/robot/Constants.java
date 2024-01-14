@@ -415,7 +415,7 @@ public final class Constants {
 
 		public static final int driverInterfaceSwitchButton = 1;
 
-		public static final int robotCentricButton = 2;
+		public static final int robotCentricButton = 5; // XBOX L1 button
 
 		public static ControllerDeviceType driverInterfaceType = ControllerDeviceType.XBOX_ONEDRIVE;
 
