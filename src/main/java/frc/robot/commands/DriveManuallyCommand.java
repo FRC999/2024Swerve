@@ -53,7 +53,8 @@ public class DriveManuallyCommand extends Command {
   public void execute() {
     double xInput = mVxSupplier.getAsDouble();
 		double yInput = mVySupplier.getAsDouble();
-		double omegaInput = mOmegaSupplier.getAsDouble();
+    // Change direction of rotation - per request of drive team
+		double omegaInput = -mOmegaSupplier.getAsDouble();
 
     
     //driveControlTelemetry(xInput, yInput, omegaInput);
