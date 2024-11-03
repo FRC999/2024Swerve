@@ -289,7 +289,7 @@ public final class Constants {
 					BaseMotorControllerTypes.TALON_SRX, // Angle motor type
 					3, // driveMotorID
 					4, // angleMotorID
-					(3307.0 * 360.0) / 4096.0, // angleOffset
+					((3307.0+731.0) * 360.0) / 4096.0, // angleOffset
 					true, // Inversion for drive motor
 					false, // Inversion for angle motor
 					true, // Sensor phase for drive motor
