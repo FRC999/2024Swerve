@@ -107,9 +107,9 @@ public class RobotContainer {
        * to the
        * commands that need manual control input (e.g. DriveManuallyCommand)
        */
-      //driveStick = new Controller(ControllerDevice.DRIVESTICK);  // disable joysticks for driver practice code
+      driveStick = new Controller(ControllerDevice.DRIVESTICK);  // disable joysticks for driver practice code
       //turnStick = new Controller(ControllerDevice.TURNSTICK);   // disable joysticks for driver practice code
-      xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
+      //xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
       // bbl = new Joystick(OIConstants.bblPort);
       // bbr = new Joystick(OIConstants.bbrPort);
 
